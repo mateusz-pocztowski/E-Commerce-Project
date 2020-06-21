@@ -1,3 +1,4 @@
+import 'styles/index.scss';
 import React from 'react';
 
 const Root = () => (
