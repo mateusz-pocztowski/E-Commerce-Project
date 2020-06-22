@@ -1,10 +1,16 @@
-import 'styles/index.scss';
+import MainTemplate from 'templates/MainTemplate';
+import HomeView from 'views/HomeView';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import React from 'react';
 
 const Root = () => (
-  <div>
-    <h1>Hello World</h1>
-  </div>
+  <BrowserRouter>
+    <MainTemplate>
+      <Switch>
+        <Route exact path="/" component={HomeView} />
+      </Switch>
+    </MainTemplate>
+  </BrowserRouter>
 );
 
 export default Root;

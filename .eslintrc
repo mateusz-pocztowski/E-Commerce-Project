@@ -8,6 +8,7 @@
   "rules": {
     "arrow-parens": ["error", "as-needed"],
     "import/prefer-default-export": 0,
+    "no-return-assign": 0,
     "react/jsx-filename-extension": [
       1,
       {
