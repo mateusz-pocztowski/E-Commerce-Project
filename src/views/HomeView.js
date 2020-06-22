@@ -1,10 +1,14 @@
 import React from 'react';
 import Slider from 'components/organisms/Slider/Slider';
+import Categories from 'components/molecules/Categories/Categories';
 
 const HomeView = () => (
-  <div>
+  <>
     <Slider />
-  </div>
+    <main>
+      <Categories />
+    </main>
+  </>
 );
 
 export default HomeView;
