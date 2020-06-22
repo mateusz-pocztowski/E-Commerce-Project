@@ -6,7 +6,7 @@ const Title = styled.h1`
   ${({ theme }) => theme.mq.sm} {
     font-size: ${({ theme }) => theme.fontSize.xxl};
   }
-  ${({ theme }) => theme.mq.md} {
+  ${({ theme }) => theme.mq.lg} {
     font-size: ${({ theme }) => theme.fontSize.xxxl};
   }
   white-space: pre-line;

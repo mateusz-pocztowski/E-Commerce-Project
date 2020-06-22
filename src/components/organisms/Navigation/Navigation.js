@@ -5,11 +5,16 @@ import { NavLink, useLocation } from 'react-router-dom';
 import logoImg from 'assets/images/logo.png';
 import logoWhiteImg from 'assets/images/logo-white.png';
 import searchIcon from 'assets/icons/search.svg';
+import closeIcon from 'assets/icons/delete.svg';
 import heartIcon from 'assets/icons/small-heart.svg';
 import cartIcon from 'assets/icons/cart.svg';
+import twitterIcon from 'assets/icons/twitter.svg';
+import facebookIcon from 'assets/icons/facebook.svg';
+import instagramIcon from 'assets/icons/instagram.svg';
 import hamburgerMenuIcon from 'assets/icons/bars.svg';
+import Heading from 'components/atoms/Heading/Heading';
 
-const Wrapper = styled.nav`
+const TopnavWrapper = styled.nav`
   position: fixed;
   width: 100%;
   z-index: ${({ theme }) => theme.zIndex.level5};
@@ -91,6 +96,7 @@ const LinkItem = styled(NavLink)`
     transition: transform 250ms ease-in-out;
   }
   &:hover:after,
+  &.active:hover:after,
   &.active:after {
     transform: scaleX(1);
   }
@@ -155,8 +161,115 @@ const CartBadge = styled.span`
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
 `;
 
+const SidenavWrapper = styled.nav`
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  left: -100vw;
+  width: 100vw;
+  top: 0;
+  bottom: 0;
+  z-index: ${({ theme }) => theme.zIndex.level5};
+  visibility: hidden;
+  opacity: 0;
+  height: 100%;
+  transition: all 0.35s cubic-bezier(0.645, 0.045, 0.355, 1);
+  background-color: ${({ theme }) => theme.white};
+  color: ${({ theme }) => theme.dark};
+  ${({ theme }) => theme.mq.xxs} {
+    width: calc(100vw - 65px);
+    left: calc((100vw - 65px) * -1);
+  }
+  ${({ theme }) => theme.mq.xs} {
+    width: 340px;
+    left: -340px;
+  }
+  ${({ isActive }) =>
+    isActive &&
+    css`
+      visibility: visible !important;
+      opacity: 1 !important;
+      left: 0 !important;
+    `}
+`;
+
+const HeadingWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 2px solid ${({ theme }) => theme.blue};
+`;
+
+const StyledHeading = styled(Heading)`
+  margin: 0;
+  font-family: ${({ theme }) => theme.fonts.subFont};
+  font-weight: ${({ theme }) => theme.medium};
+`;
+
+const CloseBtn = styled(OptionButton)`
+  filter: brightness(3);
+  background-size: 60%;
+`;
+
+const SidenavLinksWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const SidenavLink = styled(NavLink)`
+  border-bottom: 1px solid rgba(129, 129, 129, 0.2);
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  padding: 18px;
+  font-size: ${({ theme }) => theme.fontSize.xsm};
+  cursor: pointer;
+  color: ${({ theme }) => theme.dark};
+  text-decoration: none;
+  &:hover {
+    background-color: ${({ theme }) => theme.white100};
+  }
+  ${({ icon }) =>
+    icon &&
+    css`
+      &:before {
+        content: '';
+        display: block;
+        margin-right: 10px;
+        width: 19px;
+        height: 19px;
+        filter: invert(1);
+        background: url(${icon}) no-repeat center;
+        background-size: 100%;
+      }
+    `}
+`;
+
+const SocialMediaWrapper = styled.div`
+  margin-top: auto;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px 0;
+  border-top: 1px solid rgba(129, 129, 129, 0.2);
+`;
+
+const SocialMedia = styled.a`
+  display: block;
+  margin-right: 10px;
+  width: 36px;
+  height: 36px;
+  transition: 0.2s;
+  cursor: pointer;
+  background: url(${({ icon }) => icon}) no-repeat center;
+  &:hover {
+    filter: brightness(120%);
+  }
+`;
+
 const Navigation = () => {
   const [scrollTop, setScrollTop] = useState(0);
+  const [isSidenavVisible, setSidenavVisibility] = useState(false);
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -169,32 +282,62 @@ const Navigation = () => {
   }, [scrollTop]);
 
   return (
-    <Wrapper transparent={pathname === '/' && scrollTop < 10}>
-      <LinkItemsWrapper>
-        <Option menu visible>
-          <OptionButton icon={hamburgerMenuIcon} />
-        </Option>
-        <LinkItem activeclass="active" to="/">
-          Home
-        </LinkItem>
-        <LinkItem activeclass="active" to="/catalog">
-          Catalog
-        </LinkItem>
-      </LinkItemsWrapper>
-      <Logo to="/" />
-      <OptionsWrapper>
-        <Option>
-          <OptionButton icon={searchIcon} />
-        </Option>
-        <Option>
-          <OptionButton icon={heartIcon} />
-        </Option>
-        <Option visible>
-          <OptionButton icon={cartIcon} />
-          <CartBadge>0</CartBadge>
-        </Option>
-      </OptionsWrapper>
-    </Wrapper>
+    <>
+      <TopnavWrapper transparent={pathname === '/' && scrollTop < 10}>
+        <LinkItemsWrapper>
+          <Option menu visible>
+            <OptionButton
+              icon={hamburgerMenuIcon}
+              onClick={() => setSidenavVisibility(true)}
+            />
+          </Option>
+          <LinkItem activeclass="active" to="/">
+            Home
+          </LinkItem>
+          <LinkItem activeclass="active" to="/catalog">
+            Catalog
+          </LinkItem>
+        </LinkItemsWrapper>
+        <Logo to="/" />
+        <OptionsWrapper>
+          <Option>
+            <OptionButton icon={searchIcon} />
+          </Option>
+          <Option>
+            <OptionButton icon={heartIcon} />
+          </Option>
+          <Option visible>
+            <OptionButton icon={cartIcon} />
+            <CartBadge>0</CartBadge>
+          </Option>
+        </OptionsWrapper>
+      </TopnavWrapper>
+
+      <SidenavWrapper isActive={isSidenavVisible}>
+        <HeadingWrapper>
+          <StyledHeading>Menu</StyledHeading>
+          <CloseBtn
+            icon={closeIcon}
+            onClick={() => setSidenavVisibility(false)}
+          />
+        </HeadingWrapper>
+        <SidenavLinksWrapper>
+          <SidenavLink to="/">Home</SidenavLink>
+          <SidenavLink to="/catalog">Catalog</SidenavLink>
+          <SidenavLink icon={searchIcon} to="/">
+            Search
+          </SidenavLink>
+          <SidenavLink icon={heartIcon} to="/wishlist">
+            Wishlist
+          </SidenavLink>
+        </SidenavLinksWrapper>
+        <SocialMediaWrapper>
+          <SocialMedia icon={twitterIcon} />
+          <SocialMedia icon={facebookIcon} />
+          <SocialMedia icon={instagramIcon} />
+        </SocialMediaWrapper>
+      </SidenavWrapper>
+    </>
   );
 };
 
