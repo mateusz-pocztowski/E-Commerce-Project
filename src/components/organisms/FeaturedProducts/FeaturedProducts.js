@@ -22,9 +22,13 @@ const settings = {
   },
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.section`
+  margin-bottom: 30px;
+  ${({ theme }) => theme.mq.sm} {
+    margin: 0 16px 30px;
+  }
   ${({ theme }) => theme.mq.xl} {
-    margin: 0 26px;
+    margin: 0 32px 30px;
   }
 `;
 

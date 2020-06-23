@@ -6,7 +6,7 @@ import categoryImg2 from 'assets/images/category2.jpg';
 import categoryImg3 from 'assets/images/category3.jpg';
 import Button from 'components/atoms/Button/Button';
 
-const Wrapper = styled.div`
+const Wrapper = styled.section`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   }
   ${({ theme }) => theme.mq.xl} {
     flex-wrap: nowrap;
-    justify-content: space-evenly;
+    justify-content: center;
   }
 `;
 
@@ -25,9 +25,11 @@ const Category = styled.div`
   flex-basis: 100%;
   position: relative;
   transition: 0.2s;
+  margin-top: 12px;
   overflow: hidden;
   ${({ theme }) => theme.mq.sm} {
-    flex-basis: 49%;
+    margin: 10px;
+    flex-basis: calc(50% - 20px);
     &:nth-child(1) {
       flex-basis: 100%;
       max-height: 200px;

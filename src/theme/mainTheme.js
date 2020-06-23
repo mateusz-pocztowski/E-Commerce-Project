@@ -29,7 +29,7 @@ export const theme = {
     sm: '1.9rem',
     m: '2.1rem',
     l: '2.4rem',
-    lm: '3rem',
+    lm: '2.7rem',
     xl: '3.8rem',
     xxl: '5.2rem',
     xxxl: '7rem',

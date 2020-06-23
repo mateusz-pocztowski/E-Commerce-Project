@@ -134,9 +134,9 @@ const Sidenav = ({ toggle, isActive }) => (
       </SidenavLink>
     </SidenavLinksWrapper>
     <SocialMediaWrapper>
-      <SocialMedia icon={twitterIcon} />
-      <SocialMedia icon={facebookIcon} />
-      <SocialMedia icon={instagramIcon} />
+      <SocialMedia href="#" icon={twitterIcon} />
+      <SocialMedia href="#" icon={facebookIcon} />
+      <SocialMedia href="#" icon={instagramIcon} />
     </SocialMediaWrapper>
   </SidenavWrapper>
 );
