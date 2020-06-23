@@ -6,6 +6,7 @@ import Categories from 'components/molecules/Categories/Categories';
 import SectionHeader from 'components/molecules/SectionHeader/SectionHeader';
 import FeaturedProducts from 'components/organisms/FeaturedProducts/FeaturedProducts';
 import Parallax from 'components/organisms/Parallax/Parallax';
+import Features from 'components/molecules/Features/Features';
 
 const Wrapper = styled.div`
   margin: 12px;
@@ -25,6 +26,7 @@ const HomeView = () => (
     <Wrapper>
       <SectionHeader title="Best sellers" subTitle="Top sale in this week" />
       <FeaturedProducts />
+      <Features />
     </Wrapper>
   </>
 );

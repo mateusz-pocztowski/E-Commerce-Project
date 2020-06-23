@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import cartIcon from 'assets/icons/small-cart.svg';
 import heartIcon from 'assets/icons/small-heart.svg';
-import defaultImg from 'assets/images/defaultProductImg.jpg';
+import defaultImg from 'assets/images/defaultImg.jpg';
 
 const Wrapper = styled.div`
   position: relative;
