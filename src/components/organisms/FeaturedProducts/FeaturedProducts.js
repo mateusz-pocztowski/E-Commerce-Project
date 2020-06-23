@@ -28,7 +28,7 @@ const Wrapper = styled.section`
     margin: 0 16px 30px;
   }
   ${({ theme }) => theme.mq.xl} {
-    margin: 0 32px 30px;
+    margin: 0 32px 50px;
   }
 `;
 

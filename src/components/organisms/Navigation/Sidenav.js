@@ -2,14 +2,12 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import twitterIcon from 'assets/icons/twitter.svg';
-import facebookIcon from 'assets/icons/facebook.svg';
-import instagramIcon from 'assets/icons/instagram.svg';
 import Heading from 'components/atoms/Heading/Heading';
 import closeIcon from 'assets/icons/delete.svg';
 import searchIcon from 'assets/icons/search.svg';
 import heartIcon from 'assets/icons/small-heart.svg';
 import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
+import SocialMedia from 'components/atoms/SocialMedia/SocialMedia';
 
 const SidenavWrapper = styled.nav`
   position: fixed;
@@ -104,19 +102,6 @@ const SocialMediaWrapper = styled.div`
   border-top: 1px solid rgba(129, 129, 129, 0.2);
 `;
 
-const SocialMedia = styled.a`
-  display: block;
-  margin-right: 10px;
-  width: 36px;
-  height: 36px;
-  transition: 0.2s;
-  cursor: pointer;
-  background: url(${({ icon }) => icon}) no-repeat center;
-  &:hover {
-    filter: brightness(120%);
-  }
-`;
-
 const Sidenav = ({ toggle, isActive }) => (
   <SidenavWrapper isActive={isActive}>
     <HeadingWrapper>
@@ -134,9 +119,9 @@ const Sidenav = ({ toggle, isActive }) => (
       </SidenavLink>
     </SidenavLinksWrapper>
     <SocialMediaWrapper>
-      <SocialMedia href="#" icon={twitterIcon} />
-      <SocialMedia href="#" icon={facebookIcon} />
-      <SocialMedia href="#" icon={instagramIcon} />
+      <SocialMedia type="twitter" />
+      <SocialMedia type="facebook" />
+      <SocialMedia type="instagram" />
     </SocialMediaWrapper>
   </SidenavWrapper>
 );

@@ -5,14 +5,14 @@ import PropTypes from 'prop-types';
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  margin: 10px 20px;
+  margin: 10px 0;
   padding: 20px 30px;
   padding-right: 5px;
   border: 1px solid #ddd;
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
   transition: 0.3s;
   ${({ theme }) => theme.mq.sm} {
-    flex-basis: 45%;
+    flex-basis: calc(50% - 20px);
     margin: 10px;
   }
   ${({ theme }) => theme.mq.xl} {
@@ -39,8 +39,7 @@ const ContentWrapper = styled.div`
 `;
 
 const Title = styled.h3`
-  margin: 0;
-  padding: 10px 0;
+  margin: 0 0 10px;
   font-weight: ${({ theme }) => theme.medium};
   color: ${({ theme }) => theme.dark};
 `;

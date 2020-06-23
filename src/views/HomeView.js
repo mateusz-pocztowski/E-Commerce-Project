@@ -5,7 +5,7 @@ import ParallaxImage from 'assets/images/summer-sale.jpg';
 import Categories from 'components/molecules/Categories/Categories';
 import SectionHeader from 'components/molecules/SectionHeader/SectionHeader';
 import FeaturedProducts from 'components/organisms/FeaturedProducts/FeaturedProducts';
-import Parallax from 'components/organisms/Parallax/Parallax';
+import Parallax from 'components/molecules/Parallax/Parallax';
 import Features from 'components/molecules/Features/Features';
 
 const Wrapper = styled.div`
@@ -21,13 +21,13 @@ const HomeView = () => (
         <SectionHeader title="Trending" subTitle="Top view in this week" />
         <FeaturedProducts />
       </Wrapper>
+      <Parallax img={ParallaxImage} />
+      <Wrapper>
+        <SectionHeader title="Best sellers" subTitle="Top sale in this week" />
+        <FeaturedProducts />
+        <Features />
+      </Wrapper>
     </main>
-    <Parallax img={ParallaxImage} />
-    <Wrapper>
-      <SectionHeader title="Best sellers" subTitle="Top sale in this week" />
-      <FeaturedProducts />
-      <Features />
-    </Wrapper>
   </>
 );
 

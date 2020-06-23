@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Card from 'components/molecules/Features/Card';
 import deliveryIcon from 'assets/icons/truck.svg';
-import supportIcon from 'assets/icons/headset.svg';
+import supportIcon from 'assets/icons/call.svg';
 import returnIcon from 'assets/icons/box.svg';
 import saleIcon from 'assets/icons/sale.svg';
 
