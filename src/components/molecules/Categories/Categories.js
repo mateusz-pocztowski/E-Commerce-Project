@@ -12,7 +12,6 @@ const Wrapper = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
   flex-direction: column;
-  margin: 12px;
   ${({ theme }) => theme.mq.sm} {
     flex-direction: row;
   }
@@ -25,7 +24,6 @@ const Wrapper = styled.div`
 const Category = styled.div`
   flex-basis: 100%;
   position: relative;
-  margin-top: 12px;
   transition: 0.2s;
   overflow: hidden;
   ${({ theme }) => theme.mq.sm} {
