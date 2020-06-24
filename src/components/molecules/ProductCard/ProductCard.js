@@ -125,7 +125,7 @@ const Description = styled.div`
 
 const Name = styled.h3`
   margin: 5px 0;
-  font-weight: ${({ theme }) => theme.regular};
+  font-weight: ${({ theme }) => theme.medium};
 `;
 
 const Price = styled.p`

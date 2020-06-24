@@ -18,6 +18,7 @@ const Wrapper = styled.div`
     isActive &&
     css`
       opacity: 1;
+      z-index: ${({ theme }) => theme.zIndex.level2};
     `};
 `;
 
@@ -35,7 +36,14 @@ const InnerWrapper = styled.div`
       rgba(53, 129, 200, 0.4),
       rgba(2, 15, 32, 0.4)
     ),
-    url(${({ img }) => img});
+    url(${({ smallImg }) => smallImg});
+  ${({ theme }) => theme.mq.lg} {
+    background-image: linear-gradient(
+        rgba(53, 129, 200, 0.4),
+        rgba(2, 15, 32, 0.4)
+      ),
+      url(${({ img }) => img});
+  }
 `;
 
 const Content = styled.div`
@@ -81,10 +89,17 @@ const Content = styled.div`
   }
 `;
 
-const Slide = ({ title, subTitle, btnContent, image, isActive }) => {
+const Slide = ({
+  title,
+  subTitle,
+  btnContent,
+  image,
+  smallImage,
+  isActive,
+}) => {
   return (
     <Wrapper isActive={isActive}>
-      <InnerWrapper img={image}>
+      <InnerWrapper img={image} smallImg={smallImage}>
         <Content isActive={isActive}>
           <Title>{title}</Title>
           <Heading>{subTitle}</Heading>
@@ -104,6 +119,7 @@ Slide.propTypes = {
   title: PropTypes.string.isRequired,
   subTitle: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
+  smallImage: PropTypes.string.isRequired,
   btnContent: PropTypes.string,
 };
 

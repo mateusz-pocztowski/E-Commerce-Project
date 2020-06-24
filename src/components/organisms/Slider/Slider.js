@@ -6,6 +6,9 @@ import * as Control from 'components/atoms/ControlBars/ControlBars';
 import bannerImage1 from 'assets/images/banner1.jpg';
 import bannerImage2 from 'assets/images/banner2.jpg';
 import bannerImage3 from 'assets/images/banner3.jpg';
+import bannerImage1small from 'assets/images/banner1-1150.jpg';
+import bannerImage2small from 'assets/images/banner2-1150.jpg';
+import bannerImage3small from 'assets/images/banner3-1150.jpg';
 
 const slides = [
   {
@@ -14,6 +17,7 @@ const slides = [
     subTitle: 'Our collection is flattering on all body types.',
     btnContent: 'Shop now',
     image: bannerImage1,
+    smallImage: bannerImage1small,
   },
   {
     id: 2,
@@ -21,6 +25,7 @@ const slides = [
     subTitle: 'Keep time with the contemporary designs.',
     btnContent: 'Shop now',
     image: bannerImage2,
+    smallImage: bannerImage2small,
   },
   {
     id: 3,
@@ -28,6 +33,7 @@ const slides = [
     subTitle: 'Latest seasonal collection has dropped!',
     btnContent: 'Shop now',
     image: bannerImage3,
+    smallImage: bannerImage3small,
   },
 ];
 
@@ -82,13 +88,14 @@ const Slider = () => {
           />
         ))}
       </Control.Wrapper>
-      {slides.map(({ id, title, subTitle, btnContent, image }) => (
+      {slides.map(({ id, title, subTitle, btnContent, image, smallImage }) => (
         <Slide
           key={id}
           title={title}
           subTitle={subTitle}
           btnContent={btnContent}
           image={image}
+          smallImage={smallImage}
           isActive={activeSlide === id}
         />
       ))}
