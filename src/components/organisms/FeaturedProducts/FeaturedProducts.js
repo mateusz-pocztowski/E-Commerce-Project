@@ -9,11 +9,10 @@ const settings = {
   mouseDrag: true,
   controls: false,
   loop: false,
-  gutter: 12,
+  gutter: 16,
   fixedWidth: 260,
   responsive: {
     400: {
-      gutter: 16,
       fixedWidth: 300,
     },
     600: {

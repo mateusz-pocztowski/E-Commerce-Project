@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import Button from 'components/atoms/Button/Button';
 import Heading from 'components/atoms/Heading/Heading';
 
@@ -24,12 +25,22 @@ const SummaryMain = styled.div`
 `;
 
 const CheckoutButton = styled(Button)`
-  margin: 0 auto;
+  margin: 10px auto;
   width: 100%;
   text-transform: none;
+  border: 2px solid ${({ theme }) => theme.dark};
   background-color: ${({ theme }) => theme.dark};
   color: ${({ theme }) => theme.white};
   padding: 17px 32px !important;
+`;
+
+const ViewCartButton = styled(CheckoutButton)`
+  display: block;
+  text-decoration: none;
+  text-align: center;
+  border: 2px solid ${({ theme }) => theme.dark};
+  background-color: ${({ theme }) => theme.white};
+  color: ${({ theme }) => theme.dark};
 `;
 
 const StyledHeading = styled(Heading)`
@@ -50,6 +61,9 @@ const Summary = () => (
         <StyledHeading>Subtotal:</StyledHeading>
         <StyledHeading>$90.00</StyledHeading>
       </SummaryMain>
+      <ViewCartButton as={Link} to="/cart">
+        View cart
+      </ViewCartButton>
       <CheckoutButton>Check out</CheckoutButton>
       <SummaryInfo>Shipping & taxes calculated at check out</SummaryInfo>
     </SummaryContent>

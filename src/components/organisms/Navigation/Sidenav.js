@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import searchIcon from 'assets/icons/search.svg';
@@ -12,7 +12,7 @@ const SidenavLinksWrapper = styled.div`
   flex-direction: column;
 `;
 
-const SidenavLink = styled(NavLink)`
+const SidenavLink = styled(Link)`
   border-bottom: 1px solid rgba(129, 129, 129, 0.2);
   transition: 0.3s;
   display: flex;

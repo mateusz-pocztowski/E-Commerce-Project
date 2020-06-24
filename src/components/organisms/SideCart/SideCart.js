@@ -37,7 +37,7 @@ const ItemsInnerWrapper = styled.div`
 `;
 
 const SideCart = ({ close, isActive }) => {
-  const [items, setItems] = useState([1]);
+  const [items, setItems] = useState([1, 2]);
   console.log(setItems);
   return (
     <Aside title="Shopping cart" side="right" close={close} isActive={isActive}>
@@ -52,9 +52,9 @@ const SideCart = ({ close, isActive }) => {
                   <motion.div
                     key={id}
                     positionTransition
-                    initial={{ opacity: 0, y: 50 }}
+                    initial={{ opacity: 0, y: -50 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, transition: { duration: 0.2 } }}
+                    exit={{ opacity: 0, y: -50, transition: { duration: 0.2 } }}
                   >
                     <CartItem />
                   </motion.div>

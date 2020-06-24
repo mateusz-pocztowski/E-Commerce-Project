@@ -49,7 +49,7 @@ const InnerWrapper = styled.div`
 const Content = styled.div`
   flex: 1;
   height: 100%;
-  max-width: 1440px;
+  max-width: 1560px;
   display: flex;
   justify-content: center;
   align-items: flex-start;

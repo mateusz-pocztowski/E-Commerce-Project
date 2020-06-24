@@ -123,7 +123,7 @@ const CartItem = () => (
     </ImageWrapper>
     <Content>
       <RemoveBtn />
-      <Name>Nike Hoodie Sportswear</Name>
+      <Name>Nike Hoodie</Name>
       <Detail>Hoodies</Detail>
       <Detail>Size: M</Detail>
       <PricesWrapper>

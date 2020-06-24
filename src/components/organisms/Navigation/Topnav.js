@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import logoImg from 'assets/images/logo.png';
 import logoWhiteImg from 'assets/images/logo-white.png';
 import searchIcon from 'assets/icons/search.svg';
@@ -19,15 +19,10 @@ const TopnavWrapper = styled.nav`
   background-color: ${({ theme }) => theme.white};
   box-shadow: 0 -1px #ddd inset;
   transition: 0.3s ease-in-out;
-  padding: 0 5px 0 0;
   display: flex;
-  align-items: center;
   justify-content: center;
-  ${({ theme }) => theme.mq.xxs} {
-    padding: 0 20px;
-  }
+  padding: 0 0 5px 0;
   ${({ theme }) => theme.mq.lg} {
-    padding: 0 60px;
     height: 85px;
   }
   ${({ transparent }) =>
@@ -62,6 +57,17 @@ const TopnavWrapper = styled.nav`
     `};
 `;
 
+const InnerWrapper = styled.div`
+  width: 100%;
+  max-width: 1500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ${({ theme }) => theme.mq.md} {
+    padding: 0 15px;
+  }
+`;
+
 const LinkItemsWrapper = styled.div`
   flex: 3;
   display: flex;
@@ -71,7 +77,7 @@ const LinkItem = styled(NavLink)`
   display: none;
   margin: 0 15px;
   position: relative;
-  padding: 33px 0;
+  padding: 36px 0;
   width: 85px;
   text-align: center;
   font-family: ${({ theme }) => theme.fonts.subFont};
@@ -152,30 +158,32 @@ const CartBadge = styled.span`
 
 const Topnav = ({ isTransparent, openSidenav, openCart }) => (
   <TopnavWrapper transparent={isTransparent}>
-    <LinkItemsWrapper>
-      <Option menu visible onClick={openSidenav}>
-        <ButtonIcon icon={hamburgerMenuIcon} />
-      </Option>
-      <LinkItem activeclass="active" to="/">
-        Home
-      </LinkItem>
-      <LinkItem activeclass="active" to="/catalog">
-        Catalog
-      </LinkItem>
-    </LinkItemsWrapper>
-    <Logo to="/" />
-    <OptionsWrapper>
-      <Option>
-        <ButtonIcon icon={searchIcon} />
-      </Option>
-      <Option>
-        <ButtonIcon icon={heartIcon} />
-      </Option>
-      <Option visible onClick={openCart}>
-        <ButtonIcon icon={cartIcon} />
-        <CartBadge>0</CartBadge>
-      </Option>
-    </OptionsWrapper>
+    <InnerWrapper>
+      <LinkItemsWrapper>
+        <Option menu visible onClick={openSidenav}>
+          <ButtonIcon icon={hamburgerMenuIcon} />
+        </Option>
+        <LinkItem activeclass="active" to="/">
+          Home
+        </LinkItem>
+        <LinkItem activeclass="active" to="/catalog">
+          Catalog
+        </LinkItem>
+      </LinkItemsWrapper>
+      <Logo to="/" />
+      <OptionsWrapper>
+        <Option>
+          <ButtonIcon icon={searchIcon} />
+        </Option>
+        <Option as={Link} to="/wishlist">
+          <ButtonIcon icon={heartIcon} />
+        </Option>
+        <Option visible onClick={openCart}>
+          <ButtonIcon icon={cartIcon} />
+          <CartBadge>0</CartBadge>
+        </Option>
+      </OptionsWrapper>
+    </InnerWrapper>
   </TopnavWrapper>
 );
 
