@@ -8,7 +8,8 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   height: 320px;
-  background: url(${({ image }) => image}) no-repeat center;
+  background: linear-gradient(rgba(53, 129, 200, 0.3), rgba(2, 15, 32, 0.3)),
+    url(${({ image }) => image}) no-repeat center;
   background-size: cover;
   ${({ theme }) => theme.mq.md} {
     height: 400px;

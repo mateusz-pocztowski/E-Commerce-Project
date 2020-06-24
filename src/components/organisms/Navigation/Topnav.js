@@ -150,11 +150,11 @@ const CartBadge = styled.span`
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
 `;
 
-const Topnav = ({ isTransparent, openSidenav }) => (
+const Topnav = ({ isTransparent, openSidenav, openCart }) => (
   <TopnavWrapper transparent={isTransparent}>
     <LinkItemsWrapper>
-      <Option menu visible>
-        <ButtonIcon icon={hamburgerMenuIcon} onClick={openSidenav} />
+      <Option menu visible onClick={openSidenav}>
+        <ButtonIcon icon={hamburgerMenuIcon} />
       </Option>
       <LinkItem activeclass="active" to="/">
         Home
@@ -171,7 +171,7 @@ const Topnav = ({ isTransparent, openSidenav }) => (
       <Option>
         <ButtonIcon icon={heartIcon} />
       </Option>
-      <Option visible>
+      <Option visible onClick={openCart}>
         <ButtonIcon icon={cartIcon} />
         <CartBadge>0</CartBadge>
       </Option>
@@ -181,6 +181,7 @@ const Topnav = ({ isTransparent, openSidenav }) => (
 
 Topnav.propTypes = {
   openSidenav: PropTypes.func.isRequired,
+  openCart: PropTypes.func.isRequired,
   isTransparent: PropTypes.bool.isRequired,
 };
 

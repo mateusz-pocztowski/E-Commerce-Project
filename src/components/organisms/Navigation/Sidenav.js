@@ -1,64 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import Heading from 'components/atoms/Heading/Heading';
-import closeIcon from 'assets/icons/delete.svg';
+import PropTypes from 'prop-types';
 import searchIcon from 'assets/icons/search.svg';
 import heartIcon from 'assets/icons/small-heart.svg';
-import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
 import SocialMedia from 'components/atoms/SocialMedia/SocialMedia';
-
-const SidenavWrapper = styled.nav`
-  position: fixed;
-  display: flex;
-  flex-direction: column;
-  left: -100vw;
-  width: 100vw;
-  top: 0;
-  bottom: 0;
-  z-index: ${({ theme }) => theme.zIndex.level5};
-  visibility: hidden;
-  opacity: 0;
-  height: 100%;
-  transition: all 0.35s cubic-bezier(0.645, 0.045, 0.355, 1);
-  background-color: ${({ theme }) => theme.white};
-  color: ${({ theme }) => theme.dark};
-  ${({ theme }) => theme.mq.xxs} {
-    width: calc(100vw - 65px);
-    left: calc((100vw - 65px) * -1);
-  }
-  ${({ theme }) => theme.mq.xs} {
-    width: 340px;
-    left: -340px;
-  }
-  ${({ isActive }) =>
-    isActive &&
-    css`
-      visibility: visible !important;
-      opacity: 1 !important;
-      left: 0 !important;
-    `}
-`;
-
-const HeadingWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px;
-  border-bottom: 2px solid ${({ theme }) => theme.blue};
-`;
-
-const StyledHeading = styled(Heading)`
-  margin: 0;
-  font-family: ${({ theme }) => theme.fonts.subFont};
-  font-weight: ${({ theme }) => theme.medium};
-`;
-
-const CloseBtn = styled(ButtonIcon)`
-  filter: brightness(3);
-  background-size: 60%;
-`;
+import Aside from 'components/molecules/Aside/Aside';
 
 const SidenavLinksWrapper = styled.div`
   display: flex;
@@ -102,12 +49,8 @@ const SocialMediaWrapper = styled.div`
   border-top: 1px solid rgba(129, 129, 129, 0.2);
 `;
 
-const Sidenav = ({ toggle, isActive }) => (
-  <SidenavWrapper isActive={isActive}>
-    <HeadingWrapper>
-      <StyledHeading>Menu</StyledHeading>
-      <CloseBtn icon={closeIcon} onClick={toggle} />
-    </HeadingWrapper>
+const Sidenav = ({ close, isActive }) => (
+  <Aside title="Menu" close={close} isActive={isActive} side="left">
     <SidenavLinksWrapper>
       <SidenavLink to="/">Home</SidenavLink>
       <SidenavLink to="/catalog">Catalog</SidenavLink>
@@ -123,11 +66,11 @@ const Sidenav = ({ toggle, isActive }) => (
       <SocialMedia type="facebook" />
       <SocialMedia type="instagram" />
     </SocialMediaWrapper>
-  </SidenavWrapper>
+  </Aside>
 );
 
 Sidenav.propTypes = {
-  toggle: PropTypes.func.isRequired,
+  close: PropTypes.func.isRequired,
   isActive: PropTypes.bool.isRequired,
 };
 
