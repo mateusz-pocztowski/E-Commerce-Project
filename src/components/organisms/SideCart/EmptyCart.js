@@ -20,6 +20,7 @@ const StyledButton = styled(Button)`
   background-color: ${({ theme }) => theme.dark};
   color: ${({ theme }) => theme.white};
   padding: 17px 32px !important;
+  font-size: ${({ theme }) => theme.fontSize.xsm} !important;
 `;
 
 const EmptyCart = ({ closeCart }) => (

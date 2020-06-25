@@ -76,7 +76,10 @@ Aside.propTypes = {
   title: PropTypes.string.isRequired,
   close: PropTypes.func.isRequired,
   isActive: PropTypes.bool.isRequired,
-  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
   side: PropTypes.oneOf(['left', 'right']).isRequired,
 };
 

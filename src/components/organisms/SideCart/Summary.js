@@ -32,6 +32,9 @@ const CheckoutButton = styled(Button)`
   background-color: ${({ theme }) => theme.dark};
   color: ${({ theme }) => theme.white};
   padding: 17px 32px !important;
+  &:hover {
+    border-color: ${({ theme }) => theme.blue};
+  }
 `;
 
 const ViewCartButton = styled(CheckoutButton)`

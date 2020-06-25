@@ -163,10 +163,10 @@ const Topnav = ({ isTransparent, openSidenav, openCart }) => (
         <Option menu visible onClick={openSidenav}>
           <ButtonIcon icon={hamburgerMenuIcon} />
         </Option>
-        <LinkItem activeclass="active" to="/">
+        <LinkItem exact activeclass="active" to="/">
           Home
         </LinkItem>
-        <LinkItem activeclass="active" to="/catalog">
+        <LinkItem exact activeclass="active" to="/catalog">
           Catalog
         </LinkItem>
       </LinkItemsWrapper>

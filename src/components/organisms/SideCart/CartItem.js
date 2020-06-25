@@ -52,34 +52,30 @@ const RemoveBtn = styled.button`
 `;
 
 const Name = styled.h3`
-  margin: 0 0 8px;
+  margin: 5px 0 8px;
   padding-right: 15px;
   font-weight: ${({ theme }) => theme.medium};
-  font-size: 1.5rem;
-  line-height: 1.35rem;
+  font-size: ${({ theme }) => theme.fontSize.s};
 `;
 
 const PricesWrapper = styled.div`
   display: flex;
   align-items: center;
-  font-size: ${({ theme }) => theme.fontSize.xs};
+  font-size: ${({ theme }) => theme.fontSize.s};
   font-family: ${({ theme }) => theme.fonts.mainFont};
-  margin-top: 12px;
+  margin-top: 5px;
 `;
 
 const TotalPrice = styled.span`
-  font-size: ${({ theme }) => theme.fontSize.s};
   font-weight: ${({ theme }) => theme.medium};
+  margin-left: 5px;
 `;
 
 const Price = styled.span`
-  margin-left: 7px;
+  font-weight: ${({ theme }) => theme.medium};
+  color: ${({ theme }) => theme.gray100};
 `;
 
-const Detail = styled.div`
-  color: ${({ theme }) => theme.gray};
-  font-weight: ${({ theme }) => theme.medium};
-`;
 const QuantityWrapper = styled.div`
   margin-top: auto;
   display: flex;
@@ -114,6 +110,10 @@ const Quantity = styled(Input)`
   padding: 0 20px;
   font-size: 18px;
   font-family: ${({ theme }) => theme.fonts.subFont};
+  cursor: auto;
+  &:hover {
+    background-color: transparent;
+  }
 `;
 
 const CartItem = () => (
@@ -123,12 +123,10 @@ const CartItem = () => (
     </ImageWrapper>
     <Content>
       <RemoveBtn />
-      <Name>Nike Hoodie</Name>
-      <Detail>Hoodies</Detail>
-      <Detail>Size: M</Detail>
+      <Name>Nike Hoodie Sportswear</Name>
       <PricesWrapper>
-        <TotalPrice>$180.00</TotalPrice>
-        <Price>$90.00</Price>
+        <Price>1 × </Price>
+        <TotalPrice> $90.00</TotalPrice>
       </PricesWrapper>
       <QuantityWrapper>
         <MinusInput type="button" value="+" />

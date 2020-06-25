@@ -37,7 +37,7 @@ const ItemsInnerWrapper = styled.div`
 `;
 
 const SideCart = ({ close, isActive }) => {
-  const [items, setItems] = useState([1, 2]);
+  const [items, setItems] = useState([1]);
   console.log(setItems);
   return (
     <Aside title="Shopping cart" side="right" close={close} isActive={isActive}>

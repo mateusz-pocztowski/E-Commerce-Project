@@ -74,7 +74,8 @@ const Slider = () => {
 
   useEffect(() => {
     setSlideTimeout();
-    // eslint-disable-next-line
+
+    return () => clearTimeout(timeoutRef.current);
   }, []);
 
   return (
