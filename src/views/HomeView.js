@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from 'actions';
 import styled from 'styled-components';
 import Slider from 'components/organisms/Slider/Slider';
 import ParallaxImage from 'assets/images/summer-sale.jpg';
@@ -12,23 +14,35 @@ const Wrapper = styled.div`
   margin: 12px;
 `;
 
-const HomeView = () => (
-  <>
-    <Slider />
-    <main>
-      <Wrapper>
-        <Categories />
-        <SectionHeader title="Trending" subTitle="Top view in this week" />
-        <FeaturedProducts />
-      </Wrapper>
-      <Parallax img={ParallaxImage} />
-      <Wrapper>
-        <SectionHeader title="Best sellers" subTitle="Top sale in this week" />
-        <FeaturedProducts />
-        <Features />
-      </Wrapper>
-    </main>
-  </>
-);
+const HomeView = () => {
+  const dispatch = useDispatch();
+  const allProducts = useSelector(({ products }) => products);
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, []);
+
+  return (
+    <>
+      <Slider />
+      <main>
+        <Wrapper>
+          <Categories />
+          <SectionHeader title="Trending" subTitle="Top view in this week" />
+          <FeaturedProducts products={allProducts.slice(0, 6)} />
+        </Wrapper>
+        <Parallax img={ParallaxImage} />
+        <Wrapper>
+          <SectionHeader
+            title="Best sellers"
+            subTitle="Top sale in this week"
+          />
+          <FeaturedProducts products={allProducts.slice(6, 12)} />
+          <Features />
+        </Wrapper>
+      </main>
+    </>
+  );
+};
 
 export default HomeView;

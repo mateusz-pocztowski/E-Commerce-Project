@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useSelector } from 'react-redux';
 import Aside from 'components/molecules/Aside/Aside';
 import EmptyCart from 'components/organisms/SideCart/EmptyCart';
 import Summary from 'components/organisms/SideCart/Summary';
@@ -37,18 +38,18 @@ const ItemsInnerWrapper = styled.div`
 `;
 
 const SideCart = ({ close, isActive }) => {
-  const [items, setItems] = useState([1]);
-  console.log(setItems);
+  const cartItems = useSelector(({ cart }) => cart);
+
   return (
     <Aside title="Shopping cart" side="right" close={close} isActive={isActive}>
-      {items.length === 0 ? (
+      {cartItems.length === 0 ? (
         <EmptyCart closeCart={close} />
       ) : (
         <Content>
           <ItemsWrapper>
             <ItemsInnerWrapper>
               <AnimatePresence initial={false}>
-                {items.map(id => (
+                {cartItems.map(id => (
                   <motion.div
                     key={id}
                     positionTransition

@@ -134,10 +134,10 @@ const Price = styled.p`
   font-family: ${({ theme }) => theme.fonts.subFont};
 `;
 
-const ProductCard = ({ image }) => (
+const ProductCard = ({ img, price, name }) => (
   <Wrapper>
     <Overlay>
-      <Image src={image} />
+      <Image src={img} />
       <OptionsWrapper>
         <Options>
           <Button icon={cartIcon} invert>
@@ -150,18 +150,20 @@ const ProductCard = ({ image }) => (
       </OptionsWrapper>
     </Overlay>
     <Description>
-      <Name>Nike product</Name>
-      <Price>$90.00</Price>
+      <Name>{name}</Name>
+      <Price>${price}</Price>
     </Description>
   </Wrapper>
 );
 
 ProductCard.propTypes = {
-  image: PropTypes.string,
+  img: PropTypes.string,
+  price: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 ProductCard.defaultProps = {
-  image: defaultImg,
+  img: defaultImg,
 };
 
 export default ProductCard;

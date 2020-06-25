@@ -1,6 +1,7 @@
 import React from 'react';
 import TinySlider from 'tiny-slider-react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import ProductCard from 'components/molecules/ProductCard/ProductCard';
 
 const settings = {
@@ -31,17 +32,20 @@ const Wrapper = styled.section`
   }
 `;
 
-const FeaturedProducts = () => (
-  <Wrapper>
-    <TinySlider settings={settings}>
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-      <ProductCard />
-    </TinySlider>
-  </Wrapper>
-);
+const FeaturedProducts = ({ products }) => {
+  return (
+    <Wrapper>
+      <TinySlider settings={settings}>
+        {products.map(({ id, name, price, image }) => (
+          <ProductCard key={id} name={name} price={price} img={image} />
+        ))}
+      </TinySlider>
+    </Wrapper>
+  );
+};
+
+FeaturedProducts.propTypes = {
+  products: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default FeaturedProducts;
