@@ -37,7 +37,7 @@ const FeaturedProducts = ({ products }) => {
     <Wrapper>
       <TinySlider settings={settings}>
         {products.map(({ id, name, price, image }) => (
-          <ProductCard key={id} name={name} price={price} img={image} />
+          <ProductCard key={id} id={id} name={name} price={price} img={image} />
         ))}
       </TinySlider>
     </Wrapper>

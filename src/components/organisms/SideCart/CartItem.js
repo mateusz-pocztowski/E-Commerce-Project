@@ -52,7 +52,7 @@ const RemoveBtn = styled.button`
 `;
 
 const Name = styled.h3`
-  margin: 5px 0 8px;
+  margin: 5px 0 6px;
   padding-right: 15px;
   font-weight: ${({ theme }) => theme.medium};
   font-size: ${({ theme }) => theme.fontSize.s};
@@ -73,6 +73,11 @@ const TotalPrice = styled.span`
 
 const Price = styled.span`
   font-weight: ${({ theme }) => theme.medium};
+  color: ${({ theme }) => theme.gray100};
+`;
+
+const Size = styled.span`
+  margin: 0 0 5px;
   color: ${({ theme }) => theme.gray100};
 `;
 
@@ -124,6 +129,7 @@ const CartItem = () => (
     <Content>
       <RemoveBtn />
       <Name>Nike Hoodie Sportswear</Name>
+      <Size>Size: M</Size>
       <PricesWrapper>
         <Price>1 × </Price>
         <TotalPrice> $90.00</TotalPrice>

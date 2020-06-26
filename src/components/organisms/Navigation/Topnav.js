@@ -1,5 +1,6 @@
 /* eslint-disable no-use-before-define */
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { NavLink, Link } from 'react-router-dom';
@@ -21,7 +22,7 @@ const TopnavWrapper = styled.nav`
   transition: 0.3s ease-in-out;
   display: flex;
   justify-content: center;
-  padding: 0 0 5px 0;
+  padding: 0 5px 0 0;
   ${({ theme }) => theme.mq.lg} {
     height: 85px;
   }
@@ -50,7 +51,7 @@ const TopnavWrapper = styled.nav`
       & ${Option}:hover {
         background-color: ${({ theme }) => theme.white100T};
       }
-      & ${CartBadge} {
+      & ${Badge} {
         background-color: ${({ theme }) => theme.white};
         color: ${({ theme }) => theme.dark};
       }
@@ -77,7 +78,7 @@ const LinkItem = styled(NavLink)`
   display: none;
   margin: 0 15px;
   position: relative;
-  padding: 36px 0;
+  padding: 33px 0;
   width: 85px;
   text-align: center;
   font-family: ${({ theme }) => theme.fonts.subFont};
@@ -138,7 +139,7 @@ const Option = styled.div`
   }
 `;
 
-const CartBadge = styled.span`
+const Badge = styled.span`
   display: block;
   position: absolute;
   width: 20px;
@@ -156,36 +157,47 @@ const CartBadge = styled.span`
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
 `;
 
-const Topnav = ({ isTransparent, openSidenav, openCart }) => (
-  <TopnavWrapper transparent={isTransparent}>
-    <InnerWrapper>
-      <LinkItemsWrapper>
-        <Option menu visible onClick={openSidenav}>
-          <ButtonIcon icon={hamburgerMenuIcon} />
-        </Option>
-        <LinkItem exact activeclass="active" to="/">
-          Home
-        </LinkItem>
-        <LinkItem exact activeclass="active" to="/catalog">
-          Catalog
-        </LinkItem>
-      </LinkItemsWrapper>
-      <Logo to="/" />
-      <OptionsWrapper>
-        <Option>
-          <ButtonIcon icon={searchIcon} />
-        </Option>
-        <Option as={Link} to="/wishlist">
-          <ButtonIcon icon={heartIcon} />
-        </Option>
-        <Option visible onClick={openCart}>
-          <ButtonIcon icon={cartIcon} />
-          <CartBadge>0</CartBadge>
-        </Option>
-      </OptionsWrapper>
-    </InnerWrapper>
-  </TopnavWrapper>
-);
+const WishlistBadge = styled(Badge)`
+  top: -5px;
+`;
+
+const Topnav = ({ isTransparent, openSidenav, openCart }) => {
+  const cartItemsNumber = useSelector(({ cart }) => cart.length);
+  const wishlistItemsNumber = useSelector(({ wishlist }) => wishlist.length);
+  return (
+    <TopnavWrapper transparent={isTransparent}>
+      <InnerWrapper>
+        <LinkItemsWrapper>
+          <Option menu visible onClick={openSidenav}>
+            <ButtonIcon icon={hamburgerMenuIcon} />
+          </Option>
+          <LinkItem exact activeclass="active" to="/">
+            Home
+          </LinkItem>
+          <LinkItem exact activeclass="active" to="/catalog">
+            Catalog
+          </LinkItem>
+        </LinkItemsWrapper>
+        <Logo to="/" />
+        <OptionsWrapper>
+          <Option>
+            <ButtonIcon icon={searchIcon} />
+          </Option>
+          <Option as={Link} to="/wishlist">
+            <ButtonIcon icon={heartIcon} />
+            {wishlistItemsNumber !== 0 && (
+              <WishlistBadge>{wishlistItemsNumber}</WishlistBadge>
+            )}
+          </Option>
+          <Option visible onClick={openCart}>
+            <ButtonIcon icon={cartIcon} />
+            {cartItemsNumber !== 0 && <Badge>{cartItemsNumber}</Badge>}
+          </Option>
+        </OptionsWrapper>
+      </InnerWrapper>
+    </TopnavWrapper>
+  );
+};
 
 Topnav.propTypes = {
   openSidenav: PropTypes.func.isRequired,

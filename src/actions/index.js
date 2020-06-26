@@ -4,6 +4,12 @@ export const FETCH_ALL_REQUEST = 'FETCH_ALL_REQUEST';
 export const FETCH_ALL_SUCCESS = 'FETCH_ALL_SUCCESS';
 export const FETCH_ALL_FAILURE = 'FETCH_ALL_FAILURE';
 
+export const ADD_ITEM = 'ADD_ITEM';
+export const REMOVE_ITEM = 'REMOVE_ITEM';
+
+export const SHOW_LOADING = 'SHOW_LOADING';
+export const HIDE_LOADING = 'HIDE_LOADING';
+
 const API_HOST = 'localhost';
 const API_PORT = '1337';
 
@@ -37,4 +43,32 @@ export const fetchProducts = () => async (dispatch, getState) => {
     const { status } = err.response;
     dispatch({ type: FETCH_ALL_FAILURE, payload: status });
   }
+};
+
+export const addItem = (itemID, container) => (dispatch, getState) => {
+  dispatch({ type: SHOW_LOADING, payload: 1500 });
+  setTimeout(() => {
+    dispatch({
+      type: ADD_ITEM,
+      payload: {
+        item: getState().products.find(({ id }) => itemID === id),
+        container,
+      },
+    });
+    dispatch({ type: HIDE_LOADING });
+  }, 1500);
+};
+
+export const removeItem = (itemID, container) => (dispatch, getState) => {
+  dispatch({ type: SHOW_LOADING, payload: 1000 });
+  setTimeout(() => {
+    dispatch({
+      type: REMOVE_ITEM,
+      payload: {
+        item: getState().products.find(({ id }) => itemID === id),
+        container,
+      },
+    });
+    dispatch({ type: HIDE_LOADING });
+  }, 1000);
 };

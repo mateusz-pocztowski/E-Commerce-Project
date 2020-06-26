@@ -2,6 +2,9 @@ import {
   FETCH_ALL_REQUEST,
   FETCH_ALL_SUCCESS,
   FETCH_ALL_FAILURE,
+  ADD_ITEM,
+  SHOW_LOADING,
+  HIDE_LOADING,
 } from 'actions';
 
 export const initialState = {
@@ -9,6 +12,10 @@ export const initialState = {
   cart: [],
   wishlist: [],
   isOverlayVisible: false,
+  loading: {
+    isLoading: false,
+    duration: null,
+  },
   errorID: null,
 };
 
@@ -27,6 +34,30 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: action.payload,
+      };
+    case ADD_ITEM:
+      return {
+        ...state,
+        [action.payload.container]: [
+          ...state[action.payload.container],
+          action.payload.item,
+        ],
+      };
+    case SHOW_LOADING:
+      return {
+        ...state,
+        loading: {
+          isLoading: true,
+          duration: action.payload,
+        },
+      };
+    case HIDE_LOADING:
+      return {
+        ...state,
+        loading: {
+          isLoading: false,
+          duration: null,
+        },
       };
     default:
       return state;
