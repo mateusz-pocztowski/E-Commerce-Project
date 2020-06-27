@@ -4,6 +4,10 @@ export const FETCH_ALL_REQUEST = 'FETCH_ALL_REQUEST';
 export const FETCH_ALL_SUCCESS = 'FETCH_ALL_SUCCESS';
 export const FETCH_ALL_FAILURE = 'FETCH_ALL_FAILURE';
 
+export const FETCH_CATEGORIES_REQUEST = 'FETCH_CATEGORIES_REQUEST';
+export const FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS';
+export const FETCH_CATEGORIES_FAILURE = 'FETCH_CATEGORIES_FAILURE';
+
 export const ADD_ITEM = 'ADD_ITEM';
 export const UPDATE_CART_ITEM = 'UPDATE_CART_ITEM';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
@@ -43,6 +47,20 @@ export const fetchProducts = () => async (dispatch, getState) => {
   } catch (err) {
     const { status } = err.response;
     dispatch({ type: FETCH_ALL_FAILURE, payload: status });
+  }
+};
+
+export const fetchCategories = () => async dispatch => {
+  dispatch({ type: FETCH_CATEGORIES_REQUEST });
+  try {
+    const { data } = await axios.get(`http://${API_URL}/categories`);
+    dispatch({
+      type: FETCH_CATEGORIES_SUCCESS,
+      payload: data.map(({ name, total }) => ({ name, total })),
+    });
+  } catch (err) {
+    const { status } = err.response;
+    dispatch({ type: FETCH_CATEGORIES_FAILURE, payload: status });
   }
 };
 

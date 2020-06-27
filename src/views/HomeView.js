@@ -8,6 +8,7 @@ import SectionHeader from 'components/molecules/SectionHeader/SectionHeader';
 import FeaturedProducts from 'components/organisms/FeaturedProducts/FeaturedProducts';
 import Parallax from 'components/molecules/Parallax/Parallax';
 import Features from 'components/molecules/Features/Features';
+import TransitionTemplate from 'templates/TransitionTemplate';
 
 const Wrapper = styled.div`
   margin: 12px;
@@ -16,7 +17,7 @@ const Wrapper = styled.div`
 const HomeView = () => {
   const allProducts = useSelector(({ products }) => products);
   return (
-    <>
+    <TransitionTemplate>
       <Slider />
       <main>
         <Wrapper>
@@ -34,7 +35,7 @@ const HomeView = () => {
           <Features />
         </Wrapper>
       </main>
-    </>
+    </TransitionTemplate>
   );
 };
 

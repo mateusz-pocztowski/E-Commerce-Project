@@ -1,7 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import EmptyState from 'components/molecules/EmptyState/EmptyState';
-import { PageContext } from 'context/PageContext';
 import PropTypes from 'prop-types';
 
 const Wrapper = styled.div`
@@ -40,8 +38,7 @@ const Title = styled.h1`
   }
 `;
 
-const UserTemplate = ({ children }) => {
-  const page = useContext(PageContext);
+const UserTemplate = ({ children, page }) => {
   return (
     <Wrapper>
       <HeadingWrapper>
@@ -49,15 +46,13 @@ const UserTemplate = ({ children }) => {
           <Title>{page}</Title>
         </InnerWrapper>
       </HeadingWrapper>
-      <InnerWrapper>
-        <EmptyState type={page} />
-        {children}
-      </InnerWrapper>
+      <InnerWrapper>{children}</InnerWrapper>
     </Wrapper>
   );
 };
 
 UserTemplate.propTypes = {
+  page: PropTypes.string.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,

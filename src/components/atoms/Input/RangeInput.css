@@ -1,0 +1,95 @@
+.input-range__slider {
+  appearance: none;
+  background: rgb(111, 179, 235);
+  border: 1px solid rgb(111, 179, 235);
+  border-radius: 100%;
+  cursor: pointer;
+  display: block;
+  height: 1.4rem;
+  margin-left: -0.5rem;
+  margin-top: -1.1rem;
+  outline: none;
+  position: absolute;
+  top: 50%;
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  width: 1.4rem;
+}
+.input-range__slider:active {
+  transform: scale(1.3);
+}
+.input-range__slider:focus {
+  box-shadow: 0 0 0 5px rgba(111, 179, 235, 0.2);
+}
+.input-range--disabled .input-range__slider {
+  background: #cccccc;
+  border: 1px solid #cccccc;
+  box-shadow: none;
+  transform: none;
+}
+
+.input-range__slider-container {
+  transition: left 0.3s ease-out;
+}
+
+.input-range__label {
+  color: #aaaaaa;
+  font-size: 1.2rem;
+  transform: translateZ(0);
+  white-space: nowrap;
+  border-radius: 5px;
+  width: 28px;
+  height: 26px;
+  border: 1px solid #ddd;
+}
+
+.input-range__label--min,
+.input-range__label--max {
+  display: none;
+}
+
+.input-range__label--value {
+  position: absolute;
+  top: -4.3rem;
+  left: -1.2rem;
+  color: rgb(111, 179, 235);
+  text-align: center;
+}
+
+.input-range__label-container {
+  position: relative;
+  top: 6px;
+}
+.input-range__label--max .input-range__label-container {
+  left: 50%;
+}
+
+.input-range__track {
+  background: #eeeeee;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  display: block;
+  height: 0.75rem;
+  position: relative;
+  transition: left 0.3s ease-out, width 0.3s ease-out;
+}
+.input-range--disabled .input-range__track {
+  background: #eeeeee;
+}
+
+.input-range__track--background {
+  left: 0;
+  margin-top: -0.15rem;
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+
+.input-range__track--active {
+  background: rgb(111, 179, 235);
+}
+
+.input-range {
+  height: 1.1rem;
+  position: relative;
+  width: 100%;
+}

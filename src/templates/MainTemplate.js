@@ -8,13 +8,14 @@ import Brands from 'components/molecules/Brands/Brands';
 import Footer from 'components/organisms/Footer/Footer';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { fetchProducts } from 'actions';
+import { fetchProducts, fetchCategories } from 'actions';
 
 const MainTemplate = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchProducts());
+    dispatch(fetchCategories());
   }, []);
 
   return (

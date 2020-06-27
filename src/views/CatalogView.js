@@ -3,7 +3,7 @@ import GridTemplate from 'templates/GridTemplate';
 import TransitionTemplate from 'templates/TransitionTemplate';
 
 const CatalogView = () => (
-  <TransitionTemplate>
+  <TransitionTemplate transition={1}>
     <GridTemplate />
   </TransitionTemplate>
 );

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 
 const pageVariants = {
   in: {
@@ -11,23 +12,34 @@ const pageVariants = {
   },
 };
 
-const TransitionTemplate = ({ children }) => (
-  <motion.div
-    initial="out"
-    animate="in"
-    exit="out"
-    variants={pageVariants}
-    transition={{ duration: 1 }}
-  >
-    {children}
-  </motion.div>
-);
+const TransitionTemplate = ({ children, transition }) => {
+  const { pathname } = useLocation();
+  return (
+    <AnimatePresence>
+      <motion.div
+        key={pathname}
+        initial="out"
+        animate="in"
+        exit="out"
+        variants={pageVariants}
+        transition={{ duration: transition }}
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
+  );
+};
 
 TransitionTemplate.propTypes = {
+  transition: PropTypes.number,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
+};
+
+TransitionTemplate.defaultProps = {
+  transition: 0,
 };
 
 export default TransitionTemplate;

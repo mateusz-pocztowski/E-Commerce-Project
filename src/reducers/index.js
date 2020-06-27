@@ -2,6 +2,9 @@ import {
   FETCH_ALL_REQUEST,
   FETCH_ALL_SUCCESS,
   FETCH_ALL_FAILURE,
+  FETCH_CATEGORIES_REQUEST,
+  FETCH_CATEGORIES_SUCCESS,
+  FETCH_CATEGORIES_FAILURE,
   ADD_ITEM,
   UPDATE_CART_ITEM,
   REMOVE_ITEM,
@@ -13,6 +16,7 @@ export const initialState = {
   products: [],
   cart: [],
   wishlist: [],
+  categories: [],
   isOverlayVisible: false,
   loading: {
     isLoading: false,
@@ -36,6 +40,20 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: action.payload,
+      };
+    case FETCH_CATEGORIES_REQUEST:
+      return {
+        ...state,
+      };
+    case FETCH_CATEGORIES_FAILURE:
+      return {
+        ...state,
+        errorID: action.payload,
+      };
+    case FETCH_CATEGORIES_SUCCESS:
+      return {
+        ...state,
+        categories: action.payload,
       };
     case ADD_ITEM:
       return {
