@@ -1,6 +1,11 @@
 import React from 'react';
 import UserTemplate from 'templates/UserTemplate';
+import TransitionTemplate from 'templates/TransitionTemplate';
 
-const UserView = () => <UserTemplate />;
+const UserView = () => (
+  <TransitionTemplate>
+    <UserTemplate />
+  </TransitionTemplate>
+);
 
 export default UserView;

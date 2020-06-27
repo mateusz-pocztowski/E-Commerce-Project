@@ -19,6 +19,7 @@ const SidenavWrapper = styled.aside`
   visibility: hidden;
   opacity: 0;
   height: 100%;
+  will-change: transform;
   transition: all 0.35s cubic-bezier(0.645, 0.045, 0.355, 1);
   box-shadow: 2px 0 10px rgba(54, 54, 54, 0.2),
     -2px 0 10px rgba(54, 54, 54, 0.2);

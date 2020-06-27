@@ -85,6 +85,7 @@ const SideCart = ({ close, isActive, isBarActive, barDuration }) => {
             </ItemsInnerWrapper>
           </ItemsWrapper>
           <Summary
+            closeCart={close}
             subtotal={cartItems
               .reduce((acc, { quantity, price }) => acc + quantity * price, 0)
               .toFixed(2)}

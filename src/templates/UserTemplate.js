@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-// import EmptyState from 'components/molecules/EmptyState/EmptyState';
+import EmptyState from 'components/molecules/EmptyState/EmptyState';
 import { PageContext } from 'context/PageContext';
 import PropTypes from 'prop-types';
 
@@ -50,7 +50,7 @@ const UserTemplate = ({ children }) => {
         </InnerWrapper>
       </HeadingWrapper>
       <InnerWrapper>
-        {/* <EmptyState type={page} /> */}
+        <EmptyState type={page} />
         {children}
       </InnerWrapper>
     </Wrapper>

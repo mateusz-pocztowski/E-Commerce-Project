@@ -26,36 +26,38 @@ const TopnavWrapper = styled.nav`
   ${({ theme }) => theme.mq.lg} {
     height: 85px;
   }
-  ${({ transparent }) =>
-    transparent &&
-    css`
-      & {
-        background-color: transparent;
-        box-shadow: 0 -1px rgba(255, 255, 255, 0.25) inset;
-      }
-      & ${LinkItem} {
-        color: ${({ theme }) => theme.white};
-        &:after {
-          border-color: ${({ theme }) => theme.white};
+  ${({ theme }) => theme.mq.md} {
+    ${({ transparent }) =>
+      transparent &&
+      css`
+        & {
+          background-color: transparent;
+          box-shadow: 0 -1px rgba(255, 255, 255, 0.25) inset;
         }
-        &.active:after {
-          transform: scaleX(0);
+        & ${LinkItem} {
+          color: ${({ theme }) => theme.white};
+          &:after {
+            border-color: ${({ theme }) => theme.white};
+          }
+          &.active:after {
+            transform: scaleX(0);
+          }
         }
-      }
-      & ${Logo} {
-        background-image: url(${logoWhiteImg});
-      }
-      & ${ButtonIcon} {
-        filter: invert(0);
-      }
-      & ${Option}:hover {
-        background-color: ${({ theme }) => theme.white100T};
-      }
-      & ${Badge} {
-        background-color: ${({ theme }) => theme.white};
-        color: ${({ theme }) => theme.dark};
-      }
-    `};
+        & ${Logo} {
+          background-image: url(${logoWhiteImg});
+        }
+        & ${ButtonIcon} {
+          filter: invert(0);
+        }
+        & ${Option}:hover {
+          background-color: ${({ theme }) => theme.white100T};
+        }
+        & ${Badge} {
+          background-color: ${({ theme }) => theme.white};
+          color: ${({ theme }) => theme.dark};
+        }
+      `};
+  }
 `;
 
 const InnerWrapper = styled.div`
@@ -165,9 +167,7 @@ const Topnav = ({ isTransparent, openSidenav, openCart }) => {
   const cartItemsNumber = useSelector(({ cart }) =>
     cart.reduce((acc, { quantity }) => acc + quantity, 0),
   );
-  const wishlistItemsNumber = useSelector(({ wishlist }) =>
-    wishlist.reduce((acc, { quantity }) => acc + quantity, 0),
-  );
+  const wishlistItemsNumber = useSelector(({ wishlist }) => wishlist.length);
   return (
     <TopnavWrapper transparent={isTransparent}>
       <InnerWrapper>

@@ -45,14 +45,14 @@ const SummaryInfo = styled.p`
   font-size: ${({ theme }) => theme.fontSize.xs};
 `;
 
-const Summary = ({ subtotal }) => (
+const Summary = ({ subtotal, closeCart }) => (
   <SummaryWrapper>
     <SummaryContent>
       <SummaryMain>
         <StyledHeading>Subtotal:</StyledHeading>
         <StyledHeading>${subtotal}</StyledHeading>
       </SummaryMain>
-      <StyledButton as={Link} to="/cart" secondary="true">
+      <StyledButton as={Link} to="/cart" secondary="true" onClick={closeCart}>
         View cart
       </StyledButton>
       <Button secondary>Check out</Button>
@@ -63,6 +63,7 @@ const Summary = ({ subtotal }) => (
 
 Summary.propTypes = {
   subtotal: PropTypes.string.isRequired,
+  closeCart: PropTypes.func.isRequired,
 };
 
 export default Summary;

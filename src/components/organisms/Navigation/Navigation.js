@@ -9,7 +9,7 @@ import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 const Navigation = () => {
   const [scrollTop, setScrollTop] = useState(window.pageYOffset);
   const [isSidenavVisible, setSidenavVisibility] = useState(false);
-  const [isCartVisible, setCartVisibility] = useState(true);
+  const [isCartVisible, setCartVisibility] = useState(false);
 
   const { isLoading, duration } = useSelector(({ loading }) => loading);
   const { pathname } = useLocation();
