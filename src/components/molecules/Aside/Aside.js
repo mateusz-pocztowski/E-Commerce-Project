@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import closeIcon from 'assets/icons/delete.svg';
 import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 import PageOverlay from 'components/molecules/PageOverlay/PageOverlay';
 import useDetectOutsideClick from 'hooks/useDetectOutsideClick';
 
@@ -45,7 +46,6 @@ const HeadingWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 20px;
-  border-bottom: 2px solid ${({ theme }) => theme.blue};
 `;
 
 const StyledHeading = styled.h3`
@@ -64,7 +64,22 @@ const CloseBtn = styled(ButtonIcon)`
   }
 `;
 
-const Aside = ({ title, children, isActive, close, side }) => {
+const BarWrapper = styled.div`
+  height: 2px;
+  width: 100%;
+  position: relative;
+  background-color: ${({ theme }) => theme.blue50};
+`;
+
+const Aside = ({
+  title,
+  children,
+  isActive,
+  isBarActive,
+  barDuration,
+  close,
+  side,
+}) => {
   const AsideRef = useRef(null);
   useDetectOutsideClick(AsideRef, close);
 
@@ -75,6 +90,13 @@ const Aside = ({ title, children, isActive, close, side }) => {
           <StyledHeading>{title}</StyledHeading>
           <CloseBtn icon={closeIcon} onClick={close} />
         </HeadingWrapper>
+        <BarWrapper>
+          <ProgressBar
+            mini
+            isActive={isActive && isBarActive}
+            duration={barDuration}
+          />
+        </BarWrapper>
         {children}
       </SidenavWrapper>
     </PageOverlay>
@@ -85,6 +107,8 @@ Aside.propTypes = {
   title: PropTypes.string.isRequired,
   close: PropTypes.func.isRequired,
   isActive: PropTypes.bool.isRequired,
+  isBarActive: PropTypes.bool.isRequired,
+  barDuration: PropTypes.number.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,

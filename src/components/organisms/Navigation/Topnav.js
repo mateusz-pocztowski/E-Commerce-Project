@@ -162,8 +162,12 @@ const WishlistBadge = styled(Badge)`
 `;
 
 const Topnav = ({ isTransparent, openSidenav, openCart }) => {
-  const cartItemsNumber = useSelector(({ cart }) => cart.length);
-  const wishlistItemsNumber = useSelector(({ wishlist }) => wishlist.length);
+  const cartItemsNumber = useSelector(({ cart }) =>
+    cart.reduce((acc, { quantity }) => acc + quantity, 0),
+  );
+  const wishlistItemsNumber = useSelector(({ wishlist }) =>
+    wishlist.reduce((acc, { quantity }) => acc + quantity, 0),
+  );
   return (
     <TopnavWrapper transparent={isTransparent}>
       <InnerWrapper>

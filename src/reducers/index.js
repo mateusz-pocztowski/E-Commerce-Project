@@ -49,14 +49,18 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         cart: state.cart.map(cartItem =>
-          cartItem.id === action.payload.id ? action.payload : cartItem,
+          cartItem.id === action.payload.id &&
+          cartItem.size === action.payload.size
+            ? action.payload
+            : cartItem,
         ),
       };
     case REMOVE_ITEM:
       return {
         ...state,
         [action.payload.container]: state[action.payload.container].filter(
-          ({ id }) => id !== action.payload.itemID,
+          ({ id, size }) =>
+            id !== action.payload.itemID || size !== action.payload.size,
         ),
       };
     case SHOW_LOADING:

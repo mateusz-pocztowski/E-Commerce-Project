@@ -97,7 +97,7 @@ const CartItem = ({ item }) => {
   };
 
   const handleSubtract = () => {
-    if (quantity === 1) dispatch(removeItem(id, 'cart'));
+    if (quantity === 1) dispatch(removeItem(id, size, 'cart'));
     else {
       setErrorVisibility(false);
       dispatch(updateCartItem({ ...item, quantity: quantity - 1 }));
@@ -106,7 +106,7 @@ const CartItem = ({ item }) => {
 
   return (
     <Wrapper>
-      <StyledRemoveBtn onClick={() => dispatch(removeItem(id, 'cart'))} />
+      <StyledRemoveBtn onClick={() => dispatch(removeItem(id, size, 'cart'))} />
       <ImageWrapper>
         <Image src={image || defaultImg} />
       </ImageWrapper>

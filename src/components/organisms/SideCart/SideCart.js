@@ -9,6 +9,7 @@ import Summary from 'components/organisms/SideCart/Summary';
 import CartItem from 'components/organisms/SideCart/CartItem';
 
 const Content = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
@@ -17,6 +18,19 @@ const Content = styled.div`
   font-size: ${({ theme }) => theme.fontSize.xs};
   ${({ theme }) => theme.mq.xxs} {
     font-size: ${({ theme }) => theme.fontSize.xs};
+  }
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: ${({ theme }) => theme.white100T};
+    z-index: ${({ theme }) => theme.zIndex.level8};
+    visibility: ${({ isOverlayActive }) =>
+      isOverlayActive ? 'visible' : 'hidden'};
+    opacity: ${({ isOverlayActive }) => (isOverlayActive ? '1' : '0')};
   }
 `;
 
@@ -37,21 +51,28 @@ const ItemsInnerWrapper = styled.div`
   padding: 20px 13px;
 `;
 
-const SideCart = ({ close, isActive }) => {
+const SideCart = ({ close, isActive, isBarActive, barDuration }) => {
   const cartItems = useSelector(({ cart }) => cart);
 
   return (
-    <Aside title="Shopping cart" side="right" close={close} isActive={isActive}>
+    <Aside
+      barDuration={barDuration}
+      isBarActive={isBarActive}
+      title="Shopping cart"
+      side="right"
+      close={close}
+      isActive={isActive}
+    >
       {cartItems.length === 0 ? (
         <EmptyCart closeCart={close} />
       ) : (
-        <Content>
+        <Content isOverlayActive={isBarActive}>
           <ItemsWrapper>
             <ItemsInnerWrapper>
               <AnimatePresence initial={false}>
                 {cartItems.map(item => (
                   <motion.div
-                    key={item.id}
+                    key={item.id + item.size}
                     positionTransition
                     initial={{ opacity: 0, y: -50 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -77,6 +98,8 @@ const SideCart = ({ close, isActive }) => {
 SideCart.propTypes = {
   close: PropTypes.func.isRequired,
   isActive: PropTypes.bool.isRequired,
+  isBarActive: PropTypes.bool.isRequired,
+  barDuration: PropTypes.number.isRequired,
 };
 
 export default SideCart;

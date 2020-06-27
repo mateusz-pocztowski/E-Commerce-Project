@@ -52,7 +52,7 @@ const Summary = ({ subtotal }) => (
         <StyledHeading>Subtotal:</StyledHeading>
         <StyledHeading>${subtotal}</StyledHeading>
       </SummaryMain>
-      <StyledButton secondary as={Link} to="/cart">
+      <StyledButton as={Link} to="/cart" secondary="true">
         View cart
       </StyledButton>
       <Button secondary>Check out</Button>
@@ -62,7 +62,7 @@ const Summary = ({ subtotal }) => (
 );
 
 Summary.propTypes = {
-  subtotal: PropTypes.number.isRequired,
+  subtotal: PropTypes.string.isRequired,
 };
 
 export default Summary;

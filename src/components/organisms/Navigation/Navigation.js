@@ -4,12 +4,12 @@ import { useSelector } from 'react-redux';
 import Sidenav from 'components/organisms/Navigation/Sidenav';
 import Topnav from 'components/organisms/Navigation/Topnav';
 import SideCart from 'components/organisms/SideCart/SideCart';
-import ProgressBar from 'components/organisms/Navigation/ProgressBar';
+import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
 
 const Navigation = () => {
   const [scrollTop, setScrollTop] = useState(window.pageYOffset);
   const [isSidenavVisible, setSidenavVisibility] = useState(false);
-  const [isCartVisible, setCartVisibility] = useState(false);
+  const [isCartVisible, setCartVisibility] = useState(true);
 
   const { isLoading, duration } = useSelector(({ loading }) => loading);
   const { pathname } = useLocation();
@@ -25,7 +25,10 @@ const Navigation = () => {
 
   return (
     <>
-      <ProgressBar isActive={isLoading} duration={duration} />
+      <ProgressBar
+        isActive={!isCartVisible && !isSidenavVisible && isLoading}
+        duration={duration}
+      />
       <Topnav
         isTransparent={pathname === '/' && scrollTop < 10}
         openSidenav={() => {
@@ -40,10 +43,14 @@ const Navigation = () => {
       <Sidenav
         close={() => setSidenavVisibility(false)}
         isActive={isSidenavVisible}
+        isBarActive={isLoading}
+        barDuration={duration}
       />
       <SideCart
         close={() => setCartVisibility(false)}
         isActive={isCartVisible}
+        isBarActive={isLoading}
+        barDuration={duration}
       />
     </>
   );

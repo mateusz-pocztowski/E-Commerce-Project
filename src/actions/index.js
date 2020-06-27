@@ -46,20 +46,6 @@ export const fetchProducts = () => async (dispatch, getState) => {
   }
 };
 
-export const addItem = (item, container) => dispatch => {
-  dispatch({ type: SHOW_LOADING, payload: 1500 });
-  setTimeout(() => {
-    dispatch({
-      type: ADD_ITEM,
-      payload: {
-        item,
-        container,
-      },
-    });
-    dispatch({ type: HIDE_LOADING });
-  }, 1500);
-};
-
 export const updateCartItem = item => dispatch => {
   dispatch({ type: SHOW_LOADING, payload: 700 });
   setTimeout(() => {
@@ -71,13 +57,38 @@ export const updateCartItem = item => dispatch => {
   }, 700);
 };
 
-export const removeItem = (itemID, container) => dispatch => {
+export const addItem = (item, container) => (dispatch, getState) => {
+  if (
+    getState().cart.some(({ id, size }) => id === item.id && size === item.size)
+  ) {
+    const updatedItem = {
+      ...item,
+      quantity: item.quantity + 1,
+    };
+    dispatch(updateCartItem(updatedItem));
+  } else {
+    dispatch({ type: SHOW_LOADING, payload: 1500 });
+    setTimeout(() => {
+      dispatch({
+        type: ADD_ITEM,
+        payload: {
+          item,
+          container,
+        },
+      });
+      dispatch({ type: HIDE_LOADING });
+    }, 1500);
+  }
+};
+
+export const removeItem = (itemID, size, container) => dispatch => {
   dispatch({ type: SHOW_LOADING, payload: 1000 });
   setTimeout(() => {
     dispatch({
       type: REMOVE_ITEM,
       payload: {
         itemID,
+        size,
         container,
       },
     });

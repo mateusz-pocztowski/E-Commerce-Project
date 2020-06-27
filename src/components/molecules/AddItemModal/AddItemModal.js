@@ -82,6 +82,7 @@ const StyledButton = styled(Button)`
 
 const AddItemModal = ({ isActive, itemID, close }) => {
   const [isModalOpen, setModalOpen] = useState(isActive);
+  const [isErrorVisible, setErrorVisibility] = useState(false);
   const dispatch = useDispatch();
 
   const itemData = useSelector(({ products }) =>
@@ -127,10 +128,11 @@ const AddItemModal = ({ isActive, itemID, close }) => {
             }
             if (
               size.some(
-                ({ value, limit }) => value === itemSize && quantity > limit,
+                ({ value, limit }) => value === itemSize && quantity >= limit,
               )
             ) {
-              errors.quantity = true;
+              setErrorVisibility(true);
+              setTimeout(() => setErrorVisibility(false), 1500);
             }
             return errors;
           }}
@@ -190,13 +192,14 @@ const AddItemModal = ({ isActive, itemID, close }) => {
                     setFieldValue('quantity', values.quantity - 1)
                   }
                   add={() =>
-                    !errors.quantity &&
-                    values.itemSize &&
-                    setFieldValue('quantity', values.quantity + 1)
+                    sizeOptions.some(
+                      ({ value, limit }) =>
+                        value === values.itemSize && limit > values.quantity,
+                    ) && setFieldValue('quantity', values.quantity + 1)
                   }
                   value={values.quantity}
                 />
-                <ErrorMsg active={errors.quantity}>
+                <ErrorMsg active={isErrorVisible}>
                   Product limit reached!
                 </ErrorMsg>
               </QuantityFieldWrapper>
