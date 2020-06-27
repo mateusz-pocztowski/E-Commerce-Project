@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Button from 'components/atoms/Button/Button';
 import Heading from 'components/atoms/Heading/Heading';
 
@@ -44,12 +45,12 @@ const SummaryInfo = styled.p`
   font-size: ${({ theme }) => theme.fontSize.xs};
 `;
 
-const Summary = () => (
+const Summary = ({ subtotal }) => (
   <SummaryWrapper>
     <SummaryContent>
       <SummaryMain>
         <StyledHeading>Subtotal:</StyledHeading>
-        <StyledHeading>$90.00</StyledHeading>
+        <StyledHeading>${subtotal}</StyledHeading>
       </SummaryMain>
       <StyledButton secondary as={Link} to="/cart">
         View cart
@@ -59,5 +60,9 @@ const Summary = () => (
     </SummaryContent>
   </SummaryWrapper>
 );
+
+Summary.propTypes = {
+  subtotal: PropTypes.number.isRequired,
+};
 
 export default Summary;

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import RemoveBtn from 'components/atoms/RemoveBtn/RemoveBtn';
 import Button from 'components/atoms/Button/Button';
+import ErrorMsg from 'components/atoms/ErrorMsg/ErrorMsg';
 import QuantityField from 'components/molecules/QuantityField/QuantityField';
 import { useSelector, useDispatch } from 'react-redux';
 import { addItem } from 'actions';
@@ -79,19 +80,6 @@ const StyledButton = styled(Button)`
   color: ${({ theme }) => theme.dark};
 `;
 
-const ErrorMsg = styled.div`
-  opacity: ${({ active }) => (active ? '1' : '0')};
-  visibility: ${({ active }) => (active ? 'visible' : 'hidden')};
-  position: absolute;
-  bottom: -27px;
-  padding: 5px 8px;
-  border-radius: 5px;
-  background-color: ${({ theme }) => theme.dark300};
-  font-size: ${({ theme }) => theme.fontSize.xs};
-  color: ${({ theme }) => theme.white};
-  transition: 0.2s;
-`;
-
 const AddItemModal = ({ isActive, itemID, close }) => {
   const [isModalOpen, setModalOpen] = useState(isActive);
   const dispatch = useDispatch();
@@ -146,13 +134,21 @@ const AddItemModal = ({ isActive, itemID, close }) => {
             }
             return errors;
           }}
-          onSubmit={({ itemSize, quantity }) => {
+          onSubmit={({ itemSize, quantity }, { setSubmitting }) => {
+            const { limit } = sizeOptions.find(
+              ({ value }) => value === itemSize,
+            );
             const newItem = {
               ...itemData,
               size: itemSize,
+              limit,
               quantity,
             };
             dispatch(addItem(newItem, 'cart'));
+            setTimeout(() => {
+              handleModalClose();
+              setSubmitting(false);
+            }, 1500);
           }}
         >
           {({
@@ -162,6 +158,7 @@ const AddItemModal = ({ isActive, itemID, close }) => {
             setFieldTouched,
             setFieldValue,
             handleSubmit,
+            isSubmitting,
           }) => (
             <StyledForm onSubmit={handleSubmit}>
               <Select
@@ -194,19 +191,22 @@ const AddItemModal = ({ isActive, itemID, close }) => {
                   }
                   add={() =>
                     !errors.quantity &&
+                    values.itemSize &&
                     setFieldValue('quantity', values.quantity + 1)
                   }
                   value={values.quantity}
                 />
                 <ErrorMsg active={errors.quantity}>
-                  Product limit reacted!
+                  Product limit reached!
                 </ErrorMsg>
               </QuantityFieldWrapper>
               <div>
-                <Button secondary type="submit">
+                <Button disabled={isSubmitting} secondary type="submit">
                   Add to cart
                 </Button>
-                <StyledButton secondary>View full details</StyledButton>
+                <StyledButton disabled={isSubmitting} secondary>
+                  View full details
+                </StyledButton>
               </div>
             </StyledForm>
           )}

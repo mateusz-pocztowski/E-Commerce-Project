@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import defaultImg from 'assets/images/defaultImg.jpg';
 import RemoveBtn from 'components/atoms/RemoveBtn/RemoveBtn';
+import PropTypes from 'prop-types';
+import { removeItem, updateCartItem } from 'actions';
 import QuantityField from 'components/molecules/QuantityField/QuantityField';
+import ErrorMsg from 'components/atoms/ErrorMsg/ErrorMsg';
 
 const Wrapper = styled.div`
+  position: relative;
   display: flex;
   margin-bottom: 20px;
   padding: 10px;
@@ -14,6 +19,16 @@ const Wrapper = styled.div`
   font-family: ${({ theme }) => theme.fonts.subFont2};
   color: ${({ theme }) => theme.dark300};
   height: 165px;
+`;
+
+const QuantityWrapper = styled.div`
+  margin-top: auto;
+  position: relative;
+`;
+
+const StyledRemoveBtn = styled(RemoveBtn)`
+  top: 10px;
+  right: 10px;
 `;
 
 const ImageWrapper = styled.div`
@@ -29,7 +44,6 @@ const Image = styled.img`
 `;
 
 const Content = styled.div`
-  position: relative;
   padding: 5px 10px;
   display: flex;
   flex-direction: column;
@@ -65,22 +79,67 @@ const Size = styled.span`
   color: ${({ theme }) => theme.gray100};
 `;
 
-const CartItem = () => (
-  <Wrapper>
-    <ImageWrapper>
-      <Image src={defaultImg} />
-    </ImageWrapper>
-    <Content>
-      <RemoveBtn />
-      <Name>Nike Hoodie Sportswear</Name>
-      <Size>Size: M</Size>
-      <PricesWrapper>
-        <Price>1 × </Price>
-        <TotalPrice> $90.00</TotalPrice>
-      </PricesWrapper>
-      <QuantityField />
-    </Content>
-  </Wrapper>
-);
+const CartItem = ({ item }) => {
+  const [isErrorVisible, setErrorVisibility] = useState(false);
+  const dispatch = useDispatch();
+
+  const { id, image, price, quantity, size, limit, name } = item;
+
+  const showErrorMessage = () => {
+    setErrorVisibility(true);
+    setTimeout(() => setErrorVisibility(false), 1000);
+  };
+
+  const handleAdd = () => {
+    if (quantity < limit)
+      dispatch(updateCartItem({ ...item, quantity: quantity + 1 }));
+    else showErrorMessage();
+  };
+
+  const handleSubtract = () => {
+    if (quantity === 1) dispatch(removeItem(id, 'cart'));
+    else {
+      setErrorVisibility(false);
+      dispatch(updateCartItem({ ...item, quantity: quantity - 1 }));
+    }
+  };
+
+  return (
+    <Wrapper>
+      <StyledRemoveBtn onClick={() => dispatch(removeItem(id, 'cart'))} />
+      <ImageWrapper>
+        <Image src={image || defaultImg} />
+      </ImageWrapper>
+      <Content>
+        <Name>{name}</Name>
+        <Size>Size: {size.toUpperCase()}</Size>
+        <PricesWrapper>
+          <Price>{quantity} × </Price>
+          <TotalPrice> ${price}</TotalPrice>
+        </PricesWrapper>
+        <QuantityWrapper>
+          <QuantityField
+            add={handleAdd}
+            subtract={handleSubtract}
+            value={quantity}
+          />
+          <ErrorMsg active={isErrorVisible}>Product limit reached!</ErrorMsg>
+        </QuantityWrapper>
+      </Content>
+    </Wrapper>
+  );
+};
+
+CartItem.propTypes = {
+  item: PropTypes.shape({
+    id: PropTypes.number,
+    image: PropTypes.string,
+    price: PropTypes.string,
+    quantity: PropTypes.number,
+    limit: PropTypes.number,
+    name: PropTypes.string,
+    size: PropTypes.string,
+  }).isRequired,
+};
 
 export default CartItem;

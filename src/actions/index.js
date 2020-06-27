@@ -5,6 +5,7 @@ export const FETCH_ALL_SUCCESS = 'FETCH_ALL_SUCCESS';
 export const FETCH_ALL_FAILURE = 'FETCH_ALL_FAILURE';
 
 export const ADD_ITEM = 'ADD_ITEM';
+export const UPDATE_CART_ITEM = 'UPDATE_CART_ITEM';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
 
 export const SHOW_LOADING = 'SHOW_LOADING';
@@ -59,13 +60,24 @@ export const addItem = (item, container) => dispatch => {
   }, 1500);
 };
 
-export const removeItem = (itemID, container) => (dispatch, getState) => {
+export const updateCartItem = item => dispatch => {
+  dispatch({ type: SHOW_LOADING, payload: 700 });
+  setTimeout(() => {
+    dispatch({
+      type: UPDATE_CART_ITEM,
+      payload: item,
+    });
+    dispatch({ type: HIDE_LOADING });
+  }, 700);
+};
+
+export const removeItem = (itemID, container) => dispatch => {
   dispatch({ type: SHOW_LOADING, payload: 1000 });
   setTimeout(() => {
     dispatch({
       type: REMOVE_ITEM,
       payload: {
-        item: getState().products.find(({ id }) => itemID === id),
+        itemID,
         container,
       },
     });

@@ -49,21 +49,25 @@ const SideCart = ({ close, isActive }) => {
           <ItemsWrapper>
             <ItemsInnerWrapper>
               <AnimatePresence initial={false}>
-                {cartItems.map(id => (
+                {cartItems.map(item => (
                   <motion.div
-                    key={id}
+                    key={item.id}
                     positionTransition
                     initial={{ opacity: 0, y: -50 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -50, transition: { duration: 0.2 } }}
                   >
-                    <CartItem />
+                    <CartItem item={item} />
                   </motion.div>
                 ))}
               </AnimatePresence>
             </ItemsInnerWrapper>
           </ItemsWrapper>
-          <Summary />
+          <Summary
+            subtotal={cartItems
+              .reduce((acc, { quantity, price }) => acc + quantity * price, 0)
+              .toFixed(2)}
+          />
         </Content>
       )}
     </Aside>

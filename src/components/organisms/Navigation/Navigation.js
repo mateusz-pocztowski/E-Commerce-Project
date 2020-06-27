@@ -7,7 +7,7 @@ import SideCart from 'components/organisms/SideCart/SideCart';
 import ProgressBar from 'components/organisms/Navigation/ProgressBar';
 
 const Navigation = () => {
-  const [scrollTop, setScrollTop] = useState(0);
+  const [scrollTop, setScrollTop] = useState(window.pageYOffset);
   const [isSidenavVisible, setSidenavVisibility] = useState(false);
   const [isCartVisible, setCartVisibility] = useState(false);
 
@@ -15,8 +15,8 @@ const Navigation = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const onScroll = e => {
-      setScrollTop(e.target.documentElement.scrollTop);
+    const onScroll = () => {
+      setScrollTop(window.pageYOffset);
     };
     window.addEventListener('scroll', onScroll);
 

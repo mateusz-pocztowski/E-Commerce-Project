@@ -3,6 +3,8 @@ import {
   FETCH_ALL_SUCCESS,
   FETCH_ALL_FAILURE,
   ADD_ITEM,
+  UPDATE_CART_ITEM,
+  REMOVE_ITEM,
   SHOW_LOADING,
   HIDE_LOADING,
 } from 'actions';
@@ -42,6 +44,20 @@ const rootReducer = (state = initialState, action) => {
           ...state[action.payload.container],
           action.payload.item,
         ],
+      };
+    case UPDATE_CART_ITEM:
+      return {
+        ...state,
+        cart: state.cart.map(cartItem =>
+          cartItem.id === action.payload.id ? action.payload : cartItem,
+        ),
+      };
+    case REMOVE_ITEM:
+      return {
+        ...state,
+        [action.payload.container]: state[action.payload.container].filter(
+          ({ id }) => id !== action.payload.itemID,
+        ),
       };
     case SHOW_LOADING:
       return {
