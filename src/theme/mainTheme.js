@@ -13,6 +13,7 @@ export const theme = {
   white100: 'rgb(238, 238, 238)',
   white100T: 'rgb(238, 238, 238, 0.4)',
   white200: 'rgb(226, 226, 226)',
+  red: 'rgb(255, 0, 51)',
   blue: 'rgb(111, 179, 235)',
   blue100: 'rgb(157, 201, 238)',
   dark: 'rgb(39, 39, 39)',

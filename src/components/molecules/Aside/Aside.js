@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import closeIcon from 'assets/icons/delete.svg';
 import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
+import PageOverlay from 'components/molecules/PageOverlay/PageOverlay';
+import useDetectOutsideClick from 'hooks/useDetectOutsideClick';
 
 const SidenavWrapper = styled.aside`
   position: fixed;
@@ -12,7 +14,7 @@ const SidenavWrapper = styled.aside`
   width: 100vw;
   top: 0;
   bottom: 0;
-  z-index: ${({ theme }) => theme.zIndex.level5};
+  z-index: ${({ theme }) => theme.zIndex.level8};
   visibility: hidden;
   opacity: 0;
   height: 100%;
@@ -62,15 +64,22 @@ const CloseBtn = styled(ButtonIcon)`
   }
 `;
 
-const Aside = ({ title, children, isActive, close, side }) => (
-  <SidenavWrapper isActive={isActive} side={side}>
-    <HeadingWrapper>
-      <StyledHeading>{title}</StyledHeading>
-      <CloseBtn icon={closeIcon} onClick={close} />
-    </HeadingWrapper>
-    {children}
-  </SidenavWrapper>
-);
+const Aside = ({ title, children, isActive, close, side }) => {
+  const AsideRef = useRef(null);
+  useDetectOutsideClick(AsideRef, close);
+
+  return (
+    <PageOverlay isActive={isActive}>
+      <SidenavWrapper ref={AsideRef} isActive={isActive} side={side}>
+        <HeadingWrapper>
+          <StyledHeading>{title}</StyledHeading>
+          <CloseBtn icon={closeIcon} onClick={close} />
+        </HeadingWrapper>
+        {children}
+      </SidenavWrapper>
+    </PageOverlay>
+  );
+};
 
 Aside.propTypes = {
   title: PropTypes.string.isRequired,

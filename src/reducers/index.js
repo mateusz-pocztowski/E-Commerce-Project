@@ -14,7 +14,7 @@ export const initialState = {
   isOverlayVisible: false,
   loading: {
     isLoading: false,
-    duration: null,
+    duration: 0,
   },
   errorID: null,
 };
@@ -56,7 +56,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         loading: {
           isLoading: false,
-          duration: null,
+          duration: 0,
         },
       };
     default:

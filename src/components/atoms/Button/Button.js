@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const Button = styled.button`
   display: block;
@@ -26,6 +26,20 @@ const Button = styled.button`
     background-color: ${({ theme }) => theme.blue};
     color: ${({ theme }) => theme.white};
   }
+  ${({ secondary }) =>
+    secondary &&
+    css`
+      margin: 10px auto;
+      width: 100%;
+      text-transform: none;
+      border: 2px solid ${({ theme }) => theme.dark};
+      background-color: ${({ theme }) => theme.dark};
+      color: ${({ theme }) => theme.white};
+      padding: 17px 32px !important;
+      &:hover {
+        border-color: ${({ theme }) => theme.blue};
+      }
+    `}
 `;
 
 export default Button;

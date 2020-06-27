@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
@@ -6,6 +6,7 @@ import cartIcon from 'assets/icons/small-cart.svg';
 import heartIcon from 'assets/icons/small-heart.svg';
 import defaultImg from 'assets/images/defaultImg.jpg';
 import { addItem } from 'actions';
+import AddItemModal from 'components/molecules/AddItemModal/AddItemModal';
 
 const Wrapper = styled.div`
   position: relative;
@@ -137,34 +138,45 @@ const Price = styled.p`
 `;
 
 const ProductCard = ({ id, img, price, name }) => {
+  const [isModalVisible, setModalVisibility] = useState(false);
   const dispatch = useDispatch();
+
   return (
-    <Wrapper>
-      <Overlay>
-        <Image src={img} />
-        <OptionsWrapper>
-          <Options>
-            <Button
-              onClick={() => dispatch(addItem(id, 'cart'))}
-              icon={cartIcon}
-              invert
-            >
-              <ButtonContent>Add to Cart</ButtonContent>
-            </Button>
-            <Button
-              icon={heartIcon}
-              onClick={() => dispatch(addItem(id, 'wishlist'))}
-            >
-              <ButtonContent>Wishlist</ButtonContent>
-            </Button>
-          </Options>
-        </OptionsWrapper>
-      </Overlay>
-      <Description>
-        <Name>{name}</Name>
-        <Price>${price}</Price>
-      </Description>
-    </Wrapper>
+    <>
+      {isModalVisible && (
+        <AddItemModal
+          itemID={id}
+          isActive={isModalVisible}
+          close={() => setModalVisibility(false)}
+        />
+      )}
+      <Wrapper>
+        <Overlay>
+          <Image src={img} />
+          <OptionsWrapper>
+            <Options>
+              <Button
+                onClick={() => setModalVisibility(true)}
+                icon={cartIcon}
+                invert
+              >
+                <ButtonContent>Add to Cart</ButtonContent>
+              </Button>
+              <Button
+                icon={heartIcon}
+                onClick={() => dispatch(addItem(id, 'wishlist'))}
+              >
+                <ButtonContent>Wishlist</ButtonContent>
+              </Button>
+            </Options>
+          </OptionsWrapper>
+        </Overlay>
+        <Description>
+          <Name>{name}</Name>
+          <Price>${price}</Price>
+        </Description>
+      </Wrapper>
+    </>
   );
 };
 

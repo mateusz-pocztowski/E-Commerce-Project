@@ -24,20 +24,7 @@ const SummaryMain = styled.div`
   font-weight: ${({ theme }) => theme.semiBold};
 `;
 
-const CheckoutButton = styled(Button)`
-  margin: 10px auto;
-  width: 100%;
-  text-transform: none;
-  border: 2px solid ${({ theme }) => theme.dark};
-  background-color: ${({ theme }) => theme.dark};
-  color: ${({ theme }) => theme.white};
-  padding: 17px 32px !important;
-  &:hover {
-    border-color: ${({ theme }) => theme.blue};
-  }
-`;
-
-const ViewCartButton = styled(CheckoutButton)`
+const StyledButton = styled(Button)`
   display: block;
   text-decoration: none;
   text-align: center;
@@ -64,10 +51,10 @@ const Summary = () => (
         <StyledHeading>Subtotal:</StyledHeading>
         <StyledHeading>$90.00</StyledHeading>
       </SummaryMain>
-      <ViewCartButton as={Link} to="/cart">
+      <StyledButton secondary as={Link} to="/cart">
         View cart
-      </ViewCartButton>
-      <CheckoutButton>Check out</CheckoutButton>
+      </StyledButton>
+      <Button secondary>Check out</Button>
       <SummaryInfo>Shipping & taxes calculated at check out</SummaryInfo>
     </SummaryContent>
   </SummaryWrapper>

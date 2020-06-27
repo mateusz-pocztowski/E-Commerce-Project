@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from 'actions';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Slider from 'components/organisms/Slider/Slider';
 import ParallaxImage from 'assets/images/summer-sale.jpg';
@@ -15,13 +14,7 @@ const Wrapper = styled.div`
 `;
 
 const HomeView = () => {
-  const dispatch = useDispatch();
   const allProducts = useSelector(({ products }) => products);
-
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, []);
-
   return (
     <>
       <Slider />

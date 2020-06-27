@@ -45,13 +45,13 @@ export const fetchProducts = () => async (dispatch, getState) => {
   }
 };
 
-export const addItem = (itemID, container) => (dispatch, getState) => {
+export const addItem = (item, container) => dispatch => {
   dispatch({ type: SHOW_LOADING, payload: 1500 });
   setTimeout(() => {
     dispatch({
       type: ADD_ITEM,
       payload: {
-        item: getState().products.find(({ id }) => itemID === id),
+        item,
         container,
       },
     });
