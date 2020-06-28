@@ -1,7 +1,7 @@
 import {
-  FETCH_ALL_REQUEST,
-  FETCH_ALL_SUCCESS,
-  FETCH_ALL_FAILURE,
+  FETCH_ITEMS_REQUEST,
+  FETCH_ITEMS_SUCCESS,
+  FETCH_ITEMS_FAILURE,
   FETCH_CATEGORIES_REQUEST,
   FETCH_CATEGORIES_SUCCESS,
   FETCH_CATEGORIES_FAILURE,
@@ -14,6 +14,7 @@ import {
 
 export const initialState = {
   products: [],
+  featured: [],
   cart: [],
   wishlist: [],
   categories: [],
@@ -28,20 +29,24 @@ export const initialState = {
 
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_ALL_REQUEST:
+    case FETCH_ITEMS_REQUEST:
       return {
         ...state,
         isDataLoading: true,
       };
-    case FETCH_ALL_FAILURE:
+    case FETCH_ITEMS_FAILURE:
       return {
         ...state,
         errorID: action.payload,
       };
-    case FETCH_ALL_SUCCESS:
+    case FETCH_ITEMS_SUCCESS:
       return {
         ...state,
-        products: action.payload,
+        [action.payload.container]: [
+          ...state.products,
+          ...action.payload.items,
+        ],
+        products: [...action.payload.items],
         isDataLoading: false,
       };
     case FETCH_CATEGORIES_REQUEST:

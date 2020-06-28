@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Input from 'components/atoms/Input/Input';
 import InputRange from 'react-input-range';
 import ProductCategories from 'components/molecules/ProductCategories/ProductCategories';
+import Button from 'components/atoms/Button/Button';
 import PropTypes from 'prop-types';
 
 const Heading = styled.h3`
@@ -14,10 +15,21 @@ const Heading = styled.h3`
 `;
 
 const InputRangeWrapper = styled.div`
-  margin: 50px 15px 40px 10px;
+  margin: 50px 15px 50px 10px;
 `;
 
-const FiltersContent = ({ priceRange, priceHandler }) => (
+const StyledButton = styled(Button)`
+  border-radius: 4px;
+  width: 50%;
+  margin: 0;
+  &:hover {
+    background-color: ${({ theme }) => theme.white};
+    color: ${({ theme }) => theme.dark};
+    border-color: ${({ theme }) => theme.dark};
+  }
+`;
+
+const FiltersContent = ({ priceRange, priceHandler, applyFilters }) => (
   <>
     <Input icon="search" placeholder="Search..." />
     <Heading>Categories</Heading>
@@ -32,12 +44,16 @@ const FiltersContent = ({ priceRange, priceHandler }) => (
         onChange={value => priceHandler(value)}
       />
     </InputRangeWrapper>
+    <StyledButton secondary onClick={applyFilters}>
+      Filter
+    </StyledButton>
   </>
 );
 
 FiltersContent.propTypes = {
   priceRange: PropTypes.objectOf(PropTypes.number).isRequired,
   priceHandler: PropTypes.func.isRequired,
+  applyFilters: PropTypes.func.isRequired,
 };
 
 export default FiltersContent;

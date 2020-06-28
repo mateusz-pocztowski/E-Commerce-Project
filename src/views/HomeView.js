@@ -15,32 +15,32 @@ const Wrapper = styled.div`
 `;
 
 const HomeView = () => {
-  const allProducts = useSelector(({ products }) => products);
+  const featuredItems = useSelector(({ featured }) => featured);
   return (
     <TransitionTemplate>
       <Slider />
       <main>
         <Wrapper>
           <Categories />
-          {allProducts.length !== 0 && (
+          {featuredItems.length !== 0 && (
             <>
               <SectionHeader
                 title="Trending"
                 subTitle="Top view in this week"
               />
-              <FeaturedProducts products={allProducts.slice(0, 6)} />
+              <FeaturedProducts products={featuredItems.slice(0, 6)} />
             </>
           )}
         </Wrapper>
         <Parallax img={ParallaxImage} />
         <Wrapper>
-          {allProducts.length !== 0 && (
+          {featuredItems.length !== 0 && (
             <>
               <SectionHeader
                 title="Best sellers"
                 subTitle="Top sale in this week"
               />
-              <FeaturedProducts products={allProducts.slice(6, 12)} />
+              <FeaturedProducts products={featuredItems.slice(6, 12)} />
             </>
           )}
           <Features />

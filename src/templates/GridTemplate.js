@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import UserTemplate from 'templates/UserTemplate';
 import { PageContext } from 'context/PageContext';
@@ -13,6 +13,8 @@ import AsideFilters from 'components/molecules/Filters/Filters';
 import FiltersContent from 'components/molecules/Filters/FiltersContent';
 import SkeletonCard from 'components/molecules/ProductCard/SkeletonCard';
 import { motion } from 'framer-motion';
+import useSkeleton from 'hooks/useSkeleton';
+import EmptyState from 'components/molecules/EmptyState/EmptyState';
 
 const Wrapper = styled.div`
   display: flex;
@@ -76,25 +78,9 @@ const Button = styled.button`
 const GridTemplate = () => {
   const [priceRange, setPriceRange] = useState({ min: 0, max: 100 });
   const [areAsideFiltersVisible, setAsideFiltersVisibility] = useState(false);
-  const [isSkeletonContent, setSkeletonContent] = useState(false);
   const page = useContext(PageContext);
 
   const allProducts = useSelector(({ products }) => products);
-  const loading = useSelector(({ isDataLoading }) => isDataLoading);
-
-  useEffect(() => {
-    const showSkeleton = () => {
-      setSkeletonContent(true);
-    };
-    const hideSkeleton = () => {
-      setSkeletonContent(false);
-    };
-
-    if (loading) showSkeleton();
-    setTimeout(hideSkeleton, 1500);
-
-    return () => clearTimeout(hideSkeleton);
-  }, [loading]);
 
   return (
     <UserTemplate page={page}>
@@ -124,22 +110,29 @@ const GridTemplate = () => {
               />
             </SelectWrapper>
           </OptionsWrapper>
+          {!useSkeleton() && allProducts.length === 0 && (
+            <EmptyState type={page} />
+          )}
           <GridWrapper>
-            {isSkeletonContent &&
-              Array(allProducts.length || 9)
-                .fill()
-                .map((_, id) => <SkeletonCard key={id} />)}
-            {!isSkeletonContent &&
-              allProducts.map(({ id, name, price, image }) => (
-                <motion.div
-                  key={id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 1 }}
-                >
-                  <ProductCard id={id} name={name} price={price} img={image} />
-                </motion.div>
-              ))}
+            {useSkeleton()
+              ? Array(allProducts.length || 9)
+                  .fill()
+                  .map((_, id) => <SkeletonCard key={id} />)
+              : allProducts.map(({ id, name, price, image }) => (
+                  <motion.div
+                    key={id}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1 }}
+                  >
+                    <ProductCard
+                      id={id}
+                      name={name}
+                      price={price}
+                      img={image}
+                    />
+                  </motion.div>
+                ))}
           </GridWrapper>
         </MainWrapper>
       </Wrapper>

@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { category } from 'helpers/endpoints';
+import { fetchProducts } from 'actions';
 
 const Wrapper = styled.ul`
   margin: 0;
@@ -30,11 +32,23 @@ const Category = styled.a`
 
 const ProductCategories = () => {
   const allCategories = useSelector(({ categories }) => categories);
+  const dispatch = useDispatch();
+
   return (
     <Wrapper>
+      <CategoryWrapper>
+        <Category
+          onClick={() => dispatch(fetchProducts())}
+        >{`All (${allCategories.reduce(
+          (acc, { total }) => acc + total,
+          0,
+        )})`}</Category>
+      </CategoryWrapper>
       {allCategories.map(({ name, total }) => (
         <CategoryWrapper key={name}>
-          <Category>{`${name} (${total})`}</Category>
+          <Category
+            onClick={() => dispatch(fetchProducts(category(name)))}
+          >{`${name} (${total})`}</Category>
         </CategoryWrapper>
       ))}
     </Wrapper>

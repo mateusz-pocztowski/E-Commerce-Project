@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   padding: 20px;
 `;
 
-const Filters = ({ isOpen, close, priceRange, priceHandler }) => {
+const Filters = ({ isOpen, close, priceRange, priceHandler, applyFilters }) => {
   return (
     <Aside
       barDuration={0}
@@ -19,7 +19,11 @@ const Filters = ({ isOpen, close, priceRange, priceHandler }) => {
       isActive={isOpen}
     >
       <Wrapper>
-        <FiltersContent priceHandler={priceHandler} priceRange={priceRange} />
+        <FiltersContent
+          applyFilters={applyFilters}
+          priceHandler={priceHandler}
+          priceRange={priceRange}
+        />
       </Wrapper>
     </Aside>
   );
@@ -30,6 +34,7 @@ Filters.propTypes = {
   priceRange: PropTypes.objectOf(PropTypes.number).isRequired,
   close: PropTypes.func.isRequired,
   priceHandler: PropTypes.func.isRequired,
+  applyFilters: PropTypes.func.isRequired,
 };
 
 export default Filters;
