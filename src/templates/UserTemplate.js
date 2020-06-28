@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 const Wrapper = styled.div`
   padding-top: 65px;
+  min-height: 85vh;
   ${({ theme }) => theme.mq.lg} {
     padding-top: 85px;
   }

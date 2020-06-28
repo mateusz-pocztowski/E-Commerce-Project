@@ -17,6 +17,7 @@ export const initialState = {
   cart: [],
   wishlist: [],
   categories: [],
+  isDataLoading: false,
   isOverlayVisible: false,
   loading: {
     isLoading: false,
@@ -30,6 +31,7 @@ const rootReducer = (state = initialState, action) => {
     case FETCH_ALL_REQUEST:
       return {
         ...state,
+        isDataLoading: true,
       };
     case FETCH_ALL_FAILURE:
       return {
@@ -40,6 +42,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         products: action.payload,
+        isDataLoading: false,
       };
     case FETCH_CATEGORIES_REQUEST:
       return {
