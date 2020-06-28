@@ -3,6 +3,10 @@ export const defaultStyle = {
     ...styles,
     boxShadow: 'none',
   }),
+  menu: styles => ({
+    ...styles,
+    zIndex: '600',
+  }),
 };
 
 export const errorStyle = {

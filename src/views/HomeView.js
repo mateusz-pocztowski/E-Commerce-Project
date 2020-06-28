@@ -22,16 +22,27 @@ const HomeView = () => {
       <main>
         <Wrapper>
           <Categories />
-          <SectionHeader title="Trending" subTitle="Top view in this week" />
-          <FeaturedProducts products={allProducts.slice(0, 6)} />
+          {allProducts.length !== 0 && (
+            <>
+              <SectionHeader
+                title="Trending"
+                subTitle="Top view in this week"
+              />
+              <FeaturedProducts products={allProducts.slice(0, 6)} />
+            </>
+          )}
         </Wrapper>
         <Parallax img={ParallaxImage} />
         <Wrapper>
-          <SectionHeader
-            title="Best sellers"
-            subTitle="Top sale in this week"
-          />
-          <FeaturedProducts products={allProducts.slice(6, 12)} />
+          {allProducts.length !== 0 && (
+            <>
+              <SectionHeader
+                title="Best sellers"
+                subTitle="Top sale in this week"
+              />
+              <FeaturedProducts products={allProducts.slice(6, 12)} />
+            </>
+          )}
           <Features />
         </Wrapper>
       </main>
