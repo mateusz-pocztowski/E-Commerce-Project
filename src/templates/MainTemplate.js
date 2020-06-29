@@ -9,13 +9,13 @@ import Footer from 'components/organisms/Footer/Footer';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { fetchProducts, fetchCategories } from 'actions';
-import { featured } from 'helpers/endpoints';
+import { featuredEndP } from 'helpers/endpoints';
 
 const MainTemplate = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchProducts(featured));
+    dispatch(fetchProducts(featuredEndP));
     dispatch(fetchCategories());
   }, []);
 

@@ -109,13 +109,18 @@ Aside.propTypes = {
   title: PropTypes.string.isRequired,
   close: PropTypes.func.isRequired,
   isActive: PropTypes.bool.isRequired,
-  isBarActive: PropTypes.bool.isRequired,
-  barDuration: PropTypes.number.isRequired,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
   side: PropTypes.oneOf(['left', 'right']).isRequired,
+  isBarActive: PropTypes.bool,
+  barDuration: PropTypes.number,
+};
+
+Aside.defaultProps = {
+  isBarActive: false,
+  barDuration: 0,
 };
 
 export default Aside;

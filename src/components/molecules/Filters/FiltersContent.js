@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import Input from 'components/atoms/Input/Input';
 import InputRange from 'react-input-range';
 import ProductCategories from 'components/molecules/ProductCategories/ProductCategories';
 import Button from 'components/atoms/Button/Button';
-import PropTypes from 'prop-types';
+import { FiltersContext } from 'context/FiltersContext';
 
 const Heading = styled.h3`
   margin: 30px 0 22px;
@@ -29,31 +29,29 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const FiltersContent = ({ priceRange, priceHandler, applyFilters }) => (
-  <>
-    <Input icon="search" placeholder="Search..." />
-    <Heading>Categories</Heading>
-    <ProductCategories />
-    <Heading>Price</Heading>
-    <InputRangeWrapper>
-      <InputRange
-        step={25}
-        maxValue={200}
-        minValue={0}
-        value={priceRange}
-        onChange={value => priceHandler(value)}
-      />
-    </InputRangeWrapper>
-    <StyledButton secondary onClick={applyFilters}>
-      Filter
-    </StyledButton>
-  </>
-);
+const FiltersContent = () => {
+  const { priceRange, priceHandler, applyFilters } = useContext(FiltersContext);
 
-FiltersContent.propTypes = {
-  priceRange: PropTypes.objectOf(PropTypes.number).isRequired,
-  priceHandler: PropTypes.func.isRequired,
-  applyFilters: PropTypes.func.isRequired,
+  return (
+    <>
+      <Input icon="search" placeholder="Search..." />
+      <Heading>Categories</Heading>
+      <ProductCategories />
+      <Heading>Price</Heading>
+      <InputRangeWrapper>
+        <InputRange
+          step={25}
+          maxValue={200}
+          minValue={0}
+          value={priceRange}
+          onChange={value => priceHandler(value)}
+        />
+      </InputRangeWrapper>
+      <StyledButton secondary onClick={applyFilters}>
+        Filter
+      </StyledButton>
+    </>
+  );
 };
 
 export default FiltersContent;

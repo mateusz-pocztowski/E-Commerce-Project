@@ -42,11 +42,7 @@ const rootReducer = (state = initialState, action) => {
     case FETCH_ITEMS_SUCCESS:
       return {
         ...state,
-        [action.payload.container]: [
-          ...state.products,
-          ...action.payload.items,
-        ],
-        products: [...action.payload.items],
+        [action.payload.container]: [...action.payload.items],
         isDataLoading: false,
       };
     case FETCH_CATEGORIES_REQUEST:

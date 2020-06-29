@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
-import { category } from 'helpers/endpoints';
-import { fetchProducts } from 'actions';
+import { useSelector } from 'react-redux';
+import checkIcon from 'assets/icons/checkmark.svg';
+import { FiltersContext } from 'context/FiltersContext';
 
 const Wrapper = styled.ul`
   margin: 0;
@@ -12,43 +12,61 @@ const Wrapper = styled.ul`
   list-style: none;
 `;
 
-const CategoryWrapper = styled.li`
+const CategoryWrapper = styled.label`
+  display: flex;
+  align-items: center;
   width: 100%;
   color: ${({ theme }) => theme.gray100};
   transition: 0.2s;
   margin: 5px 0;
+  cursor: pointer;
   &:hover {
     color: ${({ theme }) => theme.gray};
   }
 `;
 
-const Category = styled.a`
+const Category = styled.span`
   display: block;
   padding: 5px 0;
   color: inherit;
   text-decoration: none;
-  cursor: pointer;
+  margin-left: 15px;
+`;
+
+const Checkmark = styled.span`
+  position: relative;
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  overflow: hidden;
+  &:after {
+    display: ${({ isActive }) => (isActive ? 'block' : 'none')};
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 20px;
+    height: 20px;
+    background: url(${checkIcon}) center no-repeat;
+    background-size: 70%;
+    background-color: ${({ theme }) => theme.blue};
+  }
 `;
 
 const ProductCategories = () => {
   const allCategories = useSelector(({ categories }) => categories);
-  const dispatch = useDispatch();
+  const { includeCategory, markedCategories } = useContext(FiltersContext);
 
   return (
     <Wrapper>
-      <CategoryWrapper>
-        <Category
-          onClick={() => dispatch(fetchProducts())}
-        >{`All (${allCategories.reduce(
-          (acc, { total }) => acc + total,
-          0,
-        )})`}</Category>
-      </CategoryWrapper>
       {allCategories.map(({ name, total }) => (
-        <CategoryWrapper key={name}>
-          <Category
-            onClick={() => dispatch(fetchProducts(category(name)))}
-          >{`${name} (${total})`}</Category>
+        <CategoryWrapper key={name} onClick={() => includeCategory(name)}>
+          <Checkmark
+            isActive={markedCategories.some(category => category === name)}
+          />
+          <Category>{`${name} (${total})`}</Category>
         </CategoryWrapper>
       ))}
     </Wrapper>

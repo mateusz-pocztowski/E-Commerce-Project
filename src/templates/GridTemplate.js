@@ -1,20 +1,23 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import UserTemplate from 'templates/UserTemplate';
 import { PageContext } from 'context/PageContext';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ProductCard from 'components/molecules/ProductCard/ProductCard';
 import Select from 'react-select';
 import filtersIcon from 'assets/icons/filters.svg';
 import { defaultStyle } from 'components/molecules/AddItemModal/SelectCustom';
 import 'components/atoms/Input/RangeInput.css';
-import AsideFilters from 'components/molecules/Filters/Filters';
+import AsideFilters from 'components/molecules/Filters/AsideFilters';
 import FiltersContent from 'components/molecules/Filters/FiltersContent';
 import SkeletonCard from 'components/molecules/ProductCard/SkeletonCard';
 import { motion } from 'framer-motion';
 import useSkeleton from 'hooks/useSkeleton';
 import EmptyState from 'components/molecules/EmptyState/EmptyState';
+import { fetchProducts } from 'actions';
+import FiltersProvider from 'context/FiltersContext';
+import { priceEndP, categoryEndP, sortEndP } from 'helpers/endpoints';
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,6 +39,7 @@ const GridWrapper = styled.section`
 
 const MainWrapper = styled.main`
   width: 100%;
+  padding-bottom: 50px;
 `;
 
 const SideMenu = styled.aside`
@@ -75,28 +79,64 @@ const Button = styled.button`
   }
 `;
 
+const options = [
+  { value: 'featured', label: 'Featured' },
+  { value: 'priceASC', label: 'Price, low to high' },
+  { value: 'priceDESC', label: 'Price, high to low' },
+  { value: 'alphabetASC', label: 'Alphabetically, A-Z' },
+  { value: 'alphabetDESC', label: 'Alphabetically, Z-A' },
+];
+
 const GridTemplate = () => {
   const [priceRange, setPriceRange] = useState({ min: 0, max: 100 });
+  const [categories, setCategories] = useState([]);
+  const [sortBy, setSortBy] = useState(options[0]);
   const [areAsideFiltersVisible, setAsideFiltersVisibility] = useState(false);
   const page = useContext(PageContext);
 
   const allProducts = useSelector(({ products }) => products);
+  const dispatch = useDispatch();
+
+  const applyFilters = () => {
+    const endpoint = `${
+      categoryEndP(categories) + priceEndP(priceRange) + sortEndP(sortBy.value)
+    }`;
+    dispatch(fetchProducts(endpoint));
+  };
+
+  const includeCategory = categoryName => {
+    if (categories.some(category => category === categoryName)) {
+      const newCategories = categories.filter(
+        category => category !== categoryName,
+      );
+      setCategories(newCategories);
+    } else setCategories([...categories, categoryName]);
+  };
+
+  useEffect(() => {
+    applyFilters();
+  }, [sortBy]);
+
+  const filters = {
+    priceRange,
+    priceHandler: setPriceRange,
+    applyFilters,
+    includeCategory,
+    markedCategories: categories,
+  };
 
   return (
     <UserTemplate page={page}>
       <Wrapper>
-        <AsideFilters
-          isOpen={areAsideFiltersVisible}
-          close={() => setAsideFiltersVisibility(false)}
-          priceRange={priceRange}
-          priceHandler={setPriceRange}
-        />
-        <SideMenu>
-          <FiltersContent
-            priceRange={priceRange}
-            priceHandler={setPriceRange}
+        <FiltersProvider filters={filters}>
+          <AsideFilters
+            isOpen={areAsideFiltersVisible}
+            close={() => setAsideFiltersVisibility(false)}
           />
-        </SideMenu>
+          <SideMenu>
+            <FiltersContent />
+          </SideMenu>
+        </FiltersProvider>
         <MainWrapper>
           <OptionsWrapper>
             <Button onClick={() => setAsideFiltersVisibility(true)}>
@@ -104,9 +144,10 @@ const GridTemplate = () => {
             </Button>
             <SelectWrapper>
               <Select
-                placeholder="Featured"
-                options={[{ value: 'Ascending', label: 'Ascending' }]}
+                options={options}
                 styles={defaultStyle}
+                onChange={option => setSortBy(option)}
+                value={sortBy}
               />
             </SelectWrapper>
           </OptionsWrapper>
@@ -115,7 +156,7 @@ const GridTemplate = () => {
           )}
           <GridWrapper>
             {useSkeleton()
-              ? Array(allProducts.length || 9)
+              ? Array(allProducts.length || 6)
                   .fill()
                   .map((_, id) => <SkeletonCard key={id} />)
               : allProducts.map(({ id, name, price, image }) => (
