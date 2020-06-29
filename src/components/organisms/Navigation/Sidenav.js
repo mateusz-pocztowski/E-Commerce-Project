@@ -49,15 +49,8 @@ const SocialMediaWrapper = styled.div`
   border-top: 1px solid rgba(129, 129, 129, 0.2);
 `;
 
-const Sidenav = ({ close, isActive, isBarActive, barDuration }) => (
-  <Aside
-    barDuration={barDuration}
-    isBarActive={isBarActive}
-    title="Menu"
-    close={close}
-    isActive={isActive}
-    side="left"
-  >
+const Sidenav = ({ close, isActive }) => (
+  <Aside title="Menu" close={close} isActive={isActive} side="left">
     <SidenavLinksWrapper>
       <SidenavLink to="/">Home</SidenavLink>
       <SidenavLink to="/catalog">Catalog</SidenavLink>
@@ -79,8 +72,6 @@ const Sidenav = ({ close, isActive, isBarActive, barDuration }) => (
 Sidenav.propTypes = {
   close: PropTypes.func.isRequired,
   isActive: PropTypes.bool.isRequired,
-  isBarActive: PropTypes.bool.isRequired,
-  barDuration: PropTypes.number.isRequired,
 };
 
 export default Sidenav;

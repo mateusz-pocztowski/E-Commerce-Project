@@ -43,8 +43,6 @@ const Navigation = () => {
       <Sidenav
         close={() => setSidenavVisibility(false)}
         isActive={isSidenavVisible}
-        isBarActive={isLoading}
-        barDuration={duration}
       />
       <SideCart
         close={() => setCartVisibility(false)}

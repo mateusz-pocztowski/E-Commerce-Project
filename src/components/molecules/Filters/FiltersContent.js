@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import Input from 'components/atoms/Input/Input';
 import InputRange from 'react-input-range';
-import ProductCategories from 'components/molecules/ProductCategories/ProductCategories';
+import CategoriesFilters from 'components/molecules/Filters/CategoriesFilters';
 import Button from 'components/atoms/Button/Button';
 import { FiltersContext } from 'context/FiltersContext';
 
@@ -30,13 +30,24 @@ const StyledButton = styled(Button)`
 `;
 
 const FiltersContent = () => {
-  const { priceRange, priceHandler, applyFilters } = useContext(FiltersContext);
+  const {
+    priceRange,
+    priceHandler,
+    applyFilters,
+    searchValue,
+    handleSearch,
+  } = useContext(FiltersContext);
 
   return (
     <>
-      <Input icon="search" placeholder="Search..." />
+      <Input
+        icon="search"
+        placeholder="Search..."
+        value={searchValue}
+        onChange={e => handleSearch(e)}
+      />
       <Heading>Categories</Heading>
-      <ProductCategories />
+      <CategoriesFilters />
       <Heading>Price</Heading>
       <InputRangeWrapper>
         <InputRange
@@ -47,7 +58,7 @@ const FiltersContent = () => {
           onChange={value => priceHandler(value)}
         />
       </InputRangeWrapper>
-      <StyledButton secondary onClick={applyFilters}>
+      <StyledButton secondary onClick={() => applyFilters()}>
         Filter
       </StyledButton>
     </>

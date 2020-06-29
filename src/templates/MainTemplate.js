@@ -17,7 +17,7 @@ const MainTemplate = ({ children }) => {
   useEffect(() => {
     dispatch(fetchProducts(featuredEndP));
     dispatch(fetchCategories());
-  }, []);
+  }, [dispatch]);
 
   return (
     <PageProvider>

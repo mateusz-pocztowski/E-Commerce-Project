@@ -55,7 +55,7 @@ const Checkmark = styled.span`
   }
 `;
 
-const ProductCategories = () => {
+const CategoriesFilters = () => {
   const allCategories = useSelector(({ categories }) => categories);
   const { includeCategory, markedCategories } = useContext(FiltersContext);
 
@@ -73,4 +73,4 @@ const ProductCategories = () => {
   );
 };
 
-export default ProductCategories;
+export default CategoriesFilters;

@@ -15,8 +15,9 @@ FiltersProvider.propTypes = {
   filters: PropTypes.objectOf(
     PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
-      PropTypes.func,
       PropTypes.objectOf(PropTypes.number),
+      PropTypes.string,
+      PropTypes.func,
     ]),
   ).isRequired,
   children: PropTypes.oneOfType([

@@ -1,8 +1,9 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import UserTemplate from 'templates/UserTemplate';
 import { PageContext } from 'context/PageContext';
+import Button from 'components/atoms/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductCard from 'components/molecules/ProductCard/ProductCard';
 import Select from 'react-select';
@@ -15,9 +16,14 @@ import SkeletonCard from 'components/molecules/ProductCard/SkeletonCard';
 import { motion } from 'framer-motion';
 import useSkeleton from 'hooks/useSkeleton';
 import EmptyState from 'components/molecules/EmptyState/EmptyState';
-import { fetchProducts } from 'actions';
+import { fetchProducts, PRODUCT_FETCH_LIMIT } from 'actions';
 import FiltersProvider from 'context/FiltersContext';
-import { priceEndP, categoryEndP, sortEndP } from 'helpers/endpoints';
+import {
+  priceEndP,
+  categoryEndP,
+  sortEndP,
+  searchEndP,
+} from 'helpers/endpoints';
 
 const Wrapper = styled.div`
   display: flex;
@@ -63,7 +69,7 @@ const SelectWrapper = styled.div`
   width: 190px;
 `;
 
-const Button = styled.button`
+const Filter = styled.button`
   display: block;
   background-image: url(${filtersIcon});
   background-size: 21px;
@@ -79,6 +85,11 @@ const Button = styled.button`
   }
 `;
 
+const StyledButton = styled(Button)`
+  width: 220px;
+  margin: 30px auto 0;
+`;
+
 const options = [
   { value: 'featured', label: 'Featured' },
   { value: 'priceASC', label: 'Price, low to high' },
@@ -91,17 +102,24 @@ const GridTemplate = () => {
   const [priceRange, setPriceRange] = useState({ min: 0, max: 100 });
   const [categories, setCategories] = useState([]);
   const [sortBy, setSortBy] = useState(options[0]);
+  const [searchInputValue, setSearchInputValue] = useState('');
   const [areAsideFiltersVisible, setAsideFiltersVisibility] = useState(false);
   const page = useContext(PageContext);
+  const timeoutRef = useRef(null);
 
   const allProducts = useSelector(({ products }) => products);
   const dispatch = useDispatch();
 
-  const applyFilters = () => {
+  const applyFilters = (isNew = false) => {
     const endpoint = `${
-      categoryEndP(categories) + priceEndP(priceRange) + sortEndP(sortBy.value)
+      categoryEndP(categories) +
+      priceEndP(priceRange) +
+      sortEndP(sortBy.value) +
+      searchEndP(searchInputValue)
     }`;
-    dispatch(fetchProducts(endpoint));
+
+    setAsideFiltersVisibility(false);
+    dispatch(fetchProducts(endpoint, isNew));
   };
 
   const includeCategory = categoryName => {
@@ -113,16 +131,29 @@ const GridTemplate = () => {
     } else setCategories([...categories, categoryName]);
   };
 
+  const handleSearch = e => {
+    setSearchInputValue(e.target.value);
+  };
+
   useEffect(() => {
     applyFilters();
   }, [sortBy]);
 
+  useEffect(() => {
+    clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(applyFilters, 700);
+
+    return () => clearTimeout(timeoutRef.current);
+  }, [searchInputValue.length >= 3]);
+
   const filters = {
     priceRange,
     priceHandler: setPriceRange,
-    applyFilters,
-    includeCategory,
+    searchValue: searchInputValue,
+    handleSearch,
     markedCategories: categories,
+    includeCategory,
+    applyFilters,
   };
 
   return (
@@ -139,9 +170,9 @@ const GridTemplate = () => {
         </FiltersProvider>
         <MainWrapper>
           <OptionsWrapper>
-            <Button onClick={() => setAsideFiltersVisibility(true)}>
+            <Filter onClick={() => setAsideFiltersVisibility(true)}>
               Filters
-            </Button>
+            </Filter>
             <SelectWrapper>
               <Select
                 options={options}
@@ -175,6 +206,11 @@ const GridTemplate = () => {
                   </motion.div>
                 ))}
           </GridWrapper>
+          {!useSkeleton() && PRODUCT_FETCH_LIMIT === allProducts.length && (
+            <StyledButton onClick={() => applyFilters(true)} secondary>
+              Load more
+            </StyledButton>
+          )}
         </MainWrapper>
       </Wrapper>
     </UserTemplate>

@@ -16,7 +16,7 @@ const TopnavWrapper = styled.nav`
   position: fixed;
   width: 100%;
   height: 65px;
-  z-index: ${({ theme }) => theme.zIndex.level5};
+  z-index: ${({ theme }) => theme.zIndex.level8};
   background-color: ${({ theme }) => theme.white};
   box-shadow: 0 -1px #ddd inset;
   transition: 0.3s ease-in-out;

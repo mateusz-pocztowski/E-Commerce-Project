@@ -1,6 +1,7 @@
 import {
   FETCH_ITEMS_REQUEST,
   FETCH_ITEMS_SUCCESS,
+  FETCH_NEW_ITEMS_SUCCESS,
   FETCH_ITEMS_FAILURE,
   FETCH_CATEGORIES_REQUEST,
   FETCH_CATEGORIES_SUCCESS,
@@ -43,6 +44,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         [action.payload.container]: [...action.payload.items],
+        isDataLoading: false,
+      };
+    case FETCH_NEW_ITEMS_SUCCESS:
+      return {
+        ...state,
+        products: [...state.products, ...action.payload.items],
         isDataLoading: false,
       };
     case FETCH_CATEGORIES_REQUEST:

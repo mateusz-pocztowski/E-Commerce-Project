@@ -1,23 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Slider from 'components/organisms/Slider/Slider';
 import ParallaxImage from 'assets/images/summer-sale.jpg';
 import Categories from 'components/molecules/Categories/Categories';
 import SectionHeader from 'components/molecules/SectionHeader/SectionHeader';
+import PageLoader from 'components/molecules/PageLoader/PageLoader';
 import FeaturedProducts from 'components/organisms/FeaturedProducts/FeaturedProducts';
 import Parallax from 'components/molecules/Parallax/Parallax';
 import Features from 'components/molecules/Features/Features';
-import TransitionTemplate from 'templates/TransitionTemplate';
 
 const Wrapper = styled.div`
   margin: 12px;
 `;
 
 const HomeView = () => {
+  const [isLoaderVisible, setLoaderVisibility] = useState(true);
   const featuredItems = useSelector(({ featured }) => featured);
+
+  useEffect(() => {
+    const toggleLoader = () => {
+      setLoaderVisibility(false);
+    };
+    setTimeout(toggleLoader, 1300);
+
+    return () => clearTimeout(toggleLoader);
+  }, []);
   return (
-    <TransitionTemplate>
+    <>
+      <PageLoader isActive={isLoaderVisible} />
       <Slider />
       <main>
         <Wrapper>
@@ -46,7 +57,7 @@ const HomeView = () => {
           <Features />
         </Wrapper>
       </main>
-    </TransitionTemplate>
+    </>
   );
 };
 

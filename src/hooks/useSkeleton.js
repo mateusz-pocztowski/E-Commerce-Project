@@ -14,7 +14,7 @@ const useSkeleton = () => {
     };
 
     if (loading) showSkeleton();
-    setTimeout(hideSkeleton, 1500);
+    setTimeout(hideSkeleton, 1000);
 
     return () => clearTimeout(hideSkeleton);
   }, [loading]);

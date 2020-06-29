@@ -3,6 +3,7 @@ import { featuredEndP } from 'helpers/endpoints';
 
 export const FETCH_ITEMS_REQUEST = 'FETCH_ITEMS_REQUEST';
 export const FETCH_ITEMS_SUCCESS = 'FETCH_ITEMS_SUCCESS';
+export const FETCH_NEW_ITEMS_SUCCESS = 'FETCH_NEW_ITEMS_SUCCESS';
 export const FETCH_ITEMS_FAILURE = 'FETCH_ITEMS_FAILURE';
 
 export const FETCH_CATEGORIES_REQUEST = 'FETCH_CATEGORIES_REQUEST';
@@ -21,7 +22,7 @@ const API_PORT = '1337';
 
 const API_URL = `${API_HOST}:${API_PORT}`;
 
-const PRODUCT_FETCH_LIMIT = 12;
+export const PRODUCT_FETCH_LIMIT = 12;
 
 export const fetchProducts = (endpoint = '', isNew = false) => async (
   dispatch,
@@ -32,6 +33,8 @@ export const fetchProducts = (endpoint = '', isNew = false) => async (
     ? getState().products.length + PRODUCT_FETCH_LIMIT
     : PRODUCT_FETCH_LIMIT;
 
+  const actionType = isNew ? FETCH_NEW_ITEMS_SUCCESS : FETCH_ITEMS_SUCCESS;
+
   const URL =
     endpoint === featuredEndP
       ? `http://${API_URL}/products?${endpoint}`
@@ -41,7 +44,7 @@ export const fetchProducts = (endpoint = '', isNew = false) => async (
   try {
     const { data } = await axios.get(URL);
     dispatch({
-      type: FETCH_ITEMS_SUCCESS,
+      type: actionType,
       payload: {
         container: endpoint === featuredEndP ? 'featured' : 'products',
         items: data.map(

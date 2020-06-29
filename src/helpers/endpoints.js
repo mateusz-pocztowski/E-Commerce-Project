@@ -20,3 +20,5 @@ export const sortEndP = type => {
       return '';
   }
 };
+
+export const searchEndP = value => (value ? `&Name_containss=${value}` : '');
