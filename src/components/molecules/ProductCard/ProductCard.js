@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import cartIcon from 'assets/icons/small-cart.svg';
-import heartIcon from 'assets/icons/small-heart.svg';
+import heartIcon from 'assets/icons/heart.svg';
+import eyeIcon from 'assets/icons/eye.svg';
 import defaultImg from 'assets/images/defaultImg.jpg';
 import { addItem } from 'actions';
+import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
 import AddItemModal from 'components/molecules/AddItemModal/AddItemModal';
 
 const Wrapper = styled.div`
@@ -126,10 +128,26 @@ const Description = styled.div`
   }
 `;
 
+const InnerWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 const Name = styled.h3`
   margin: 5px 0;
   font-weight: ${({ theme }) => theme.medium};
   font-size: ${({ theme }) => theme.fontSize.s};
+`;
+
+const WishlistIcon = styled(ButtonIcon)`
+  width: 22px;
+  height: 22px;
+  margin-right: 8px;
+  filter: ${({ inWishlist }) => inWishlist && 'brightness(150%)'};
+  &:hover {
+    filter: brightness(120%);
+  }
 `;
 
 const Price = styled.p`
@@ -138,7 +156,7 @@ const Price = styled.p`
   font-family: ${({ theme }) => theme.fonts.subFont};
 `;
 
-const ProductCard = ({ id, img, price, name }) => {
+const ProductCard = ({ id, img, price, name, inWishlist }) => {
   const [isModalVisible, setModalVisibility] = useState(false);
   const dispatch = useDispatch();
 
@@ -163,17 +181,21 @@ const ProductCard = ({ id, img, price, name }) => {
               >
                 <ButtonContent>Add to Cart</ButtonContent>
               </Button>
-              <Button
-                icon={heartIcon}
-                onClick={() => dispatch(addItem(id, 'wishlist'))}
-              >
-                <ButtonContent>Wishlist</ButtonContent>
+              <Button icon={eyeIcon}>
+                <ButtonContent>View Details</ButtonContent>
               </Button>
             </Options>
           </OptionsWrapper>
         </Overlay>
         <Description>
-          <Name>{name}</Name>
+          <InnerWrapper>
+            <Name>{name}</Name>
+            <WishlistIcon
+              inWishlist={inWishlist}
+              icon={heartIcon}
+              onClick={() => dispatch(addItem(id, 'wishlist'))}
+            />
+          </InnerWrapper>
           <Price>${price}</Price>
         </Description>
       </Wrapper>
@@ -186,10 +208,12 @@ ProductCard.propTypes = {
   price: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   img: PropTypes.string,
+  inWishlist: PropTypes.bool,
 };
 
 ProductCard.defaultProps = {
   img: defaultImg,
+  inWishlist: false,
 };
 
 export default ProductCard;

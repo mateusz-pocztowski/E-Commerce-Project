@@ -8,6 +8,13 @@ const Wrapper = styled.div`
   height: 100%;
 `;
 
+const InnerWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 8px;
+`;
+
 const Description = styled.div`
   width: 100%;
   padding: 13px 0;
@@ -44,7 +51,10 @@ const SkeletonCard = () => {
         <Image src={defaultImg} />
       </Overlay>
       <Description>
-        <Skeleton width="80%" />
+        <InnerWrapper>
+          <Skeleton width={170} />
+          <Skeleton circle height={30} width={30} />
+        </InnerWrapper>
         <Skeleton width="30%" />
       </Description>
     </Wrapper>

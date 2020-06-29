@@ -22,7 +22,7 @@ const HomeView = () => {
     const toggleLoader = () => {
       setLoaderVisibility(false);
     };
-    setTimeout(toggleLoader, 1300);
+    setTimeout(toggleLoader, 900);
 
     return () => clearTimeout(toggleLoader);
   }, []);
@@ -39,7 +39,9 @@ const HomeView = () => {
                 title="Trending"
                 subTitle="Top view in this week"
               />
-              <FeaturedProducts products={featuredItems.slice(0, 6)} />
+              <FeaturedProducts
+                products={featuredItems.slice(0, featuredItems.length)}
+              />
             </>
           )}
         </Wrapper>
@@ -51,7 +53,12 @@ const HomeView = () => {
                 title="Best sellers"
                 subTitle="Top sale in this week"
               />
-              <FeaturedProducts products={featuredItems.slice(6, 12)} />
+              <FeaturedProducts
+                products={featuredItems.slice(
+                  Math.floor(featuredItems.length / 2),
+                  featuredItems.length,
+                )}
+              />
             </>
           )}
           <Features />

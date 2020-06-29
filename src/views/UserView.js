@@ -12,7 +12,13 @@ const UserView = () => {
   return (
     <TransitionTemplate transition={1}>
       <UserTemplate page={page}>
-        {cartItems.length === 0 ? <EmptyState type={page} /> : <h1>hello</h1>}
+        {cartItems.length === 0 ? (
+          <EmptyState type={page} />
+        ) : (
+          <div>
+            <h1>siema</h1>
+          </div>
+        )}
       </UserTemplate>
     </TransitionTemplate>
   );

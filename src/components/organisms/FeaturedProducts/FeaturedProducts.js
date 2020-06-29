@@ -32,17 +32,15 @@ const Wrapper = styled.section`
   }
 `;
 
-const FeaturedProducts = ({ products }) => {
-  return (
-    <Wrapper>
-      <TinySlider settings={settings}>
-        {products.map(({ id, name, price, image }) => (
-          <ProductCard key={id} id={id} name={name} price={price} img={image} />
-        ))}
-      </TinySlider>
-    </Wrapper>
-  );
-};
+const FeaturedProducts = ({ products }) => (
+  <Wrapper>
+    <TinySlider settings={settings}>
+      {products.map(({ id, name, price, image }) => (
+        <ProductCard key={id} id={id} name={name} price={price} img={image} />
+      ))}
+    </TinySlider>
+  </Wrapper>
+);
 
 FeaturedProducts.propTypes = {
   products: PropTypes.arrayOf(PropTypes.object).isRequired,
