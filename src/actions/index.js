@@ -18,6 +18,7 @@ export const REMOVE_WISHLIST_ITEM = 'REMOVE_WISHLIST_ITEM';
 
 export const SHOW_LOADING = 'SHOW_LOADING';
 export const HIDE_LOADING = 'HIDE_LOADING';
+export const SET_SEARCH_VALUE = 'SET_SEARCH_VALUE';
 
 const API_HOST = 'localhost';
 const API_PORT = '1337';
@@ -143,4 +144,11 @@ export const removeWishlistItem = itemID => dispatch => {
     });
     dispatch({ type: HIDE_LOADING });
   }, 600);
+};
+
+export const setSearchValue = value => {
+  return {
+    type: SET_SEARCH_VALUE,
+    payload: value,
+  };
 };

@@ -16,7 +16,7 @@ import SkeletonCard from 'components/molecules/ProductCard/SkeletonCard';
 import { motion } from 'framer-motion';
 import useSkeleton from 'hooks/useSkeleton';
 import EmptyState from 'components/molecules/EmptyState/EmptyState';
-import { fetchProducts, PRODUCT_FETCH_LIMIT } from 'actions';
+import { fetchProducts, setSearchValue, PRODUCT_FETCH_LIMIT } from 'actions';
 import FiltersProvider from 'context/FiltersContext';
 import {
   priceEndP,
@@ -98,17 +98,19 @@ const options = [
   { value: 'alphabetDESC', label: 'Alphabetically, Z-A' },
 ];
 
-const GridTemplate = () => {
-  const [priceRange, setPriceRange] = useState({ min: 0, max: 100 });
+const ProductTemplate = () => {
+  const allProducts = useSelector(({ products }) => products);
+  const givenSearchedValue = useSelector(({ searchValue }) => searchValue);
+
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 150 });
   const [categories, setCategories] = useState([]);
   const [sortBy, setSortBy] = useState(options[0]);
-  const [searchInputValue, setSearchInputValue] = useState('');
+  const [searchInputValue, setSearchInputValue] = useState(givenSearchedValue);
   const [areAsideFiltersVisible, setAsideFiltersVisibility] = useState(false);
-  const page = useContext(PageContext);
-  const timeoutRef = useRef(null);
 
-  const allProducts = useSelector(({ products }) => products);
+  const page = useContext(PageContext);
   const dispatch = useDispatch();
+  const timeoutRef = useRef(null);
 
   const applyFilters = (isNew = false) => {
     const endpoint = `${
@@ -137,14 +139,15 @@ const GridTemplate = () => {
 
   useEffect(() => {
     applyFilters();
-  }, [sortBy]);
+    dispatch(setSearchValue(''));
+  }, [sortBy, givenSearchedValue]);
 
   useEffect(() => {
     clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(applyFilters, 700);
 
     return () => clearTimeout(timeoutRef.current);
-  }, [searchInputValue.length >= 3]);
+  }, [searchInputValue.length >= 3 && !givenSearchedValue]);
 
   const filters = {
     priceRange,
@@ -217,4 +220,4 @@ const GridTemplate = () => {
   );
 };
 
-export default GridTemplate;
+export default ProductTemplate;

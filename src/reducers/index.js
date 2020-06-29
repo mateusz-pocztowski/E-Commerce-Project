@@ -12,6 +12,7 @@ import {
   REMOVE_WISHLIST_ITEM,
   SHOW_LOADING,
   HIDE_LOADING,
+  SET_SEARCH_VALUE,
 } from 'actions';
 
 export const initialState = {
@@ -26,6 +27,7 @@ export const initialState = {
     isLoading: false,
     duration: 0,
   },
+  searchValue: '',
   errorID: null,
 };
 
@@ -115,6 +117,11 @@ const rootReducer = (state = initialState, action) => {
           isLoading: false,
           duration: 0,
         },
+      };
+    case SET_SEARCH_VALUE:
+      return {
+        ...state,
+        searchValue: action.payload,
       };
     default:
       return state;

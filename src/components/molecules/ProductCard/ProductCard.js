@@ -131,7 +131,6 @@ const Description = styled.div`
 const InnerWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
 `;
 
 const Name = styled.h3`
@@ -143,7 +142,7 @@ const Name = styled.h3`
 const WishlistIcon = styled(ButtonIcon)`
   width: 22px;
   height: 22px;
-  margin-right: 8px;
+  margin: 5px 8px 0;
   filter: ${({ inWishlist }) => inWishlist && 'brightness(160%)'};
   &:hover {
     filter: brightness(120%);
