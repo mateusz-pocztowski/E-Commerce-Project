@@ -12,7 +12,9 @@ export const FETCH_CATEGORIES_FAILURE = 'FETCH_CATEGORIES_FAILURE';
 
 export const ADD_ITEM = 'ADD_ITEM';
 export const UPDATE_CART_ITEM = 'UPDATE_CART_ITEM';
-export const REMOVE_ITEM = 'REMOVE_ITEM';
+
+export const REMOVE_CART_ITEM = 'REMOVE_CART_ITEM';
+export const REMOVE_WISHLIST_ITEM = 'REMOVE_WISHLIST_ITEM';
 
 export const SHOW_LOADING = 'SHOW_LOADING';
 export const HIDE_LOADING = 'HIDE_LOADING';
@@ -115,11 +117,11 @@ export const addItem = (item, container) => (dispatch, getState) => {
   }
 };
 
-export const removeItem = (itemID, size, container) => dispatch => {
+export const removeCartItem = (itemID, container, size = '') => dispatch => {
   dispatch({ type: SHOW_LOADING, payload: 1000 });
   setTimeout(() => {
     dispatch({
-      type: REMOVE_ITEM,
+      type: REMOVE_CART_ITEM,
       payload: {
         itemID,
         size,
@@ -128,4 +130,17 @@ export const removeItem = (itemID, size, container) => dispatch => {
     });
     dispatch({ type: HIDE_LOADING });
   }, 1000);
+};
+
+export const removeWishlistItem = itemID => dispatch => {
+  dispatch({ type: SHOW_LOADING, payload: 600 });
+  setTimeout(() => {
+    dispatch({
+      type: REMOVE_WISHLIST_ITEM,
+      payload: {
+        itemID,
+      },
+    });
+    dispatch({ type: HIDE_LOADING });
+  }, 600);
 };

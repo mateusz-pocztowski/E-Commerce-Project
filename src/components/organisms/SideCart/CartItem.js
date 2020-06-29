@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import defaultImg from 'assets/images/defaultImg.jpg';
 import RemoveBtn from 'components/atoms/RemoveBtn/RemoveBtn';
 import PropTypes from 'prop-types';
-import { removeItem, updateCartItem } from 'actions';
+import { removeCartItem, updateCartItem } from 'actions';
 import QuantityField from 'components/molecules/QuantityField/QuantityField';
 import ErrorMsg from 'components/atoms/ErrorMsg/ErrorMsg';
 
@@ -97,7 +97,7 @@ const CartItem = ({ item }) => {
   };
 
   const handleSubtract = () => {
-    if (quantity === 1) dispatch(removeItem(id, size, 'cart'));
+    if (quantity === 1) dispatch(removeCartItem(id, 'cart', size));
     else {
       setErrorVisibility(false);
       dispatch(updateCartItem({ ...item, quantity: quantity - 1 }));
@@ -106,7 +106,9 @@ const CartItem = ({ item }) => {
 
   return (
     <Wrapper>
-      <StyledRemoveBtn onClick={() => dispatch(removeItem(id, size, 'cart'))} />
+      <StyledRemoveBtn
+        onClick={() => dispatch(removeCartItem(id, 'cart', size))}
+      />
       <ImageWrapper>
         <Image src={image || defaultImg} />
       </ImageWrapper>

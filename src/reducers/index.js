@@ -8,7 +8,8 @@ import {
   FETCH_CATEGORIES_FAILURE,
   ADD_ITEM,
   UPDATE_CART_ITEM,
-  REMOVE_ITEM,
+  REMOVE_CART_ITEM,
+  REMOVE_WISHLIST_ITEM,
   SHOW_LOADING,
   HIDE_LOADING,
 } from 'actions';
@@ -84,12 +85,19 @@ const rootReducer = (state = initialState, action) => {
             : cartItem,
         ),
       };
-    case REMOVE_ITEM:
+    case REMOVE_CART_ITEM:
       return {
         ...state,
-        [action.payload.container]: state[action.payload.container].filter(
+        cart: state.cart.filter(
           ({ id, size }) =>
             id !== action.payload.itemID || size !== action.payload.size,
+        ),
+      };
+    case REMOVE_WISHLIST_ITEM:
+      return {
+        ...state,
+        wishlist: state.wishlist.filter(
+          ({ id }) => id !== action.payload.itemID,
         ),
       };
     case SHOW_LOADING:
