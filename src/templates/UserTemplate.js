@@ -53,11 +53,15 @@ const UserTemplate = ({ children, page }) => {
 };
 
 UserTemplate.propTypes = {
-  page: PropTypes.string.isRequired,
+  page: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
+};
+
+UserTemplate.defaultProps = {
+  page: 'catalog',
 };
 
 export default UserTemplate;

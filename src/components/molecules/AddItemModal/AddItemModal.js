@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import Select from 'react-select';
 import { Formik } from 'formik';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import RemoveBtn from 'components/atoms/RemoveBtn/RemoveBtn';
@@ -83,11 +84,16 @@ const StyledButton = styled(Button)`
 const AddItemModal = ({ isActive, itemID, close }) => {
   const [isModalOpen, setModalOpen] = useState(isActive);
   const [isErrorVisible, setErrorVisibility] = useState(false);
+  const [isRedirect, setRedirect] = useState(false);
   const dispatch = useDispatch();
 
-  const itemData = useSelector(({ products }) =>
-    products.find(({ id }) => id === itemID),
-  );
+  const allContainers = useSelector(({ products, wishlist, featured }) => [
+    ...products,
+    ...wishlist,
+    ...featured,
+  ]);
+
+  const itemData = allContainers.find(({ id }) => id === itemID);
 
   const { image, name, price, size } = itemData;
 
@@ -103,119 +109,126 @@ const AddItemModal = ({ isActive, itemID, close }) => {
   };
 
   return (
-    <Modal
-      closeTimeoutMS={300}
-      isOpen={isModalOpen}
-      onRequestClose={handleModalClose}
-    >
-      <Wrapper>
-        <ItemWrapper>
-          <RemoveBtn onClick={handleModalClose} />
-          <ImageWrapper>
-            <Image src={image} />
-          </ImageWrapper>
-          <Content>
-            <Name>{name}</Name>
-            <Price>${price}</Price>
-          </Content>
-        </ItemWrapper>
-        <Formik
-          initialValues={{ itemSize: '', quantity: 1 }}
-          validate={({ itemSize, quantity }) => {
-            const errors = {};
-            if (!itemSize) {
-              errors.itemSize = 'You need to select size!';
-            }
-            if (
-              size.some(
-                ({ value, limit }) => value === itemSize && quantity >= limit,
-              )
-            ) {
-              setErrorVisibility(true);
-              setTimeout(() => setErrorVisibility(false), 1500);
-            }
-            return errors;
-          }}
-          onSubmit={({ itemSize, quantity }, { setSubmitting }) => {
-            const { limit } = sizeOptions.find(
-              ({ value }) => value === itemSize,
-            );
-            const newItem = {
-              ...itemData,
-              size: itemSize,
-              limit,
-              quantity,
-            };
-            dispatch(addItem(newItem, 'cart'));
-            setTimeout(() => {
-              handleModalClose();
-              setSubmitting(false);
-            }, 1500);
-          }}
-        >
-          {({
-            values,
-            touched,
-            errors,
-            setFieldTouched,
-            setFieldValue,
-            handleSubmit,
-            isSubmitting,
-          }) => (
-            <StyledForm onSubmit={handleSubmit}>
-              <Select
-                placeholder={
-                  (errors.itemSize && touched.itemSize && errors.itemSize) ||
-                  'Size'
-                }
-                styles={
-                  errors.itemSize && touched.itemSize && errors.itemSize
-                    ? errorStyle
-                    : defaultStyle
-                }
-                name="itemSize"
-                options={sizeOptions}
-                isOptionDisabled={option => option.limit === 0}
-                onChange={option => {
-                  setFieldValue('itemSize', option.value);
-                  setFieldValue('quantity', 1);
-                  setFieldTouched('itemSize', false);
-                }}
-                onBlur={() => setFieldTouched('itemSize', true)}
-                isSearchable={false}
-              />
-              <QuantityFieldWrapper>
-                <QuantityField
-                  name="quantity"
-                  subtract={() =>
-                    values.quantity > 1 &&
-                    setFieldValue('quantity', values.quantity - 1)
+    <>
+      {isRedirect && <Redirect to={`/catalog/${itemID}`} />}
+      <Modal
+        closeTimeoutMS={300}
+        isOpen={isModalOpen}
+        onRequestClose={handleModalClose}
+      >
+        <Wrapper>
+          <ItemWrapper>
+            <RemoveBtn onClick={handleModalClose} />
+            <ImageWrapper>
+              <Image src={image} />
+            </ImageWrapper>
+            <Content>
+              <Name>{name}</Name>
+              <Price>${price}</Price>
+            </Content>
+          </ItemWrapper>
+          <Formik
+            initialValues={{ itemSize: '', quantity: 1 }}
+            validate={({ itemSize, quantity }) => {
+              const errors = {};
+              if (!itemSize) {
+                errors.itemSize = 'You need to select size!';
+              }
+              if (
+                size.some(
+                  ({ value, limit }) => value === itemSize && quantity >= limit,
+                )
+              ) {
+                setErrorVisibility(true);
+                setTimeout(() => setErrorVisibility(false), 1500);
+              }
+              return errors;
+            }}
+            onSubmit={({ itemSize, quantity }, { setSubmitting }) => {
+              const { limit } = sizeOptions.find(
+                ({ value }) => value === itemSize,
+              );
+              const newItem = {
+                ...itemData,
+                size: itemSize,
+                limit,
+                quantity,
+              };
+              dispatch(addItem(newItem, 'cart'));
+              setTimeout(() => {
+                handleModalClose();
+                setSubmitting(false);
+              }, 1500);
+            }}
+          >
+            {({
+              values,
+              touched,
+              errors,
+              setFieldTouched,
+              setFieldValue,
+              handleSubmit,
+              isSubmitting,
+            }) => (
+              <StyledForm onSubmit={handleSubmit}>
+                <Select
+                  placeholder={
+                    (errors.itemSize && touched.itemSize && errors.itemSize) ||
+                    'Size'
                   }
-                  add={() =>
-                    sizeOptions.some(
-                      ({ value, limit }) =>
-                        value === values.itemSize && limit > values.quantity,
-                    ) && setFieldValue('quantity', values.quantity + 1)
+                  styles={
+                    errors.itemSize && touched.itemSize && errors.itemSize
+                      ? errorStyle
+                      : defaultStyle
                   }
-                  value={values.quantity}
+                  name="itemSize"
+                  options={sizeOptions}
+                  isOptionDisabled={option => option.limit === 0}
+                  onChange={option => {
+                    setFieldValue('itemSize', option.value);
+                    setFieldValue('quantity', 1);
+                    setFieldTouched('itemSize', false);
+                  }}
+                  onBlur={() => setFieldTouched('itemSize', true)}
+                  isSearchable={false}
                 />
-                <ErrorMsg active={isErrorVisible}>
-                  Product limit reached!
-                </ErrorMsg>
-              </QuantityFieldWrapper>
-              <div>
-                <Button disabled={isSubmitting} secondary type="submit">
-                  Add to cart
-                </Button>
-                <StyledButton disabled={isSubmitting} secondary>
-                  View full details
-                </StyledButton>
-              </div>
-            </StyledForm>
-          )}
-        </Formik>
-      </Wrapper>
-    </Modal>
+                <QuantityFieldWrapper>
+                  <QuantityField
+                    name="quantity"
+                    subtract={() =>
+                      values.quantity > 1 &&
+                      setFieldValue('quantity', values.quantity - 1)
+                    }
+                    add={() =>
+                      sizeOptions.some(
+                        ({ value, limit }) =>
+                          value === values.itemSize && limit > values.quantity,
+                      ) && setFieldValue('quantity', values.quantity + 1)
+                    }
+                    value={values.quantity}
+                  />
+                  <ErrorMsg active={isErrorVisible}>
+                    Product limit reached!
+                  </ErrorMsg>
+                </QuantityFieldWrapper>
+                <div>
+                  <Button disabled={isSubmitting} secondary type="submit">
+                    Add to cart
+                  </Button>
+                  <StyledButton
+                    onClick={() => setRedirect(true)}
+                    disabled={isSubmitting}
+                    secondary
+                  >
+                    View full details
+                  </StyledButton>
+                </div>
+              </StyledForm>
+            )}
+          </Formik>
+        </Wrapper>
+      </Modal>
+    </>
   );
 };
 

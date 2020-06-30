@@ -23,7 +23,7 @@ export const SET_SEARCH_VALUE = 'SET_SEARCH_VALUE';
 const API_HOST = 'localhost';
 const API_PORT = '1337';
 
-const API_URL = `${API_HOST}:${API_PORT}`;
+export const API_URL = `http://${API_HOST}:${API_PORT}`;
 
 export const PRODUCT_FETCH_LIMIT = 12;
 
@@ -40,8 +40,8 @@ export const fetchProducts = (endpoint = '', isNew = false) => async (
 
   const URL =
     endpoint === featuredEndP
-      ? `http://${API_URL}/products?${endpoint}`
-      : `http://${API_URL}/products?_start=${start}&_limit=${limit + endpoint}`;
+      ? `${API_URL}/products?${endpoint}`
+      : `${API_URL}/products?_start=${start}&_limit=${limit + endpoint}`;
 
   dispatch({ type: FETCH_ITEMS_REQUEST });
   try {
@@ -56,7 +56,7 @@ export const fetchProducts = (endpoint = '', isNew = false) => async (
             name: Name,
             description: Description,
             category: category.name,
-            image: `http://${API_URL + image.url}`,
+            image: `${API_URL + image.url}`,
             size,
             price: price.toFixed(2),
           }),
@@ -72,7 +72,7 @@ export const fetchProducts = (endpoint = '', isNew = false) => async (
 export const fetchCategories = () => async dispatch => {
   dispatch({ type: FETCH_CATEGORIES_REQUEST });
   try {
-    const { data } = await axios.get(`http://${API_URL}/categories`);
+    const { data } = await axios.get(`${API_URL}/categories`);
     dispatch({
       type: FETCH_CATEGORIES_SUCCESS,
       payload: data.map(({ name, total }) => ({ name, total })),

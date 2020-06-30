@@ -187,7 +187,7 @@ const Topnav = ({ isTransparent, openSidenav, openCart }) => {
           <LinkItem exact activeclass="active" to="/">
             Home
           </LinkItem>
-          <LinkItem exact activeclass="active" to="/catalog">
+          <LinkItem activeclass="active" to="/catalog">
             Catalog
           </LinkItem>
         </LinkItemsWrapper>

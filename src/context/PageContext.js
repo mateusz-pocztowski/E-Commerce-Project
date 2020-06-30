@@ -8,9 +8,7 @@ const pages = ['catalog', 'wishlist', 'cart', 'checkout'];
 
 const PageProvider = ({ children }) => {
   const { pathname } = useLocation();
-  const [value] = pages.filter(page =>
-    page.includes(pathname.replace(/[/\\]/g, '')),
-  );
+  const [value] = pages.filter(page => pathname.includes(page));
 
   return <PageContext.Provider value={value}>{children}</PageContext.Provider>;
 };

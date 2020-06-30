@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Slider from 'components/organisms/Slider/Slider';
@@ -9,27 +9,18 @@ import PageLoader from 'components/molecules/PageLoader/PageLoader';
 import FeaturedProducts from 'components/organisms/FeaturedProducts/FeaturedProducts';
 import Parallax from 'components/molecules/Parallax/Parallax';
 import Features from 'components/molecules/Features/Features';
+import useLoader from 'hooks/useLoader';
 
 const Wrapper = styled.div`
   margin: 12px;
 `;
 
 const HomeView = () => {
-  const [isLoaderVisible, setLoaderVisibility] = useState(true);
   const featuredItems = useSelector(({ featured }) => featured);
-
-  useEffect(() => {
-    const toggleLoader = () => {
-      setLoaderVisibility(false);
-    };
-    setTimeout(toggleLoader, 900);
-
-    return () => clearTimeout(toggleLoader);
-  }, []);
 
   return (
     <>
-      <PageLoader isActive={isLoaderVisible} />
+      <PageLoader isActive={useLoader()} />
       <Slider />
       <main>
         <Wrapper>

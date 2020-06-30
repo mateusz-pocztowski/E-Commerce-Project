@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import cartIcon from 'assets/icons/small-cart.svg';
 import heartIcon from 'assets/icons/heart.svg';
@@ -57,7 +58,10 @@ const Button = styled.button`
   margin: 5px 0;
   padding: 10px;
   width: 150px;
+  text-align: center;
+  color: ${({ theme }) => theme.dark};
   font-family: ${({ theme }) => theme.fonts.subFont};
+  font-weight: ${({ theme }) => theme.regular};
   font-size: ${({ theme }) => theme.fontSize.s};
   border-radius: 50px;
   background-color: ${({ theme }) => theme.white};
@@ -159,6 +163,7 @@ const Price = styled.p`
 
 const ProductCard = ({ id, image, price, name }) => {
   const [isModalVisible, setModalVisibility] = useState(false);
+  const [isRedirect, setRedirect] = useState(false);
   const dispatch = useDispatch();
 
   const page = useContext(PageContext);
@@ -177,6 +182,7 @@ const ProductCard = ({ id, image, price, name }) => {
 
   return (
     <>
+      {isRedirect && <Redirect to={`/catalog/${id}`} />}
       {isModalVisible && (
         <AddItemModal
           itemID={id}
@@ -196,7 +202,7 @@ const ProductCard = ({ id, image, price, name }) => {
               >
                 <ButtonContent>Add to Cart</ButtonContent>
               </Button>
-              <Button icon={eyeIcon}>
+              <Button onClick={() => setRedirect(true)} icon={eyeIcon}>
                 <ButtonContent>View Details</ButtonContent>
               </Button>
             </Options>
