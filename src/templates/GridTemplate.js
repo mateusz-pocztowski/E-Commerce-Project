@@ -26,10 +26,24 @@ const GridWrapper = styled.section`
         grid-template-columns: repeat(4, 1fr);
       }
     `}
+  ${({ explicit }) =>
+    explicit &&
+    css`
+      ${({ theme }) => theme.mq.md} {
+        & div:nth-child(4) {
+          display: none;
+        }
+      }
+      ${({ theme }) => theme.mq.xl} {
+        & div:nth-child(4) {
+          display: block;
+        }
+      }
+    `}
 `;
 
-const GridTemplate = ({ products, isWide }) => (
-  <GridWrapper isWide={isWide}>
+const GridTemplate = ({ products, isWide, explicit }) => (
+  <GridWrapper explicit={explicit} isWide={isWide}>
     {useSkeleton()
       ? Array(products.length || 6)
           .fill()
@@ -51,10 +65,12 @@ const GridTemplate = ({ products, isWide }) => (
 GridTemplate.propTypes = {
   products: PropTypes.arrayOf(PropTypes.object).isRequired,
   isWide: PropTypes.bool,
+  explicit: PropTypes.bool,
 };
 
 GridTemplate.defaultProps = {
   isWide: false,
+  explicit: false,
 };
 
 export default GridTemplate;

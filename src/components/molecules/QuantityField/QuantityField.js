@@ -41,7 +41,7 @@ const QuantityWrapper = styled.div`
       }
       & > ${Quantity} {
         width: 70px;
-        font-size: 24px;
+        font-size: 22px;
       }
     `}
 `;

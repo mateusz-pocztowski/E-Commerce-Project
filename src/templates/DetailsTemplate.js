@@ -3,21 +3,31 @@ import styled from 'styled-components';
 import defaultImg from 'assets/images/defaultImg.jpg';
 import Heading from 'components/atoms/Heading/Heading';
 import PropTypes from 'prop-types';
-import UserTemplate from 'templates/UserTemplate';
+import UserTemplate, { Title } from 'templates/UserTemplate';
+import GridTemplate from 'templates/GridTemplate';
 import AddForm from 'components/molecules/AddItemModal/AddForm';
+import { useSelector } from 'react-redux';
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 20px 0 40px;
   color: ${({ theme }) => theme.dark300};
+  ${({ theme }) => theme.mq.md} {
+    flex-direction: row;
+  }
+`;
+
+const InnerWrapper = styled.div`
+  ${({ theme }) => theme.mq.md} {
+    padding: 15px 0;
+  }
 `;
 
 const ImageWrapper = styled.div`
-  max-width: 500px;
-  border-radius: 5px;
+  max-width: 768px;
+  border-radius: 2px;
   overflow: hidden;
-  box-shadow: 0 0 30px -10px rgba(0, 0, 0, 0.2);
   border: 1px solid #eaeaea;
 `;
 
@@ -30,10 +40,21 @@ const StyledHeading = styled(Heading)`
   margin: 15px 0 8px;
 `;
 
+const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  ${({ theme }) => theme.mq.md} {
+    padding: 0 25px;
+  }
+  ${({ theme }) => theme.mq.xl} {
+    padding: 0 40px;
+  }
+`;
+
 const Price = styled.div`
   margin: 0;
   font-weight: ${({ theme }) => theme.medium};
-  ${({ theme }) => theme.mq.md} {
+  ${({ theme }) => theme.mq.lg} {
     font-size: ${({ theme }) => theme.fontSize.m};
   }
 `;
@@ -49,33 +70,60 @@ const Category = styled.span`
 `;
 
 const Description = styled.div`
-  margin: 25px 0;
+  margin: 25px 0 0;
   line-height: 1.25;
   white-space: pre-wrap;
   color: ${({ theme }) => theme.gray};
   max-width: 700px;
-  ${({ theme }) => theme.mq.md} {
+  ${({ theme }) => theme.mq.lg} {
     font-size: ${({ theme }) => theme.fontSize.sm};
+  }
+`;
+
+const SectionWrapper = styled.div`
+  margin: 30px 0 60px;
+  border-top: 1px solid #ddd;
+`;
+
+const StyledTitle = styled(Title)`
+  margin: 25px 0;
+  text-align: center;
+  text-transform: none;
+  font-weight: ${({ theme }) => theme.semiBold};
+  color: ${({ theme }) => theme.dark300};
+  ${({ theme }) => theme.mq.lg} {
+    margin: 40px 0;
   }
 `;
 
 const DetailsTemplate = ({ productData }) => {
   const { name, description, category, image, price } = productData;
 
+  const featuredItems = useSelector(({ featured }) =>
+    featured.sort(() => Math.random() - 0.5).slice(0, 4),
+  );
   return (
     <UserTemplate>
       <Wrapper>
-        <ImageWrapper>
-          <Image src={image} />
-        </ImageWrapper>
-        <StyledHeading>{name}</StyledHeading>
-        <Price>${price}</Price>
-        <CategoryWrapper>
-          <Category>{category}</Category>
-        </CategoryWrapper>
-        <Description>{description}</Description>
-        <AddForm itemData={productData} />
+        <InnerWrapper>
+          <ImageWrapper>
+            <Image src={image} />
+          </ImageWrapper>
+        </InnerWrapper>
+        <ContentWrapper>
+          <StyledHeading>{name}</StyledHeading>
+          <Price>${price}</Price>
+          <CategoryWrapper>
+            <Category>{category}</Category>
+          </CategoryWrapper>
+          <Description>{description}</Description>
+          <AddForm itemData={productData} />
+        </ContentWrapper>
       </Wrapper>
+      <SectionWrapper>
+        <StyledTitle>You may also like</StyledTitle>
+        <GridTemplate explicit products={featuredItems} isWide />
+      </SectionWrapper>
     </UserTemplate>
   );
 };

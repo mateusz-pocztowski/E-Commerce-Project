@@ -28,7 +28,7 @@ const HeadingWrapper = styled.div`
   }
 `;
 
-const Title = styled.h1`
+export const Title = styled.h1`
   margin: 0;
   font-size: ${({ theme }) => theme.fontSize.l};
   font-weight: ${({ theme }) => theme.medium};
