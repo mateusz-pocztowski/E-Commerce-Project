@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -8,6 +8,7 @@ import logoImg from 'assets/images/logo.png';
 import logoWhiteImg from 'assets/images/logo-white.png';
 import heartIcon from 'assets/icons/small-heart.svg';
 import cartIcon from 'assets/icons/cart.svg';
+import searchIcon from 'assets/icons/search.svg';
 import hamburgerMenuIcon from 'assets/icons/bars.svg';
 import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
 import Search from 'components/atoms/Search/Search';
@@ -139,6 +140,11 @@ const Option = styled.div`
   ${({ theme }) => theme.mq.lg} {
     display: ${({ menu }) => (menu ? 'none' : 'flex')};
   }
+  ${({ isActive }) =>
+    isActive &&
+    css`
+      background-color: ${({ theme }) => theme.white100T};
+    `}
 `;
 
 const Badge = styled.span`
@@ -164,10 +170,13 @@ const WishlistBadge = styled(Badge)`
 `;
 
 const Topnav = ({ isTransparent, openSidenav, openCart }) => {
+  const [isSearchVisible, setSearchVisibility] = useState(false);
+
   const cartItemsNumber = useSelector(({ cart }) =>
     cart.reduce((acc, { quantity }) => acc + quantity, 0),
   );
   const wishlistItemsNumber = useSelector(({ wishlist }) => wishlist.length);
+
   return (
     <TopnavWrapper transparent={isTransparent}>
       <InnerWrapper>
@@ -184,8 +193,17 @@ const Topnav = ({ isTransparent, openSidenav, openCart }) => {
         </LinkItemsWrapper>
         <Logo to="/" />
         <OptionsWrapper>
-          <Option>
-            <Search />
+          <Option
+            isActive={isSearchVisible}
+            onMouseEnter={() => setSearchVisibility(true)}
+            onMouseLeave={() => setSearchVisibility(false)}
+          >
+            <Search
+              topnav
+              isVisible={isSearchVisible}
+              closeSearch={() => setSearchVisibility(false)}
+            />
+            <ButtonIcon icon={searchIcon} />
           </Option>
           <Option as={Link} to="/wishlist">
             <ButtonIcon icon={heartIcon} />

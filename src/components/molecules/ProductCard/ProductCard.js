@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import cartIcon from 'assets/icons/small-cart.svg';
 import heartIcon from 'assets/icons/heart.svg';
 import eyeIcon from 'assets/icons/eye.svg';
+import deleteIcon from 'assets/icons/bin.svg';
 import defaultImg from 'assets/images/defaultImg.jpg';
 import { addItem, removeWishlistItem } from 'actions';
 import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
@@ -140,7 +141,7 @@ const Name = styled.h3`
   font-size: ${({ theme }) => theme.fontSize.s};
 `;
 
-const WishlistIcon = styled(ButtonIcon)`
+const OptionIcon = styled(ButtonIcon)`
   width: 22px;
   height: 22px;
   margin: 5px 8px 0;
@@ -164,7 +165,9 @@ const ProductCard = ({ id, image, price, name }) => {
   const wishlistItems = useSelector(({ wishlist }) => wishlist);
 
   const handleWishlist = productID => {
-    if (wishlistItems.some(item => productID === item.id)) {
+    if (
+      wishlistItems.some(item => productID === item.id || page === 'wishlist')
+    ) {
       dispatch(removeWishlistItem(productID, 'wishlist'));
     } else {
       const newWishlistItem = { id, image, price, name };
@@ -202,13 +205,11 @@ const ProductCard = ({ id, image, price, name }) => {
         <Description>
           <InnerWrapper>
             <Name>{name}</Name>
-            {page !== 'wishlist' && (
-              <WishlistIcon
-                inWishlist={wishlistItems.some(item => item.id === id)}
-                icon={heartIcon}
-                onClick={() => handleWishlist(id)}
-              />
-            )}
+            <OptionIcon
+              inWishlist={wishlistItems.some(item => item.id === id)}
+              icon={page === 'wishlist' ? deleteIcon : heartIcon}
+              onClick={() => handleWishlist(id)}
+            />
           </InnerWrapper>
           <Price>${price}</Price>
         </Description>

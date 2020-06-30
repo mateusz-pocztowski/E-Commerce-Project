@@ -121,6 +121,7 @@ const ProductTemplate = () => {
 
   useEffect(() => {
     applyFilters();
+    setSearchInputValue(givenSearchedValue);
     dispatch(setSearchValue(''));
   }, [sortBy, searchInputValue.length >= 3]);
 

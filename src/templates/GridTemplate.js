@@ -37,6 +37,7 @@ const GridTemplate = ({ products, isWide }) => (
       : products.map(({ id, name, price, image }) => (
           <motion.div
             key={id}
+            positionTransition
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1 }}
