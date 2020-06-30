@@ -54,14 +54,13 @@ const SearchWrapper = styled.form`
   height: 100%;
   transition: all 0.3s;
   opacity: ${({ active }) => (active ? '1' : '0')};
-  border-bottom: 1px solid
-    ${({ active }) => (active ? 'rgba(129, 129, 129, 0.2)' : 'transparent')};
 `;
 
 const SearchInput = styled.input`
   display: block;
   font-size: ${({ theme }) => theme.fontSize.xsm};
-  padding: 0 18px;
+  padding: 10px 18px;
+  border-bottom: 1px solid rgba(129, 129, 129, 0.2);
 `;
 
 const StyledButton = styled(Button)`

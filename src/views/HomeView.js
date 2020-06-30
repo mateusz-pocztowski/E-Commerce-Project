@@ -26,6 +26,7 @@ const HomeView = () => {
 
     return () => clearTimeout(toggleLoader);
   }, []);
+
   return (
     <>
       <PageLoader isActive={isLoaderVisible} />
@@ -39,9 +40,7 @@ const HomeView = () => {
                 title="Trending"
                 subTitle="Top view in this week"
               />
-              <FeaturedProducts
-                products={featuredItems.slice(0, featuredItems.length)}
-              />
+              <FeaturedProducts products={featuredItems.slice(0, 6)} />
             </>
           )}
         </Wrapper>
@@ -54,10 +53,7 @@ const HomeView = () => {
                 subTitle="Top sale in this week"
               />
               <FeaturedProducts
-                products={featuredItems.slice(
-                  Math.floor(featuredItems.length / 2),
-                  featuredItems.length,
-                )}
+                products={featuredItems.slice(6, featuredItems.length)}
               />
             </>
           )}

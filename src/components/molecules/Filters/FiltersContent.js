@@ -36,7 +36,13 @@ const FiltersContent = () => {
     applyFilters,
     searchValue,
     handleSearch,
+    close,
   } = useContext(FiltersContext);
+
+  const handleApply = () => {
+    applyFilters();
+    close();
+  };
 
   return (
     <>
@@ -58,7 +64,7 @@ const FiltersContent = () => {
           onChange={value => priceHandler(value)}
         />
       </InputRangeWrapper>
-      <StyledButton secondary onClick={() => applyFilters()}>
+      <StyledButton secondary onClick={() => handleApply()}>
         Filter
       </StyledButton>
     </>

@@ -6,11 +6,11 @@ import styled, { css } from 'styled-components';
 import { NavLink, Link } from 'react-router-dom';
 import logoImg from 'assets/images/logo.png';
 import logoWhiteImg from 'assets/images/logo-white.png';
-import searchIcon from 'assets/icons/search.svg';
 import heartIcon from 'assets/icons/small-heart.svg';
 import cartIcon from 'assets/icons/cart.svg';
 import hamburgerMenuIcon from 'assets/icons/bars.svg';
 import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
+import Search from 'components/atoms/Search/Search';
 
 const TopnavWrapper = styled.nav`
   position: fixed;
@@ -185,7 +185,7 @@ const Topnav = ({ isTransparent, openSidenav, openCart }) => {
         <Logo to="/" />
         <OptionsWrapper>
           <Option>
-            <ButtonIcon icon={searchIcon} />
+            <Search />
           </Option>
           <Option as={Link} to="/wishlist">
             <ButtonIcon icon={heartIcon} />

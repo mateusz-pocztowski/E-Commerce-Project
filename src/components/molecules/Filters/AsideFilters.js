@@ -19,8 +19,12 @@ const AsideFilters = ({ isOpen, close }) => {
 };
 
 AsideFilters.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool,
   close: PropTypes.func.isRequired,
+};
+
+AsideFilters.defaultProps = {
+  isOpen: false,
 };
 
 export default AsideFilters;

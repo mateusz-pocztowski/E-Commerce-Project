@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import closeIcon from 'assets/icons/delete.svg';
@@ -18,7 +18,7 @@ const SidenavWrapper = styled.aside`
   z-index: ${({ theme }) => theme.zIndex.level8};
   visibility: hidden;
   opacity: 0;
-  height: 100%;
+  height: 100vh;
   overflow: auto;
   will-change: transform;
   transition: all 0.35s cubic-bezier(0.645, 0.045, 0.355, 1);
@@ -85,6 +85,11 @@ const Aside = ({
   const AsideRef = useRef(null);
   useDetectOutsideClick(AsideRef, close);
 
+  useEffect(() => {
+    if (isActive) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'auto';
+  }, [isActive]);
+
   return (
     <PageOverlay isActive={isActive}>
       <SidenavWrapper ref={AsideRef} isActive={isActive} side={side}>
@@ -108,7 +113,7 @@ const Aside = ({
 Aside.propTypes = {
   title: PropTypes.string.isRequired,
   close: PropTypes.func.isRequired,
-  isActive: PropTypes.bool.isRequired,
+  isActive: PropTypes.bool,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
@@ -119,6 +124,7 @@ Aside.propTypes = {
 };
 
 Aside.defaultProps = {
+  isActive: false,
   isBarActive: false,
   barDuration: 0,
 };

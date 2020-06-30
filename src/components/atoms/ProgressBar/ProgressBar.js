@@ -19,12 +19,14 @@ const ProgressBar = ({ isActive, duration, mini }) => (
 );
 
 ProgressBar.propTypes = {
-  isActive: PropTypes.bool.isRequired,
-  duration: PropTypes.number.isRequired,
+  isActive: PropTypes.bool,
+  duration: PropTypes.number,
   mini: PropTypes.bool,
 };
 
 ProgressBar.defaultProps = {
+  isActive: false,
+  duration: 0,
   mini: false,
 };
 

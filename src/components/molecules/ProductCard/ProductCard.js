@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +9,7 @@ import defaultImg from 'assets/images/defaultImg.jpg';
 import { addItem, removeWishlistItem } from 'actions';
 import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
 import AddItemModal from 'components/molecules/AddItemModal/AddItemModal';
+import { PageContext } from 'context/PageContext';
 
 const Wrapper = styled.div`
   position: relative;
@@ -155,17 +156,18 @@ const Price = styled.p`
   font-family: ${({ theme }) => theme.fonts.subFont};
 `;
 
-const ProductCard = ({ id, img, price, name }) => {
+const ProductCard = ({ id, image, price, name }) => {
   const [isModalVisible, setModalVisibility] = useState(false);
   const dispatch = useDispatch();
 
+  const page = useContext(PageContext);
   const wishlistItems = useSelector(({ wishlist }) => wishlist);
 
   const handleWishlist = productID => {
     if (wishlistItems.some(item => productID === item.id)) {
       dispatch(removeWishlistItem(productID, 'wishlist'));
     } else {
-      const newWishlistItem = { id, img, price, name };
+      const newWishlistItem = { id, image, price, name };
       dispatch(addItem(newWishlistItem, 'wishlist'));
     }
   };
@@ -181,7 +183,7 @@ const ProductCard = ({ id, img, price, name }) => {
       )}
       <Wrapper>
         <Overlay>
-          <Image src={img} />
+          <Image src={image} />
           <OptionsWrapper>
             <Options>
               <Button
@@ -200,11 +202,13 @@ const ProductCard = ({ id, img, price, name }) => {
         <Description>
           <InnerWrapper>
             <Name>{name}</Name>
-            <WishlistIcon
-              inWishlist={wishlistItems.some(item => item.id === id)}
-              icon={heartIcon}
-              onClick={() => handleWishlist(id)}
-            />
+            {page !== 'wishlist' && (
+              <WishlistIcon
+                inWishlist={wishlistItems.some(item => item.id === id)}
+                icon={heartIcon}
+                onClick={() => handleWishlist(id)}
+              />
+            )}
           </InnerWrapper>
           <Price>${price}</Price>
         </Description>
@@ -217,11 +221,11 @@ ProductCard.propTypes = {
   id: PropTypes.number.isRequired,
   price: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  img: PropTypes.string,
+  image: PropTypes.string,
 };
 
 ProductCard.defaultProps = {
-  img: defaultImg,
+  image: defaultImg,
 };
 
 export default ProductCard;

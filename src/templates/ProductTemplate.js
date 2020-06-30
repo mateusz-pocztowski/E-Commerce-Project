@@ -1,21 +1,18 @@
-/* eslint-disable react/no-array-index-key */
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import UserTemplate from 'templates/UserTemplate';
 import { PageContext } from 'context/PageContext';
 import Button from 'components/atoms/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
-import ProductCard from 'components/molecules/ProductCard/ProductCard';
 import Select from 'react-select';
 import filtersIcon from 'assets/icons/filters.svg';
 import { defaultStyle } from 'components/molecules/AddItemModal/SelectCustom';
 import 'components/atoms/Input/RangeInput.css';
 import AsideFilters from 'components/molecules/Filters/AsideFilters';
 import FiltersContent from 'components/molecules/Filters/FiltersContent';
-import SkeletonCard from 'components/molecules/ProductCard/SkeletonCard';
-import { motion } from 'framer-motion';
 import useSkeleton from 'hooks/useSkeleton';
 import EmptyState from 'components/molecules/EmptyState/EmptyState';
+import GridTemplate from 'templates/GridTemplate';
 import { fetchProducts, setSearchValue, PRODUCT_FETCH_LIMIT } from 'actions';
 import FiltersProvider from 'context/FiltersContext';
 import {
@@ -28,19 +25,6 @@ import {
 const Wrapper = styled.div`
   display: flex;
   padding: 20px 0;
-`;
-
-const GridWrapper = styled.section`
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  grid-gap: 15px;
-  ${({ theme }) => theme.mq.xs} {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  ${({ theme }) => theme.mq.md} {
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 25px;
-  }
 `;
 
 const MainWrapper = styled.main`
@@ -110,7 +94,6 @@ const ProductTemplate = () => {
 
   const page = useContext(PageContext);
   const dispatch = useDispatch();
-  const timeoutRef = useRef(null);
 
   const applyFilters = (isNew = false) => {
     const endpoint = `${
@@ -120,7 +103,6 @@ const ProductTemplate = () => {
       searchEndP(searchInputValue)
     }`;
 
-    setAsideFiltersVisibility(false);
     dispatch(fetchProducts(endpoint, isNew));
   };
 
@@ -140,14 +122,7 @@ const ProductTemplate = () => {
   useEffect(() => {
     applyFilters();
     dispatch(setSearchValue(''));
-  }, [sortBy, givenSearchedValue]);
-
-  useEffect(() => {
-    clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(applyFilters, 700);
-
-    return () => clearTimeout(timeoutRef.current);
-  }, [searchInputValue.length >= 3 && !givenSearchedValue]);
+  }, [sortBy, searchInputValue.length >= 3]);
 
   const filters = {
     priceRange,
@@ -157,6 +132,7 @@ const ProductTemplate = () => {
     markedCategories: categories,
     includeCategory,
     applyFilters,
+    close: setAsideFiltersVisibility,
   };
 
   return (
@@ -188,27 +164,7 @@ const ProductTemplate = () => {
           {!useSkeleton() && allProducts.length === 0 && (
             <EmptyState type={page} />
           )}
-          <GridWrapper>
-            {useSkeleton()
-              ? Array(allProducts.length || 6)
-                  .fill()
-                  .map((_, id) => <SkeletonCard key={id} />)
-              : allProducts.map(({ id, name, price, image }) => (
-                  <motion.div
-                    key={id}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1 }}
-                  >
-                    <ProductCard
-                      id={id}
-                      name={name}
-                      price={price}
-                      img={image}
-                    />
-                  </motion.div>
-                ))}
-          </GridWrapper>
+          <GridTemplate products={allProducts} />
           {!useSkeleton() && PRODUCT_FETCH_LIMIT === allProducts.length && (
             <StyledButton onClick={() => applyFilters(true)} secondary>
               Load more
