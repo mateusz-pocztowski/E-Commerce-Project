@@ -1,11 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-
-const QuantityWrapper = styled.div`
-  display: flex;
-  margin-top: auto;
-`;
 
 const Input = styled.input`
   display: inline-block;
@@ -22,16 +17,6 @@ const Input = styled.input`
   }
 `;
 
-const MinusInput = styled(Input)`
-  border-radius: 5px 0 0 5px;
-  border-right: none;
-`;
-
-const PlusInput = styled(Input)`
-  border-radius: 0 5px 5px 0;
-  border-left: none;
-`;
-
 const Quantity = styled(Input)`
   width: 50px;
   text-align: center;
@@ -43,8 +28,36 @@ const Quantity = styled(Input)`
   }
 `;
 
-const QuantityField = ({ value, add, subtract }) => (
-  <QuantityWrapper>
+const QuantityWrapper = styled.div`
+  display: flex;
+  margin-top: auto;
+  ${({ big }) =>
+    big &&
+    css`
+      & > ${Input} {
+        font-size: 45px;
+        line-height: 45px;
+        padding: 0 20px;
+      }
+      & > ${Quantity} {
+        width: 70px;
+        font-size: 24px;
+      }
+    `}
+`;
+
+const MinusInput = styled(Input)`
+  border-radius: 5px 0 0 5px;
+  border-right: none;
+`;
+
+const PlusInput = styled(Input)`
+  border-radius: 0 5px 5px 0;
+  border-left: none;
+`;
+
+const QuantityField = ({ big, value, add, subtract }) => (
+  <QuantityWrapper big={big}>
     <MinusInput onClick={add} type="button" value="+" />
     <Quantity as="span">{value}</Quantity>
     <PlusInput onClick={subtract} type="button" value="-" />
@@ -55,6 +68,11 @@ QuantityField.propTypes = {
   value: PropTypes.number.isRequired,
   add: PropTypes.func.isRequired,
   subtract: PropTypes.func.isRequired,
+  big: PropTypes.bool,
+};
+
+QuantityField.defaultProps = {
+  big: false,
 };
 
 export default QuantityField;

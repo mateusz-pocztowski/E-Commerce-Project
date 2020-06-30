@@ -41,7 +41,7 @@ const NotFoundTemplate = ({ type }) => {
       <StyledButton
         as={Link}
         to={type === 'Product' ? '/catalog' : '/'}
-        secondary
+        secondary="true"
       >
         {type === 'Product' ? 'Go back shopping' : 'Homepage'}
       </StyledButton>

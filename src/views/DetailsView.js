@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react';
 import DetailsTemplate from 'templates/DetailsTemplate';
 import { useLocation } from 'react-router-dom';
@@ -10,17 +9,15 @@ import NotFoundTemplate from 'templates/NotFoundTemplate';
 
 const DetailsView = () => {
   const [isNotFound, setIsNotFound] = useState(false);
-  const [productData, setProductData] = useState([
-    {
-      id: null,
-      name: '',
-      description: '',
-      category: '',
-      image: '',
-      size: '',
-      price: null,
-    },
-  ]);
+  const [productData, setProductData] = useState({
+    id: null,
+    name: '',
+    description: '',
+    category: '',
+    image: '',
+    size: [],
+    price: null,
+  });
 
   const { pathname } = useLocation();
   const [slug] = pathname.split('/').reverse();
@@ -29,14 +26,22 @@ const DetailsView = () => {
     const fetchProductData = async () => {
       try {
         const { data } = await axios.get(`${API_URL}/products/${slug}`);
-        setProductData(data);
+        const itemData = {
+          id: data.id,
+          name: data.Name,
+          description: data.Description,
+          category: data.category.name,
+          image: `${API_URL + data.image.url}`,
+          size: data.size,
+          price: data.price.toFixed(2),
+        };
+        setProductData(itemData);
       } catch (err) {
-        console.log(err.response);
         setIsNotFound(true);
       }
     };
     fetchProductData();
-  });
+  }, [pathname]);
 
   return (
     <>
