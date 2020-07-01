@@ -169,10 +169,12 @@ const ProductCard = ({ id, image, price, name }) => {
   const page = useContext(PageContext);
   const wishlistItems = useSelector(({ wishlist }) => wishlist);
 
+  const isInWishlist = productID => {
+    return wishlistItems.some(item => productID === item.id);
+  };
+
   const handleWishlist = productID => {
-    if (
-      wishlistItems.some(item => productID === item.id || page === 'wishlist')
-    ) {
+    if (isInWishlist(productID) || page === 'wishlist') {
       dispatch(removeWishlistItem(productID, 'wishlist'));
     } else {
       const newWishlistItem = { id, image, price, name };
@@ -212,7 +214,7 @@ const ProductCard = ({ id, image, price, name }) => {
           <InnerWrapper>
             <Name>{name}</Name>
             <OptionIcon
-              inWishlist={wishlistItems.some(item => item.id === id)}
+              inWishlist={isInWishlist(id)}
               icon={page === 'wishlist' ? deleteIcon : heartIcon}
               onClick={() => handleWishlist(id)}
             />

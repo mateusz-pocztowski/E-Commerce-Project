@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 import QuantityField from 'components/molecules/QuantityField/QuantityField';
 import Button from 'components/atoms/Button/Button';
 import Select from 'react-select';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
-import { addItem } from 'actions';
+import { addItem, removeWishlistItem } from 'actions';
 import { defaultStyle, errorStyle } from './SelectCustom';
 
 const StyledForm = styled.form`
@@ -53,18 +53,24 @@ const WishlistButton = styled.button`
   border-radius: 4px;
   background-size: 50%;
   margin: 10px;
-  padding: 0 25px;
+  padding: 0 28px;
   cursor: pointer;
   transition: 0.35s;
   &:hover {
-    box-shadow: 0 0 8px 0 rgba(111, 179, 235, 0.7);
+    box-shadow: 0 0 8px 0 rgba(111, 179, 235, 0.8);
   }
+  ${({ inWishlist }) =>
+    inWishlist &&
+    css`
+      background-color: ${({ theme }) => theme.white100};
+      box-shadow: 0 0 8px 0 rgba(111, 179, 235, 0.4);
+    `}
 `;
 
 const AddForm = ({ redirect, isModal, itemData, closeAction }) => {
   const [isErrorVisible, setErrorVisibility] = useState(false);
 
-  const { size } = itemData;
+  const { id, image, price, name, size } = itemData;
   const sizeOptions = size.map(({ value, limit }) => ({
     value,
     label: value.toUpperCase(),
@@ -72,6 +78,20 @@ const AddForm = ({ redirect, isModal, itemData, closeAction }) => {
   }));
 
   const dispatch = useDispatch();
+  const wishlistItems = useSelector(({ wishlist }) => wishlist);
+
+  const isInWishlist = productID => {
+    return wishlistItems.some(item => productID === item.id);
+  };
+
+  const handleWishlist = productID => {
+    if (isInWishlist(productID)) {
+      dispatch(removeWishlistItem(productID, 'wishlist'));
+    } else {
+      const newWishlistItem = { id, image, price, name };
+      dispatch(addItem(newWishlistItem, 'wishlist'));
+    }
+  };
 
   return (
     <Formik
@@ -165,6 +185,7 @@ const AddForm = ({ redirect, isModal, itemData, closeAction }) => {
             </SubmitButton>
             {isModal ? (
               <StyledButton
+                type="button"
                 onClick={redirect}
                 disabled={isSubmitting}
                 secondary
@@ -172,7 +193,11 @@ const AddForm = ({ redirect, isModal, itemData, closeAction }) => {
                 View full details
               </StyledButton>
             ) : (
-              <WishlistButton />
+              <WishlistButton
+                type="button"
+                inWishlist={isInWishlist(id)}
+                onClick={() => handleWishlist(id)}
+              />
             )}
           </InnerWrapper>
         </StyledForm>
