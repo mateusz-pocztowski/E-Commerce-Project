@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import DetailsTemplate from 'templates/DetailsTemplate';
 import { useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { API_URL } from 'actions';
 import useLoader from 'hooks/useLoader';
 import axios from 'axios';
@@ -44,19 +43,13 @@ const DetailsView = () => {
     fetchProductData();
   }, [pathname]);
 
-  const featuredItems = useSelector(({ featured }) =>
-    featured.filter(({ id }) => id !== productData.id).slice(4, 8),
-  );
   return (
     <>
       <PageLoader isActive={useLoader()} />
       {isNotFound ? (
         <NotFoundTemplate type="Product" />
       ) : (
-        <DetailsTemplate
-          featuredItems={featuredItems}
-          productData={productData}
-        />
+        <DetailsTemplate productData={productData} />
       )}
     </>
   );

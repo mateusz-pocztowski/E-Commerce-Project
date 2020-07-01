@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import Button from 'components/atoms/Button/Button';
 import PropTypes from 'prop-types';
 
@@ -13,7 +14,6 @@ const Wrapper = styled.div`
   background-size: cover;
   ${({ theme }) => theme.mq.md} {
     height: 400px;
-    background-attachment: fixed;
   }
 `;
 
@@ -43,6 +43,7 @@ const Title = styled.h1`
 const StyledButton = styled(Button)`
   margin: 0 auto;
   text-transform: none;
+  width: 220px;
 `;
 
 const Parallax = ({ img }) => (
@@ -50,7 +51,9 @@ const Parallax = ({ img }) => (
     <HeaderWrapper>
       <Heading>New Summer Sale</Heading>
       <Title>40% OFF</Title>
-      <StyledButton>Shop now</StyledButton>
+      <StyledButton as={Link} to="/catalog">
+        Shop now
+      </StyledButton>
     </HeaderWrapper>
   </Wrapper>
 );

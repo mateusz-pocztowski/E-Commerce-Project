@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${({ theme }) => theme.white};
-  z-index: ${({ theme }) => theme.zIndex.level8};
+  z-index: ${({ theme }) => theme.zIndex.level10};
   visibility: ${({ isActive }) => (isActive ? 'visible' : 'hidden')};
   opacity: ${({ isActive }) => (isActive ? '1' : '0')};
   transition: 0.25s ease;

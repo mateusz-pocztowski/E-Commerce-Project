@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Title from 'components/atoms/Title/Title';
 import Heading from 'components/atoms/Heading/Heading';
 import Button from 'components/atoms/Button/Button';
@@ -105,7 +106,9 @@ const Slide = ({
           <Heading>{subTitle}</Heading>
           {btnContent && (
             <div>
-              <Button as="a">{btnContent}</Button>
+              <Button as={Link} to="/catalog">
+                {btnContent}
+              </Button>
             </div>
           )}
         </Content>

@@ -18,33 +18,31 @@ const ProductList = styled.div`
   flex-direction: column;
 `;
 
-const CartTemplate = ({ cartItems }) => {
-  return (
-    <Wrapper>
-      <FullCartHeader />
-      <ProductList>
-        <AnimatePresence initial={false}>
-          {cartItems.map(item => (
-            <motion.div
-              key={item.id + item.size}
-              positionTransition
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0, transition: { duration: 0.2 } }}
-            >
-              <FullCartItem item={item} />
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </ProductList>
-      <FullCartSummary
-        subtotal={cartItems
-          .reduce((acc, { quantity, price }) => acc + quantity * price, 0)
-          .toFixed(2)}
-      />
-    </Wrapper>
-  );
-};
+const CartTemplate = ({ cartItems }) => (
+  <Wrapper>
+    <FullCartHeader />
+    <ProductList>
+      <AnimatePresence initial={false}>
+        {cartItems.map(item => (
+          <motion.div
+            key={item.id + item.size}
+            positionTransition
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.2 } }}
+          >
+            <FullCartItem item={item} />
+          </motion.div>
+        ))}
+      </AnimatePresence>
+    </ProductList>
+    <FullCartSummary
+      subtotal={cartItems
+        .reduce((acc, { quantity, price }) => acc + quantity * price, 0)
+        .toFixed(2)}
+    />
+  </Wrapper>
+);
 
 CartTemplate.propTypes = {
   cartItems: PropTypes.arrayOf(PropTypes.object).isRequired,

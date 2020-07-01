@@ -3,17 +3,19 @@ import styled from 'styled-components';
 import defaultImg from 'assets/images/defaultImg.jpg';
 import Heading from 'components/atoms/Heading/Heading';
 import PropTypes from 'prop-types';
-import UserTemplate, { Title } from 'templates/UserTemplate';
-import GridTemplate from 'templates/GridTemplate';
+import UserTemplate from 'templates/UserTemplate';
+import OtherItemsSection from 'components/molecules/OtherItemsSection/OtherItemsSection';
 import AddForm from 'components/molecules/AddItemModal/AddForm';
+import { useSelector } from 'react-redux';
 import { NavigationContext } from 'context/NavigationContext';
 import TransitionTemplate from 'templates/TransitionTemplate';
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 20px 0 40px;
+  padding: 20px 0 40px;
   color: ${({ theme }) => theme.dark300};
+  border-bottom: 1px solid #ddd;
   ${({ theme }) => theme.mq.md} {
     flex-direction: row;
   }
@@ -81,25 +83,13 @@ const Description = styled.div`
   }
 `;
 
-const SectionWrapper = styled.div`
-  margin: 30px 0 60px;
-  border-top: 1px solid #ddd;
-`;
-
-const StyledTitle = styled(Title)`
-  margin: 25px 0;
-  text-align: center;
-  text-transform: none;
-  font-weight: ${({ theme }) => theme.semiBold};
-  color: ${({ theme }) => theme.dark300};
-  ${({ theme }) => theme.mq.lg} {
-    margin: 40px 0;
-  }
-`;
-
-const DetailsTemplate = ({ productData, featuredItems }) => {
+const DetailsTemplate = ({ productData }) => {
   const { name, description, category, image, price } = productData;
   const { openSideCart } = useContext(NavigationContext);
+
+  const featuredItems = useSelector(({ featured }) =>
+    featured.filter(({ id }) => id !== productData.id).slice(2, 6),
+  );
 
   return (
     <UserTemplate>
@@ -120,10 +110,7 @@ const DetailsTemplate = ({ productData, featuredItems }) => {
             <AddForm onFinishFunc={openSideCart} itemData={productData} />
           </ContentWrapper>
         </Wrapper>
-        <SectionWrapper>
-          <StyledTitle>You may also like</StyledTitle>
-          <GridTemplate explicit products={featuredItems} isWide />
-        </SectionWrapper>
+        <OtherItemsSection title="You may also like" items={featuredItems} />
       </TransitionTemplate>
     </UserTemplate>
   );
@@ -138,7 +125,6 @@ DetailsTemplate.propTypes = {
     price: PropTypes.string,
     size: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
-  featuredItems: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 DetailsTemplate.defaultProps = {

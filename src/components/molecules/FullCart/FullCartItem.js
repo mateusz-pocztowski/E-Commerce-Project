@@ -101,6 +101,10 @@ const Section = styled.div`
   }
 `;
 
+const QuantityWrapper = styled.div`
+  position: relative;
+`;
+
 const Detail = styled.div`
   color: ${({ theme }) => theme.gray};
   font-weight: ${({ theme, bold }) => bold && theme.semiBold};
@@ -130,14 +134,14 @@ const FullCartItem = ({ item }) => {
           <Detail>${price}</Detail>
         </Section>
         <Section>
-          <div>
+          <QuantityWrapper>
             <QuantityField
               add={handleAdd}
               subtract={handleSubtract}
               value={quantity}
             />
             <ErrorMsg active={isErrorVisible}>Product limit reached!</ErrorMsg>
-          </div>
+          </QuantityWrapper>
         </Section>
         <Section>
           <Detail bold>${(price * quantity).toFixed(2)}</Detail>
