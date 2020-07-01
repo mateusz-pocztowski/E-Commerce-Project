@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import PropTypes from 'prop-types';
 import searchIcon from 'assets/icons/search.svg';
 import heartIcon from 'assets/icons/small-heart.svg';
 import SocialMedia from 'components/atoms/SocialMedia/SocialMedia';
 import Aside from 'components/molecules/Aside/Aside';
 import Search from 'components/atoms/Search/Search';
+import { NavigationContext } from 'context/NavigationContext';
 
 const SidenavLinksWrapper = styled.div`
   display: flex;
@@ -54,19 +54,25 @@ const SocialMediaWrapper = styled.div`
   border-top: 1px solid rgba(129, 129, 129, 0.2);
 `;
 
-const Sidenav = ({ close, isActive }) => {
+const Sidenav = () => {
   const [isSearchVisible, setSearchVisibility] = useState(false);
+  const { isSidenavVisible, closeSidenav } = useContext(NavigationContext);
 
   return (
-    <Aside title="Menu" close={close} isActive={isActive} side="left">
+    <Aside
+      title="Menu"
+      close={closeSidenav}
+      isActive={isSidenavVisible}
+      side="left"
+    >
       <SidenavLinksWrapper>
-        <SidenavLink onClick={close} to="/">
+        <SidenavLink onClick={closeSidenav} to="/">
           Home
         </SidenavLink>
-        <SidenavLink onClick={close} to="/catalog">
+        <SidenavLink onClick={closeSidenav} to="/catalog">
           Catalog
         </SidenavLink>
-        <SidenavLink onClick={close} icon={heartIcon} to="/wishlist">
+        <SidenavLink onClick={closeSidenav} icon={heartIcon} to="/wishlist">
           Wishlist
         </SidenavLink>
         <SearchSidenavLink
@@ -78,7 +84,7 @@ const Sidenav = ({ close, isActive }) => {
         </SearchSidenavLink>
         <Search
           isVisible={isSearchVisible}
-          close={close}
+          close={closeSidenav}
           closeSearch={() => setSearchVisibility(false)}
         />
       </SidenavLinksWrapper>
@@ -89,11 +95,6 @@ const Sidenav = ({ close, isActive }) => {
       </SocialMediaWrapper>
     </Aside>
   );
-};
-
-Sidenav.propTypes = {
-  close: PropTypes.func.isRequired,
-  isActive: PropTypes.bool.isRequired,
 };
 
 export default Sidenav;

@@ -95,7 +95,7 @@ const AddItemModal = ({ isActive, itemID, close }) => {
             isModal
             itemData={itemData}
             redirect={() => setRedirect(true)}
-            closeAction={handleModalClose}
+            onFinishFunc={handleModalClose}
           />
         </Wrapper>
       </Modal>

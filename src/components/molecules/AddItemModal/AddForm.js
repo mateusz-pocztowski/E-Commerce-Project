@@ -67,7 +67,7 @@ const WishlistButton = styled.button`
     `}
 `;
 
-const AddForm = ({ redirect, isModal, itemData, closeAction }) => {
+const AddForm = ({ redirect, isModal, itemData, onFinishFunc }) => {
   const [isErrorVisible, setErrorVisibility] = useState(false);
 
   const { id, image, price, name, size } = itemData;
@@ -121,7 +121,7 @@ const AddForm = ({ redirect, isModal, itemData, closeAction }) => {
         };
         dispatch(addItem(newItem, 'cart'));
         setTimeout(() => {
-          closeAction();
+          onFinishFunc();
           setSubmitting(false);
         }, 1500);
       }}
@@ -216,7 +216,7 @@ AddForm.propTypes = {
     ]),
   ).isRequired,
   redirect: PropTypes.func,
-  closeAction: PropTypes.func.isRequired,
+  onFinishFunc: PropTypes.func.isRequired,
   isModal: PropTypes.bool,
 };
 

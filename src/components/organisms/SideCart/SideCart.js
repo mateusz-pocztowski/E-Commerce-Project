@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { NavigationContext } from 'context/NavigationContext';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSelector } from 'react-redux';
 import Aside from 'components/molecules/Aside/Aside';
@@ -51,8 +52,9 @@ const ItemsInnerWrapper = styled.div`
   padding: 20px 13px;
 `;
 
-const SideCart = ({ close, isActive, isBarActive, barDuration }) => {
+const SideCart = ({ isBarActive, barDuration }) => {
   const cartItems = useSelector(({ cart }) => cart);
+  const { isSideCartVisible, closeSideCart } = useContext(NavigationContext);
 
   return (
     <Aside
@@ -60,11 +62,11 @@ const SideCart = ({ close, isActive, isBarActive, barDuration }) => {
       isBarActive={isBarActive}
       title="Shopping cart"
       side="right"
-      close={close}
-      isActive={isActive}
+      close={closeSideCart}
+      isActive={isSideCartVisible}
     >
       {cartItems.length === 0 ? (
-        <EmptyCart closeCart={close} />
+        <EmptyCart closeCart={closeSideCart} />
       ) : (
         <Content isOverlayActive={isBarActive}>
           <ItemsWrapper>
@@ -85,7 +87,7 @@ const SideCart = ({ close, isActive, isBarActive, barDuration }) => {
             </ItemsInnerWrapper>
           </ItemsWrapper>
           <Summary
-            closeCart={close}
+            closeCart={closeSideCart}
             subtotal={cartItems
               .reduce((acc, { quantity, price }) => acc + quantity * price, 0)
               .toFixed(2)}
@@ -97,8 +99,6 @@ const SideCart = ({ close, isActive, isBarActive, barDuration }) => {
 };
 
 SideCart.propTypes = {
-  close: PropTypes.func.isRequired,
-  isActive: PropTypes.bool.isRequired,
   isBarActive: PropTypes.bool.isRequired,
   barDuration: PropTypes.number.isRequired,
 };

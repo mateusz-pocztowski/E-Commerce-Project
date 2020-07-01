@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -12,6 +12,7 @@ import searchIcon from 'assets/icons/search.svg';
 import hamburgerMenuIcon from 'assets/icons/bars.svg';
 import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
 import Search from 'components/atoms/Search/Search';
+import { NavigationContext } from 'context/NavigationContext';
 
 const TopnavWrapper = styled.nav`
   position: fixed;
@@ -169,8 +170,9 @@ const WishlistBadge = styled(Badge)`
   top: -5px;
 `;
 
-const Topnav = ({ isTransparent, openSidenav, openCart }) => {
+const Topnav = ({ isTransparent }) => {
   const [isSearchVisible, setSearchVisibility] = useState(false);
+  const { openSidenav, openSideCart } = useContext(NavigationContext);
 
   const cartItemsNumber = useSelector(({ cart }) =>
     cart.reduce((acc, { quantity }) => acc + quantity, 0),
@@ -211,7 +213,7 @@ const Topnav = ({ isTransparent, openSidenav, openCart }) => {
               <WishlistBadge>{wishlistItemsNumber}</WishlistBadge>
             )}
           </Option>
-          <Option visible onClick={openCart}>
+          <Option visible onClick={openSideCart}>
             <ButtonIcon icon={cartIcon} />
             {cartItemsNumber !== 0 && <Badge>{cartItemsNumber}</Badge>}
           </Option>
@@ -222,8 +224,6 @@ const Topnav = ({ isTransparent, openSidenav, openCart }) => {
 };
 
 Topnav.propTypes = {
-  openSidenav: PropTypes.func.isRequired,
-  openCart: PropTypes.func.isRequired,
   isTransparent: PropTypes.bool.isRequired,
 };
 

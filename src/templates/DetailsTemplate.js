@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import defaultImg from 'assets/images/defaultImg.jpg';
 import Heading from 'components/atoms/Heading/Heading';
@@ -7,6 +7,7 @@ import UserTemplate, { Title } from 'templates/UserTemplate';
 import GridTemplate from 'templates/GridTemplate';
 import AddForm from 'components/molecules/AddItemModal/AddForm';
 import { useSelector } from 'react-redux';
+import { NavigationContext } from 'context/NavigationContext';
 
 const Wrapper = styled.div`
   display: flex;
@@ -98,6 +99,7 @@ const StyledTitle = styled(Title)`
 
 const DetailsTemplate = ({ productData }) => {
   const { name, description, category, image, price } = productData;
+  const { openSideCart } = useContext(NavigationContext);
 
   const featuredItems = useSelector(({ featured }) =>
     featured.sort(() => Math.random() - 0.5).slice(0, 4),
@@ -117,7 +119,7 @@ const DetailsTemplate = ({ productData }) => {
             <Category>{category}</Category>
           </CategoryWrapper>
           <Description>{description}</Description>
-          <AddForm itemData={productData} />
+          <AddForm onFinishFunc={openSideCart} itemData={productData} />
         </ContentWrapper>
       </Wrapper>
       <SectionWrapper>
