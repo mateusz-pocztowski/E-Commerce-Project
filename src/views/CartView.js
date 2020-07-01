@@ -1,27 +1,23 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import UserTemplate from 'templates/UserTemplate';
 import TransitionTemplate from 'templates/TransitionTemplate';
-import { PageContext } from 'context/PageContext';
-import { useSelector } from 'react-redux';
+import CartTemplate from 'templates/CartTemplate';
 import EmptyState from 'components/molecules/EmptyState/EmptyState';
+import { useSelector } from 'react-redux';
 
-const UserView = () => {
-  const page = useContext(PageContext);
+const CartView = () => {
   const cartItems = useSelector(({ cart }) => cart);
-
   return (
     <TransitionTemplate transition={1}>
-      <UserTemplate page={page}>
+      <UserTemplate>
         {cartItems.length === 0 ? (
-          <EmptyState type={page} />
+          <EmptyState />
         ) : (
-          <div>
-            <h1>siema</h1>
-          </div>
+          <CartTemplate cartItems={cartItems} />
         )}
       </UserTemplate>
     </TransitionTemplate>
   );
 };
 
-export default UserView;
+export default CartView;

@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { PageContext } from 'context/PageContext';
 
 const Wrapper = styled.div`
   padding-top: 65px;
@@ -39,7 +40,8 @@ export const Title = styled.h1`
   }
 `;
 
-const UserTemplate = ({ children, page }) => {
+const UserTemplate = ({ children }) => {
+  const page = useContext(PageContext);
   return (
     <Wrapper>
       <HeadingWrapper>
@@ -53,15 +55,10 @@ const UserTemplate = ({ children, page }) => {
 };
 
 UserTemplate.propTypes = {
-  page: PropTypes.string,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
-};
-
-UserTemplate.defaultProps = {
-  page: 'catalog',
 };
 
 export default UserTemplate;

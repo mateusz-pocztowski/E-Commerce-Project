@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 import UserTemplate, { Title } from 'templates/UserTemplate';
 import GridTemplate from 'templates/GridTemplate';
 import AddForm from 'components/molecules/AddItemModal/AddForm';
-import { useSelector } from 'react-redux';
 import { NavigationContext } from 'context/NavigationContext';
+import TransitionTemplate from 'templates/TransitionTemplate';
 
 const Wrapper = styled.div`
   display: flex;
@@ -97,35 +97,34 @@ const StyledTitle = styled(Title)`
   }
 `;
 
-const DetailsTemplate = ({ productData }) => {
+const DetailsTemplate = ({ productData, featuredItems }) => {
   const { name, description, category, image, price } = productData;
   const { openSideCart } = useContext(NavigationContext);
 
-  const featuredItems = useSelector(({ featured }) =>
-    featured.sort(() => Math.random() - 0.5).slice(0, 4),
-  );
   return (
     <UserTemplate>
-      <Wrapper>
-        <InnerWrapper>
-          <ImageWrapper>
-            <Image src={image} />
-          </ImageWrapper>
-        </InnerWrapper>
-        <ContentWrapper>
-          <StyledHeading>{name}</StyledHeading>
-          <Price>${price}</Price>
-          <CategoryWrapper>
-            <Category>{category}</Category>
-          </CategoryWrapper>
-          <Description>{description}</Description>
-          <AddForm onFinishFunc={openSideCart} itemData={productData} />
-        </ContentWrapper>
-      </Wrapper>
-      <SectionWrapper>
-        <StyledTitle>You may also like</StyledTitle>
-        <GridTemplate explicit products={featuredItems} isWide />
-      </SectionWrapper>
+      <TransitionTemplate transition={0.4}>
+        <Wrapper>
+          <InnerWrapper>
+            <ImageWrapper>
+              <Image src={image} />
+            </ImageWrapper>
+          </InnerWrapper>
+          <ContentWrapper>
+            <StyledHeading>{name}</StyledHeading>
+            <Price>${price}</Price>
+            <CategoryWrapper>
+              <Category>{category}</Category>
+            </CategoryWrapper>
+            <Description>{description}</Description>
+            <AddForm onFinishFunc={openSideCart} itemData={productData} />
+          </ContentWrapper>
+        </Wrapper>
+        <SectionWrapper>
+          <StyledTitle>You may also like</StyledTitle>
+          <GridTemplate explicit products={featuredItems} isWide />
+        </SectionWrapper>
+      </TransitionTemplate>
     </UserTemplate>
   );
 };
@@ -139,6 +138,7 @@ DetailsTemplate.propTypes = {
     price: PropTypes.string,
     size: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
+  featuredItems: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 DetailsTemplate.defaultProps = {

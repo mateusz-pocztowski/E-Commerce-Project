@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
 import styled from 'styled-components';
 import defaultImg from 'assets/images/defaultImg.jpg';
+import { Link } from 'react-router-dom';
 import RemoveBtn from 'components/atoms/RemoveBtn/RemoveBtn';
 import PropTypes from 'prop-types';
-import { removeCartItem, updateCartItem } from 'actions';
 import QuantityField from 'components/molecules/QuantityField/QuantityField';
 import ErrorMsg from 'components/atoms/ErrorMsg/ErrorMsg';
+import useCart from 'hooks/useCart';
 
 const Wrapper = styled.div`
   position: relative;
@@ -31,7 +31,7 @@ const StyledRemoveBtn = styled(RemoveBtn)`
   right: 10px;
 `;
 
-const ImageWrapper = styled.div`
+const ImageWrapper = styled(Link)`
   flex-basis: 31%;
   display: flex;
   align-items: center;
@@ -80,36 +80,15 @@ const Size = styled.span`
 `;
 
 const CartItem = ({ item }) => {
-  const [isErrorVisible, setErrorVisibility] = useState(false);
-  const dispatch = useDispatch();
+  const [isErrorVisible, { removeItem, handleAdd, handleSubtract }] = useCart(
+    item,
+  );
 
-  const { id, image, price, quantity, size, limit, name } = item;
-
-  const showErrorMessage = () => {
-    setErrorVisibility(true);
-    setTimeout(() => setErrorVisibility(false), 1000);
-  };
-
-  const handleAdd = () => {
-    if (quantity < limit)
-      dispatch(updateCartItem({ ...item, quantity: quantity + 1 }));
-    else showErrorMessage();
-  };
-
-  const handleSubtract = () => {
-    if (quantity === 1) dispatch(removeCartItem(id, 'cart', size));
-    else {
-      setErrorVisibility(false);
-      dispatch(updateCartItem({ ...item, quantity: quantity - 1 }));
-    }
-  };
-
+  const { id, name, image, size, price, quantity } = item;
   return (
     <Wrapper>
-      <StyledRemoveBtn
-        onClick={() => dispatch(removeCartItem(id, 'cart', size))}
-      />
-      <ImageWrapper>
+      <StyledRemoveBtn onClick={removeItem} />
+      <ImageWrapper to={`/catalog/${id}`}>
         <Image src={image || defaultImg} />
       </ImageWrapper>
       <Content>

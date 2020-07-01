@@ -15,6 +15,7 @@ const Button = styled.button`
   padding: 20px 40px;
   pointer-events: all;
   transition: 0.3s;
+  text-decoration: none;
   ${({ theme }) => theme.mq.md} {
     padding: 20px 54px;
     font-size: ${({ theme }) => theme.fontSize.s};

@@ -1,7 +1,6 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import UserTemplate from 'templates/UserTemplate';
-import { PageContext } from 'context/PageContext';
 import Button from 'components/atoms/Button/Button';
 import { useSelector, useDispatch } from 'react-redux';
 import Select from 'react-select';
@@ -92,15 +91,15 @@ const ProductTemplate = () => {
   const [searchInputValue, setSearchInputValue] = useState(givenSearchedValue);
   const [areAsideFiltersVisible, setAsideFiltersVisibility] = useState(false);
 
-  const page = useContext(PageContext);
   const dispatch = useDispatch();
 
   const applyFilters = (isNew = false) => {
+    if (allProducts.length === 0 && givenSearchedValue.length >= 3) return;
     const endpoint = `${
       categoryEndP(categories) +
       priceEndP(priceRange) +
       sortEndP(sortBy.value) +
-      searchEndP(searchInputValue)
+      searchEndP(givenSearchedValue)
     }`;
 
     dispatch(fetchProducts(endpoint, isNew));
@@ -116,14 +115,13 @@ const ProductTemplate = () => {
   };
 
   const handleSearch = e => {
-    setSearchInputValue(e.target.value);
+    dispatch(setSearchValue(e.target.value));
   };
 
   useEffect(() => {
     applyFilters();
     setSearchInputValue(givenSearchedValue);
-    dispatch(setSearchValue(''));
-  }, [sortBy, searchInputValue.length >= 3]);
+  }, [sortBy, givenSearchedValue]);
 
   const filters = {
     priceRange,
@@ -137,7 +135,7 @@ const ProductTemplate = () => {
   };
 
   return (
-    <UserTemplate page={page}>
+    <UserTemplate>
       <Wrapper>
         <FiltersProvider filters={filters}>
           <AsideFilters
@@ -162,9 +160,7 @@ const ProductTemplate = () => {
               />
             </SelectWrapper>
           </OptionsWrapper>
-          {!useSkeleton() && allProducts.length === 0 && (
-            <EmptyState type={page} />
-          )}
+          {!useSkeleton() && allProducts.length === 0 && <EmptyState />}
           <GridTemplate products={allProducts} />
           {!useSkeleton() && PRODUCT_FETCH_LIMIT === allProducts.length && (
             <StyledButton onClick={() => applyFilters(true)} secondary>
