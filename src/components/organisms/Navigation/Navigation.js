@@ -8,6 +8,7 @@ import Topnav from 'components/organisms/Navigation/Topnav';
 import ReturnToTop from 'components/organisms/Navigation/ReturnToTop';
 import SideCart from 'components/organisms/SideCart/SideCart';
 import ProgressBar from 'components/atoms/ProgressBar/ProgressBar';
+import Notifications from 'components/organisms/Navigation/Notifications';
 
 const Wrapper = styled.div`
   position: relative;
@@ -30,6 +31,7 @@ const Navigation = () => {
 
   return (
     <Wrapper>
+      <Notifications />
       <ProgressBar
         isActive={!isSideCartVisible && !isSidenavVisible && isLoading}
         duration={duration}

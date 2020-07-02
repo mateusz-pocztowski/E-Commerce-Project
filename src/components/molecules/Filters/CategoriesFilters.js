@@ -67,7 +67,7 @@ const CategoriesFilters = () => {
 
   return (
     <Wrapper>
-      {isLoading && <StyledSkeleton count={6} />}
+      {isLoading && allCategories.length === 0 && <StyledSkeleton count={6} />}
       {allCategories.map(({ name, total }) => (
         <CategoryWrapper key={name} onClick={() => includeCategory(name)}>
           <Checkmark

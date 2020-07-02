@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { featuredEndP } from 'helpers/endpoints';
+import { toast } from 'react-toastify';
 
 export const FETCH_ITEMS_REQUEST = 'FETCH_ITEMS_REQUEST';
 export const FETCH_ITEMS_SUCCESS = 'FETCH_ITEMS_SUCCESS';
@@ -67,6 +68,7 @@ export const fetchProducts = (endpoint = '', isNew = false) => async (
       },
     });
   } catch (err) {
+    toast.error(`Could not fetch items!`);
     dispatch({ type: FETCH_ITEMS_FAILURE, payload: err });
   }
 };
@@ -80,6 +82,7 @@ export const fetchCategories = () => async dispatch => {
       payload: data.map(({ name, total }) => ({ name, total })),
     });
   } catch (err) {
+    toast.error(`Could not fetch categories!`);
     dispatch({ type: FETCH_CATEGORIES_FAILURE, payload: err });
   }
 };
@@ -114,6 +117,7 @@ export const updateStore = (itemID, itemSize, quantity) => async dispatch => {
       dispatch(fetchProducts(featuredEndP));
     }, 3500);
   } catch (err) {
+    toast.error(`Something went wrong!`);
     dispatch({ type: UPDATE_STORE_FAILURE, payload: err });
   }
 };
