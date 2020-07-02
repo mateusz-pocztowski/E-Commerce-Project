@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import checkIcon from 'assets/icons/checkmark.svg';
+import Skeleton from 'react-loading-skeleton';
 import { FiltersContext } from 'context/FiltersContext';
 
 const Wrapper = styled.ul`
@@ -10,6 +11,10 @@ const Wrapper = styled.ul`
   display: flex;
   flex-direction: column;
   list-style: none;
+`;
+
+const StyledSkeleton = styled(Skeleton)`
+  margin: 8px 0;
 `;
 
 const CategoryWrapper = styled.label`
@@ -57,10 +62,12 @@ const Checkmark = styled.span`
 
 const CategoriesFilters = () => {
   const allCategories = useSelector(({ categories }) => categories);
+  const isLoading = useSelector(({ isDataLoading }) => isDataLoading);
   const { includeCategory, markedCategories } = useContext(FiltersContext);
 
   return (
     <Wrapper>
+      {isLoading && <StyledSkeleton count={6} />}
       {allCategories.map(({ name, total }) => (
         <CategoryWrapper key={name} onClick={() => includeCategory(name)}>
           <Checkmark

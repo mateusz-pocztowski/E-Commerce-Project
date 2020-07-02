@@ -71,7 +71,9 @@ const CheckoutForm = ({ cartItems }) => {
       }}
       validationSchema={CheckoutSchema}
       onSubmit={(values, { setSubmitting }) => {
-        cartItems.map(({ id, size }) => dispatch(updateStore(id, size)));
+        cartItems.map(({ id, size, quantity }) =>
+          dispatch(updateStore(id, size, quantity)),
+        );
         setTimeout(() => {
           setSubmitting(false);
         }, 3500);

@@ -1,8 +1,10 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import TinySlider from 'tiny-slider-react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import ProductCard from 'components/molecules/ProductCard/ProductCard';
+import SkeletonCard from 'components/molecules/ProductCard/SkeletonCard';
 
 const settings = {
   lazyload: true,
@@ -35,9 +37,19 @@ const Wrapper = styled.section`
 const FeaturedProducts = ({ products }) => (
   <Wrapper>
     <TinySlider settings={settings}>
-      {products.map(({ id, name, price, image }) => (
-        <ProductCard key={id} id={id} name={name} price={price} image={image} />
-      ))}
+      {products.length === 0
+        ? Array(6)
+            .fill()
+            .map((_, id) => <SkeletonCard key={id} />)
+        : products.map(({ id, name, price, image }) => (
+            <ProductCard
+              key={id}
+              id={id}
+              name={name}
+              price={price}
+              image={image}
+            />
+          ))}
     </TinySlider>
   </Wrapper>
 );

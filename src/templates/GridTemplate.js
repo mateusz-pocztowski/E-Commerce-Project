@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import SkeletonCard from 'components/molecules/ProductCard/SkeletonCard';
 import ProductCard from 'components/molecules/ProductCard/ProductCard';
 import { motion } from 'framer-motion';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import useSkeleton from 'hooks/useSkeleton';
 
@@ -44,10 +45,11 @@ const GridWrapper = styled.section`
 
 const GridTemplate = ({ products, isWide, explicit }) => {
   const isSkeletonLoading = useSkeleton();
+  const isLoading = useSelector(({ isDataLoading }) => isDataLoading);
 
   return (
     <GridWrapper explicit={explicit} isWide={isWide}>
-      {isSkeletonLoading
+      {isLoading || isSkeletonLoading
         ? Array(products.length || 6)
             .fill()
             .map((_, id) => <SkeletonCard key={id} />)

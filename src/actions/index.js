@@ -107,11 +107,11 @@ export const updateStore = (itemID, itemSize, quantity) => async dispatch => {
         : element,
     );
     await axios.put(`${API_URL}/products/${itemID}`, {
-      newSize,
+      size: newSize,
     });
     setTimeout(() => {
       dispatch({ type: UPDATE_STORE_SUCCESS });
-      dispatch(fetchProducts('products?featured=true'));
+      dispatch(fetchProducts(featuredEndP));
     }, 3500);
   } catch (err) {
     dispatch({ type: UPDATE_STORE_FAILURE, payload: err });

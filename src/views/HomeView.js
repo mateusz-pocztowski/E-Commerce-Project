@@ -17,16 +17,16 @@ const Wrapper = styled.div`
 
 const HomeView = () => {
   const featuredItems = useSelector(({ featured }) => featured);
-  const loading = useLoader();
+  const isLoading = useSelector(({ isDataLoading }) => isDataLoading);
 
   return (
     <>
-      <PageLoader isActive={loading} />
+      <PageLoader isActive={useLoader()} />
       <Slider />
       <main>
         <Wrapper>
           <Categories />
-          {featuredItems.length !== 0 && (
+          {!isLoading && featuredItems.length === 0 ? null : (
             <>
               <SectionHeader
                 title="Trending"
@@ -38,7 +38,7 @@ const HomeView = () => {
         </Wrapper>
         <Parallax img={ParallaxImage} />
         <Wrapper>
-          {featuredItems.length !== 0 && (
+          {!isLoading && featuredItems.length === 0 ? null : (
             <>
               <SectionHeader
                 title="Best sellers"
