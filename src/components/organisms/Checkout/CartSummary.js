@@ -90,7 +90,7 @@ const CartSummary = ({ cartItems }) => {
           Cart Summary
         </Heading>
         {cartItems.map(({ name, quantity, size, category, price }) => (
-          <ItemWrapper>
+          <ItemWrapper key={name + size}>
             <ItemContent>
               <Name>{`${quantity} × ${name}`}</Name>
               <Name>${price}</Name>

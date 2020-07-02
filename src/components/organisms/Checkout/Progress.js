@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import formIcon from 'assets/icons/form.svg';
 import cartIcon from 'assets/icons/cart.svg';
@@ -81,7 +82,7 @@ const Line = styled.hr`
 const Progress = () => (
   <Wrapper>
     <ElementWrapper>
-      <Element icon={cartIcon} />
+      <Element as={Link} to="/cart" icon={cartIcon} />
       <ElementName>Your cart</ElementName>
     </ElementWrapper>
     <LineWrapper>

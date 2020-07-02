@@ -1,4 +1,13 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
+
+const spin = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+`;
 
 const Button = styled.button`
   display: block;
@@ -40,6 +49,26 @@ const Button = styled.button`
       padding: 17px 32px !important;
       &:hover {
         border-color: ${({ theme }) => theme.blue};
+      }
+    `}
+  ${({ submit }) =>
+    submit &&
+    css`
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &::before {
+        content: '';
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        border: 3px solid ${({ theme }) => theme.white};
+        border-top: 3px solid transparent;
+        border-bottom: 3px solid transparent;
+        border-radius: 50%;
+        opacity: ${({ disabled }) => (disabled ? '1' : '0')};
+        animation: ${spin} 1s ease infinite;
       }
     `}
 `;

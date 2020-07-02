@@ -165,7 +165,7 @@ const ProductTemplate = () => {
           {!isSkeletonLoading && allProducts.length === 0 && <EmptyState />}
           <GridTemplate products={allProducts} />
           {!isSkeletonLoading && PRODUCT_FETCH_LIMIT === allProducts.length && (
-            <StyledButton onClick={() => applyFilters(true)} secondary>
+            <StyledButton onClick={() => applyFilters(true)} secondary="true">
               Load more
             </StyledButton>
           )}

@@ -178,7 +178,7 @@ const AddForm = ({ redirect, isModal, itemData, onFinishFunc }) => {
             <SubmitButton
               isRound={isModal}
               disabled={isSubmitting}
-              secondary
+              secondary="true"
               type="submit"
             >
               Add to cart
@@ -188,7 +188,7 @@ const AddForm = ({ redirect, isModal, itemData, onFinishFunc }) => {
                 type="button"
                 onClick={redirect}
                 disabled={isSubmitting}
-                secondary
+                secondary="true"
               >
                 View full details
               </StyledButton>

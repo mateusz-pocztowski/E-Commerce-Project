@@ -64,7 +64,7 @@ const FiltersContent = () => {
           onChange={value => priceHandler(value)}
         />
       </InputRangeWrapper>
-      <StyledButton secondary onClick={() => handleApply()}>
+      <StyledButton secondary="true" onClick={() => handleApply()}>
         Filter
       </StyledButton>
     </>

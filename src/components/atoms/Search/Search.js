@@ -116,7 +116,7 @@ const Search = ({ close, isVisible, closeSearch, topnav }) => {
             ref={searchRef}
             isTopnav={topnav}
           />
-          <StyledButton isTopnav={topnav} type="submit" secondary>
+          <StyledButton isTopnav={topnav} type="submit" secondary="true">
             Submit
           </StyledButton>
         </InnerWrapper>

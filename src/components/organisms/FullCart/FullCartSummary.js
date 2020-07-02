@@ -53,7 +53,7 @@ const FullCartSummary = ({ subtotal }) => {
   return (
     <Wrapper>
       <ButtonWrapper>
-        <Button as={Link} to="/catalog" secondary>
+        <Button as={Link} to="/catalog" secondary="true">
           Continue shopping
         </Button>
       </ButtonWrapper>
@@ -66,7 +66,7 @@ const FullCartSummary = ({ subtotal }) => {
           <Detail>Shipping:</Detail>
           <Detail>Free</Detail>
         </Total>
-        <StyledButton as={Link} to="/checkout" secondary>
+        <StyledButton as={Link} to="/checkout" secondary="true">
           Check out
         </StyledButton>
       </Summary>

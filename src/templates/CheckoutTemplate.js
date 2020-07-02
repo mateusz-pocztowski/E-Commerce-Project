@@ -3,7 +3,7 @@ import UserTemplate from 'templates/UserTemplate';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Progress from 'components/organisms/Checkout/Progress';
-import CheckoutForm from 'components/organisms/Checkout/Form';
+import CheckoutForm from 'components/organisms/Checkout/Form/Form';
 import CartSummary from 'components/organisms/Checkout/CartSummary';
 
 const Wrapper = styled.div`
