@@ -11,11 +11,12 @@ const Button = styled.button`
   font-family: ${({ theme }) => theme.fonts.mainFont};
   color: ${({ theme }) => theme.dark};
   text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
   border-radius: 50px;
   padding: 20px 40px;
   pointer-events: all;
   transition: 0.3s;
-  text-decoration: none;
   ${({ theme }) => theme.mq.md} {
     padding: 20px 54px;
     font-size: ${({ theme }) => theme.fontSize.s};

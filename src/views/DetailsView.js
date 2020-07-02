@@ -21,6 +21,7 @@ const DetailsView = () => {
 
   const { pathname } = useLocation();
   const [slug] = pathname.split('/').reverse();
+  const loading = useLoader();
 
   useEffect(() => {
     const fetchProductData = async () => {
@@ -45,7 +46,7 @@ const DetailsView = () => {
 
   return (
     <>
-      <PageLoader isActive={useLoader()} />
+      <PageLoader isActive={loading} />
       {isNotFound ? (
         <NotFoundTemplate type="Product" />
       ) : (

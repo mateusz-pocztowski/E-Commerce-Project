@@ -3,7 +3,6 @@ import searchIcon from 'assets/icons/search-black.svg';
 
 const Input = styled.input`
   width: 100%;
-  min-width: 220px;
   padding: 15px 30px;
   border: none;
   font-weight: ${({ theme }) => theme.regular};

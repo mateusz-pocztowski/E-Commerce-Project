@@ -55,7 +55,9 @@ const Summary = ({ subtotal, closeCart }) => (
       <StyledButton as={Link} to="/cart" secondary="true" onClick={closeCart}>
         View cart
       </StyledButton>
-      <Button secondary>Check out</Button>
+      <Button onClick={closeCart} as={Link} to="/checkout" secondary>
+        Check out
+      </Button>
       <SummaryInfo>Shipping & taxes calculated at check out</SummaryInfo>
     </SummaryContent>
   </SummaryWrapper>

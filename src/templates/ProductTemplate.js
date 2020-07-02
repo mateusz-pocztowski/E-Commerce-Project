@@ -134,6 +134,8 @@ const ProductTemplate = () => {
     close: setAsideFiltersVisibility,
   };
 
+  const isSkeletonLoading = useSkeleton();
+
   return (
     <UserTemplate>
       <Wrapper>
@@ -160,9 +162,9 @@ const ProductTemplate = () => {
               />
             </SelectWrapper>
           </OptionsWrapper>
-          {!useSkeleton() && allProducts.length === 0 && <EmptyState />}
+          {!isSkeletonLoading && allProducts.length === 0 && <EmptyState />}
           <GridTemplate products={allProducts} />
-          {!useSkeleton() && PRODUCT_FETCH_LIMIT === allProducts.length && (
+          {!isSkeletonLoading && PRODUCT_FETCH_LIMIT === allProducts.length && (
             <StyledButton onClick={() => applyFilters(true)} secondary>
               Load more
             </StyledButton>

@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   width: 50px;
   height: 50px;
   background-color: ${({ theme }) => theme.white100};
-  z-index: ${({ theme }) => theme.zIndex.level9};
+  z-index: ${({ theme }) => theme.zIndex.level7};
   padding: 10px;
   border-radius: 4px;
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);

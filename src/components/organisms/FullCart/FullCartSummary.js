@@ -35,6 +35,7 @@ const StyledHeading = styled(Heading)`
 
 const StyledButton = styled(Button)`
   border-radius: 4px;
+  text-align: center;
 `;
 
 const ButtonWrapper = styled.div`
@@ -65,7 +66,9 @@ const FullCartSummary = ({ subtotal }) => {
           <Detail>Shipping:</Detail>
           <Detail>Free</Detail>
         </Total>
-        <StyledButton secondary>Check out</StyledButton>
+        <StyledButton as={Link} to="/checkout" secondary>
+          Check out
+        </StyledButton>
       </Summary>
     </Wrapper>
   );

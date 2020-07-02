@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import FullCartItem from 'components/molecules/FullCart/FullCartItem';
-import FullCartHeader from 'components/molecules/FullCart/FullCartHeader';
-import FullCartSummary from 'components/molecules/FullCart/FullCartSummary';
+import FullCartItem from 'components/organisms/FullCart/FullCartItem';
+import FullCartHeader from 'components/organisms/FullCart/FullCartHeader';
+import FullCartSummary from 'components/organisms/FullCart/FullCartSummary';
 import PropTypes from 'prop-types';
 import { AnimatePresence, motion } from 'framer-motion';
 

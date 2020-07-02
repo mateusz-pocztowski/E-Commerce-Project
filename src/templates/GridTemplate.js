@@ -42,25 +42,29 @@ const GridWrapper = styled.section`
     `}
 `;
 
-const GridTemplate = ({ products, isWide, explicit }) => (
-  <GridWrapper explicit={explicit} isWide={isWide}>
-    {useSkeleton()
-      ? Array(products.length || 6)
-          .fill()
-          .map((_, id) => <SkeletonCard key={id} />)
-      : products.map(({ id, name, price, image }) => (
-          <motion.div
-            key={id}
-            positionTransition={!explicit}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-          >
-            <ProductCard id={id} name={name} price={price} image={image} />
-          </motion.div>
-        ))}
-  </GridWrapper>
-);
+const GridTemplate = ({ products, isWide, explicit }) => {
+  const isSkeletonLoading = useSkeleton();
+
+  return (
+    <GridWrapper explicit={explicit} isWide={isWide}>
+      {isSkeletonLoading
+        ? Array(products.length || 6)
+            .fill()
+            .map((_, id) => <SkeletonCard key={id} />)
+        : products.map(({ id, name, price, image }) => (
+            <motion.div
+              key={id}
+              positionTransition={!explicit}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
+              <ProductCard id={id} name={name} price={price} image={image} />
+            </motion.div>
+          ))}
+    </GridWrapper>
+  );
+};
 
 GridTemplate.propTypes = {
   products: PropTypes.arrayOf(PropTypes.object).isRequired,

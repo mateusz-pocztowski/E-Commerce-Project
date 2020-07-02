@@ -22,6 +22,7 @@ const InnerWrapper = styled.div`
 `;
 
 const HeadingWrapper = styled.div`
+  display: ${({ isVisible }) => (isVisible ? 'block' : 'none')};
   padding: 20px 0;
   box-shadow: 0 -1px #ddd inset;
   ${({ theme }) => theme.mq.lg} {
@@ -40,11 +41,11 @@ export const Title = styled.h1`
   }
 `;
 
-const UserTemplate = ({ children }) => {
+const UserTemplate = ({ children, header }) => {
   const page = useContext(PageContext);
   return (
     <Wrapper>
-      <HeadingWrapper>
+      <HeadingWrapper isVisible={header}>
         <InnerWrapper>
           <Title>{page}</Title>
         </InnerWrapper>
@@ -59,6 +60,11 @@ UserTemplate.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
+  header: PropTypes.bool,
+};
+
+UserTemplate.defaultProps = {
+  header: true,
 };
 
 export default UserTemplate;

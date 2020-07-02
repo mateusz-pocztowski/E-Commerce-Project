@@ -15,7 +15,7 @@ const SidenavWrapper = styled.aside`
   width: 100vw;
   top: 0;
   bottom: 0;
-  z-index: ${({ theme }) => theme.zIndex.level8};
+  z-index: ${({ theme }) => theme.zIndex.level9};
   visibility: hidden;
   opacity: 0;
   height: 100vh;

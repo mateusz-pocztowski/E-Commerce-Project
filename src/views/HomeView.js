@@ -17,10 +17,11 @@ const Wrapper = styled.div`
 
 const HomeView = () => {
   const featuredItems = useSelector(({ featured }) => featured);
+  const loading = useLoader();
 
   return (
     <>
-      <PageLoader isActive={useLoader()} />
+      <PageLoader isActive={loading} />
       <Slider />
       <main>
         <Wrapper>

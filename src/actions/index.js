@@ -64,8 +64,8 @@ export const fetchProducts = (endpoint = '', isNew = false) => async (
       },
     });
   } catch (err) {
-    const { status } = err.response;
-    dispatch({ type: FETCH_ITEMS_FAILURE, payload: status });
+    // const { status } = err.response;
+    // dispatch({ type: FETCH_ITEMS_FAILURE, payload: status });
   }
 };
 
@@ -78,8 +78,8 @@ export const fetchCategories = () => async dispatch => {
       payload: data.map(({ name, total }) => ({ name, total })),
     });
   } catch (err) {
-    const { status } = err.response;
-    dispatch({ type: FETCH_CATEGORIES_FAILURE, payload: status });
+    // const { status } = err.response;
+    // dispatch({ type: FETCH_CATEGORIES_FAILURE, payload: status });
   }
 };
 

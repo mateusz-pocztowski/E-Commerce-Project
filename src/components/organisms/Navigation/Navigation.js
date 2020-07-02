@@ -37,7 +37,9 @@ const Navigation = () => {
       <Topnav isTransparent={pathname === '/' && scrollTop < 10} />
       <Sidenav />
       <SideCart isBarActive={isLoading} barDuration={duration} />
-      <ReturnToTop isVisible={scrollTop >= 250} />
+      <ReturnToTop
+        isVisible={scrollTop >= 250 && !isSideCartVisible && !isSidenavVisible}
+      />
     </Wrapper>
   );
 };
