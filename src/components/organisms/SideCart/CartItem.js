@@ -84,12 +84,12 @@ const CartItem = ({ item }) => {
     item,
   );
 
-  const { id, name, image, size, price, quantity } = item;
+  const { id, name, image, size, price, quantity, alt } = item;
   return (
     <Wrapper>
       <StyledRemoveBtn onClick={removeItem} />
       <ImageWrapper to={`/catalog/${id}`}>
-        <Image src={image || defaultImg} />
+        <Image src={image || defaultImg} alt={alt} />
       </ImageWrapper>
       <Content>
         <Name>{name}</Name>
@@ -116,6 +116,7 @@ CartItem.propTypes = {
     id: PropTypes.number,
     image: PropTypes.string,
     price: PropTypes.string,
+    alt: PropTypes.string,
     quantity: PropTypes.number,
     limit: PropTypes.number,
     name: PropTypes.string,

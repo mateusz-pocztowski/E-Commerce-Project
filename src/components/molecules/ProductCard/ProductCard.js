@@ -161,7 +161,7 @@ const Price = styled.p`
   font-family: ${({ theme }) => theme.fonts.subFont};
 `;
 
-const ProductCard = ({ id, image, price, name }) => {
+const ProductCard = ({ id, image, price, name, alt }) => {
   const [isModalVisible, setModalVisibility] = useState(false);
   const [isRedirect, setRedirect] = useState(false);
   const dispatch = useDispatch();
@@ -177,7 +177,7 @@ const ProductCard = ({ id, image, price, name }) => {
     if (isInWishlist(productID) || page === 'wishlist') {
       dispatch(removeWishlistItem(productID, 'wishlist'));
     } else {
-      const newWishlistItem = { id, image, price, name };
+      const newWishlistItem = { id, image, price, name, alt };
       dispatch(addItem(newWishlistItem, 'wishlist'));
     }
   };
@@ -194,7 +194,7 @@ const ProductCard = ({ id, image, price, name }) => {
       )}
       <Wrapper>
         <Overlay>
-          <Image src={image} />
+          <Image src={image} alt={alt} />
           <OptionsWrapper>
             <Options>
               <Button
@@ -230,6 +230,7 @@ ProductCard.propTypes = {
   id: PropTypes.number.isRequired,
   price: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
   image: PropTypes.string,
 };
 

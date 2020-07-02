@@ -24,7 +24,7 @@ export const initialState = {
   cart: [],
   wishlist: [],
   categories: [],
-  isDataLoading: false,
+  isDataLoading: true,
   isOverlayVisible: false,
   loading: {
     isLoading: false,

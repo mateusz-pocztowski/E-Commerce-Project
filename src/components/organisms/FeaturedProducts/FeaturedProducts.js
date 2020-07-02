@@ -36,21 +36,29 @@ const Wrapper = styled.section`
 
 const FeaturedProducts = ({ products }) => (
   <Wrapper>
-    <TinySlider settings={settings}>
-      {products.length === 0
-        ? Array(6)
-            .fill()
-            .map((_, id) => <SkeletonCard key={id} />)
-        : products.map(({ id, name, price, image }) => (
-            <ProductCard
-              key={id}
-              id={id}
-              name={name}
-              price={price}
-              image={image}
-            />
+    {products.length === 0 && (
+      <TinySlider settings={settings}>
+        {Array(6)
+          .fill()
+          .map((_, id) => (
+            <SkeletonCard key={id} />
           ))}
-    </TinySlider>
+      </TinySlider>
+    )}
+    {products.length !== 0 && (
+      <TinySlider settings={settings}>
+        {products.map(({ id, name, price, image, alt }) => (
+          <ProductCard
+            key={id}
+            id={id}
+            name={name}
+            price={price}
+            image={image}
+            alt={alt}
+          />
+        ))}
+      </TinySlider>
+    )}
   </Wrapper>
 );
 

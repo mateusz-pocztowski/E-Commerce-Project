@@ -84,7 +84,7 @@ const Description = styled.div`
 `;
 
 const DetailsTemplate = ({ productData }) => {
-  const { name, description, category, image, price } = productData;
+  const { name, description, category, image, alt, price } = productData;
   const { openSideCart } = useContext(NavigationContext);
 
   const featuredItems = useSelector(({ featured }) =>
@@ -97,7 +97,7 @@ const DetailsTemplate = ({ productData }) => {
         <Wrapper>
           <InnerWrapper>
             <ImageWrapper>
-              <Image src={image} />
+              <Image alt={alt} src={image} />
             </ImageWrapper>
           </InnerWrapper>
           <ContentWrapper>
@@ -122,6 +122,7 @@ DetailsTemplate.propTypes = {
     description: PropTypes.string.isRequired,
     category: PropTypes.string.isRequired,
     image: PropTypes.string,
+    alt: PropTypes.string,
     price: PropTypes.string,
     size: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),

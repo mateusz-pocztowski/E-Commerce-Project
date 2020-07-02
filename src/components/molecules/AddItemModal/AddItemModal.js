@@ -65,7 +65,7 @@ const AddItemModal = ({ isActive, itemID, close }) => {
 
   const itemData = allContainers.find(({ id }) => id === itemID);
 
-  const { image, name, price } = itemData;
+  const { image, name, price, alt } = itemData;
 
   const handleModalClose = () => {
     setModalOpen(false);
@@ -84,7 +84,7 @@ const AddItemModal = ({ isActive, itemID, close }) => {
           <ItemWrapper>
             <RemoveBtn onClick={handleModalClose} />
             <ImageWrapper>
-              <Image src={image} />
+              <Image src={image} alt={alt} />
             </ImageWrapper>
             <Content>
               <Name>{name}</Name>

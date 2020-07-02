@@ -100,7 +100,7 @@ const Slide = ({
 }) => {
   return (
     <Wrapper isActive={isActive}>
-      <InnerWrapper img={image} smallImg={smallImage}>
+      <InnerWrapper alt="slide image" img={image} smallImg={smallImage}>
         <Content isActive={isActive}>
           <Title>{title}</Title>
           <Heading>{subTitle}</Heading>

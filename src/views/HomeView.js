@@ -26,7 +26,7 @@ const HomeView = () => {
       <main>
         <Wrapper>
           <Categories />
-          {!isLoading && featuredItems.length === 0 ? null : (
+          {!isLoading && featuredItems.length !== 0 && (
             <>
               <SectionHeader
                 title="Trending"
@@ -38,7 +38,7 @@ const HomeView = () => {
         </Wrapper>
         <Parallax img={ParallaxImage} />
         <Wrapper>
-          {!isLoading && featuredItems.length === 0 ? null : (
+          {!isLoading && featuredItems.length !== 0 && (
             <>
               <SectionHeader
                 title="Best sellers"

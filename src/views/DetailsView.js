@@ -29,8 +29,8 @@ const DetailsView = () => {
         const { data } = await axios.get(`${API_URL}/products/${slug}`);
         const itemData = {
           id: data.id,
-          name: data.Name,
-          description: data.Description,
+          name: data.name,
+          description: data.description,
           category: data.category.name,
           image: `${API_URL + data.image.url}`,
           size: data.size,
@@ -42,7 +42,7 @@ const DetailsView = () => {
       }
     };
     fetchProductData();
-  }, [pathname]);
+  }, [slug]);
 
   return (
     <>

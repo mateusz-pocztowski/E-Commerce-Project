@@ -121,6 +121,7 @@ const ProductTemplate = () => {
   useEffect(() => {
     applyFilters();
     setSearchInputValue(givenSearchedValue);
+    // eslint-disable-next-line
   }, [sortBy, givenSearchedValue]);
 
   const filters = {

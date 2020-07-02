@@ -48,7 +48,7 @@ const SkeletonCard = () => {
     <Wrapper>
       <Overlay>
         <StyledSkeleton width="100%" height="100%" />
-        <Image src={defaultImg} />
+        <Image src={defaultImg} alt="loading..." />
       </Overlay>
       <Description>
         <InnerWrapper>

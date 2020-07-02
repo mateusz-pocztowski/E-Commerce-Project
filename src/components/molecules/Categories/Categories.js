@@ -93,19 +93,19 @@ const Categories = () => (
   <Wrapper>
     <Category>
       <StyledLink to="/">
-        <CategoryImage src={categoryImg1} />
+        <CategoryImage src={categoryImg1} alt="shoes" />
         <StyledButton>Shoes</StyledButton>
       </StyledLink>
     </Category>
     <Category>
       <StyledLink to="/">
-        <CategoryImage src={categoryImg2} />
+        <CategoryImage src={categoryImg2} alt="clothing" />
         <StyledButton>Clothing</StyledButton>
       </StyledLink>
     </Category>
     <Category>
       <StyledLink to="/">
-        <CategoryImage src={categoryImg3} />
+        <CategoryImage src={categoryImg3} alt="accessories" />
         <StyledButton>Accessories</StyledButton>
       </StyledLink>
     </Category>

@@ -53,7 +53,7 @@ const GridTemplate = ({ products, isWide, explicit }) => {
         ? Array(products.length || 6)
             .fill()
             .map((_, id) => <SkeletonCard key={id} />)
-        : products.map(({ id, name, price, image }) => (
+        : products.map(({ id, name, price, image, alt }) => (
             <motion.div
               key={id}
               positionTransition={!explicit}
@@ -61,7 +61,13 @@ const GridTemplate = ({ products, isWide, explicit }) => {
               animate={{ opacity: 1 }}
               transition={{ duration: 1 }}
             >
-              <ProductCard id={id} name={name} price={price} image={image} />
+              <ProductCard
+                alt={alt}
+                id={id}
+                name={name}
+                price={price}
+                image={image}
+              />
             </motion.div>
           ))}
     </GridWrapper>

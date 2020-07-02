@@ -25,10 +25,7 @@ export const SHOW_LOADING = 'SHOW_LOADING';
 export const HIDE_LOADING = 'HIDE_LOADING';
 export const SET_SEARCH_VALUE = 'SET_SEARCH_VALUE';
 
-const API_HOST = 'localhost';
-const API_PORT = '1337';
-
-export const API_URL = `http://${API_HOST}:${API_PORT}`;
+export const API_URL = `https://shopmaxbackend.herokuapp.com`;
 export const PRODUCT_FETCH_LIMIT = 12;
 
 export const fetchProducts = (endpoint = '', isNew = false) => async (
@@ -55,12 +52,13 @@ export const fetchProducts = (endpoint = '', isNew = false) => async (
       payload: {
         container: endpoint === featuredEndP ? 'featured' : 'products',
         items: data.map(
-          ({ id, Name, Description, category, image, size, price }) => ({
+          ({ id, name, description, category, image, size, price }) => ({
             id,
-            name: Name,
-            description: Description,
+            name,
+            description,
             category: category.name,
             image: `${API_URL + image.url}`,
+            alt: image.alternativeText,
             size,
             price: price.toFixed(2),
           }),
