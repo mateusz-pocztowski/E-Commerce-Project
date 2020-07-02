@@ -10,6 +10,10 @@ export const FETCH_CATEGORIES_REQUEST = 'FETCH_CATEGORIES_REQUEST';
 export const FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS';
 export const FETCH_CATEGORIES_FAILURE = 'FETCH_CATEGORIES_FAILURE';
 
+export const UPDATE_STORE_REQUEST = 'UPDATE_STORE_REQUEST';
+export const UPDATE_STORE_SUCCESS = 'UPDATE_STORE_SUCCESS';
+export const UPDATE_STORE_FAILURE = 'UPDATE_STORE_FAILURE';
+
 export const ADD_ITEM = 'ADD_ITEM';
 export const UPDATE_CART_ITEM = 'UPDATE_CART_ITEM';
 
@@ -24,7 +28,6 @@ const API_HOST = 'localhost';
 const API_PORT = '1337';
 
 export const API_URL = `http://${API_HOST}:${API_PORT}`;
-
 export const PRODUCT_FETCH_LIMIT = 12;
 
 export const fetchProducts = (endpoint = '', isNew = false) => async (
@@ -64,8 +67,7 @@ export const fetchProducts = (endpoint = '', isNew = false) => async (
       },
     });
   } catch (err) {
-    // const { status } = err.response;
-    // dispatch({ type: FETCH_ITEMS_FAILURE, payload: status });
+    dispatch({ type: FETCH_ITEMS_FAILURE, payload: err });
   }
 };
 
@@ -78,8 +80,7 @@ export const fetchCategories = () => async dispatch => {
       payload: data.map(({ name, total }) => ({ name, total })),
     });
   } catch (err) {
-    // const { status } = err.response;
-    // dispatch({ type: FETCH_CATEGORIES_FAILURE, payload: status });
+    dispatch({ type: FETCH_CATEGORIES_FAILURE, payload: err });
   }
 };
 
@@ -92,6 +93,29 @@ export const updateCartItem = item => dispatch => {
     });
     dispatch({ type: HIDE_LOADING });
   }, 700);
+};
+
+export const updateStore = (itemID, itemSize, quantity) => async dispatch => {
+  dispatch({ type: UPDATE_STORE_REQUEST, payload: 3500 });
+  try {
+    const {
+      data: { size },
+    } = await axios.get(`${API_URL}/products/${itemID}`);
+    const newSize = size.map(element =>
+      element.value === itemSize
+        ? { ...element, limit: element.limit - quantity }
+        : element,
+    );
+    await axios.put(`${API_URL}/products/${itemID}`, {
+      newSize,
+    });
+    setTimeout(() => {
+      dispatch({ type: UPDATE_STORE_SUCCESS });
+      dispatch(fetchProducts('products?featured=true'));
+    }, 3500);
+  } catch (err) {
+    dispatch({ type: UPDATE_STORE_FAILURE, payload: err });
+  }
 };
 
 export const addItem = (item, container) => (dispatch, getState) => {

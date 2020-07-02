@@ -6,6 +6,9 @@ import {
   FETCH_CATEGORIES_REQUEST,
   FETCH_CATEGORIES_SUCCESS,
   FETCH_CATEGORIES_FAILURE,
+  UPDATE_STORE_REQUEST,
+  UPDATE_STORE_SUCCESS,
+  UPDATE_STORE_FAILURE,
   ADD_ITEM,
   UPDATE_CART_ITEM,
   REMOVE_CART_ITEM,
@@ -68,6 +71,32 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         categories: action.payload,
+      };
+    case UPDATE_STORE_REQUEST:
+      return {
+        ...state,
+        loading: {
+          isLoading: true,
+          duration: action.payload,
+        },
+      };
+    case UPDATE_STORE_FAILURE:
+      return {
+        ...state,
+        errorID: action.payload,
+        loading: {
+          isLoading: false,
+          duration: 0,
+        },
+      };
+    case UPDATE_STORE_SUCCESS:
+      return {
+        ...state,
+        cart: [],
+        loading: {
+          isLoading: false,
+          duration: 0,
+        },
       };
     case ADD_ITEM:
       return {

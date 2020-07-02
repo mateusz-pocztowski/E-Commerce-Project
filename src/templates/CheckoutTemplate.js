@@ -2,6 +2,8 @@ import React from 'react';
 import UserTemplate from 'templates/UserTemplate';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import useLoader from 'hooks/useLoader';
+import PageLoader from 'components/molecules/PageLoader/PageLoader';
 import Progress from 'components/organisms/Checkout/Progress';
 import CheckoutForm from 'components/organisms/Checkout/Form/Form';
 import CartSummary from 'components/organisms/Checkout/CartSummary';
@@ -51,22 +53,26 @@ const CartSummaryWrapper = styled.div`
 `;
 
 const CheckoutTemplate = ({ items }) => {
+  const isLoading = useLoader();
   return (
-    <UserTemplate header={false}>
-      <Wrapper>
-        <ProgressWrapper>
-          <Progress />
-        </ProgressWrapper>
-        <InnerWrapper>
-          <FormWrapper>
-            <CheckoutForm />
-          </FormWrapper>
-          <CartSummaryWrapper>
-            <CartSummary cartItems={items} />
-          </CartSummaryWrapper>
-        </InnerWrapper>
-      </Wrapper>
-    </UserTemplate>
+    <>
+      <PageLoader isActive={isLoading} />
+      <UserTemplate header={false}>
+        <Wrapper>
+          <ProgressWrapper>
+            <Progress />
+          </ProgressWrapper>
+          <InnerWrapper>
+            <FormWrapper>
+              <CheckoutForm cartItems={items} />
+            </FormWrapper>
+            <CartSummaryWrapper>
+              <CartSummary cartItems={items} />
+            </CartSummaryWrapper>
+          </InnerWrapper>
+        </Wrapper>
+      </UserTemplate>
+    </>
   );
 };
 

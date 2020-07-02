@@ -1,8 +1,11 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { useDispatch } from 'react-redux';
 import Button from 'components/atoms/Button/Button';
 import RadioInputs from 'components/organisms/Checkout/Form/RadioInputs';
 import FormInput from 'components/organisms/Checkout/Form/FormInput';
+import PropTypes from 'prop-types';
+import { updateStore } from 'actions';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 
@@ -54,7 +57,8 @@ const CheckoutSchema = Yup.object().shape({
   city: Yup.string().required('City is required!'),
 });
 
-const CheckoutForm = () => {
+const CheckoutForm = ({ cartItems }) => {
+  const dispatch = useDispatch();
   return (
     <Formik
       initialValues={{
@@ -67,10 +71,10 @@ const CheckoutForm = () => {
       }}
       validationSchema={CheckoutSchema}
       onSubmit={(values, { setSubmitting }) => {
-        console.log(values);
+        cartItems.map(({ id, size }) => dispatch(updateStore(id, size)));
         setTimeout(() => {
           setSubmitting(false);
-        }, 2000);
+        }, 3500);
       }}
     >
       {({
@@ -157,6 +161,10 @@ const CheckoutForm = () => {
       )}
     </Formik>
   );
+};
+
+CheckoutForm.propTypes = {
+  cartItems: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default CheckoutForm;
