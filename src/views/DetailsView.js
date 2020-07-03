@@ -32,7 +32,7 @@ const DetailsView = () => {
           name: data.name,
           description: data.description,
           category: data.category.name,
-          image: `${API_URL + data.image.url}`,
+          image: data.image,
           size: data.size,
           price: data.price.toFixed(2),
         };
