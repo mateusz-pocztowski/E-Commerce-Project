@@ -12,7 +12,7 @@ import FiltersContent from 'components/molecules/Filters/FiltersContent';
 import useSkeleton from 'hooks/useSkeleton';
 import EmptyState from 'components/molecules/EmptyState/EmptyState';
 import GridTemplate from 'templates/GridTemplate';
-import { fetchProducts, setSearchValue, PRODUCT_FETCH_LIMIT } from 'actions';
+import { fetchProducts, setSearchValues, PRODUCT_FETCH_LIMIT } from 'actions';
 import FiltersProvider from 'context/FiltersContext';
 import {
   priceEndP,
@@ -83,11 +83,16 @@ const options = [
 
 const ProductTemplate = () => {
   const allProducts = useSelector(({ products }) => products);
-  const givenSearchedValue = useSelector(({ searchValue }) => searchValue);
+  const givenSearchedValue = useSelector(
+    ({ searchValues }) => searchValues.search,
+  );
+  const givenCategories = useSelector(
+    ({ searchValues }) => searchValues.categories,
+  );
 
   const [priceRange, setPriceRange] = useState({ min: 0, max: 150 });
-  const [categories, setCategories] = useState([]);
   const [sortBy, setSortBy] = useState(options[0]);
+  const [categories, setCategories] = useState(givenCategories);
   const [searchInputValue, setSearchInputValue] = useState(givenSearchedValue);
   const [areAsideFiltersVisible, setAsideFiltersVisibility] = useState(false);
 
@@ -105,6 +110,14 @@ const ProductTemplate = () => {
     dispatch(fetchProducts(endpoint, isNew));
   };
 
+  const clearFilters = () => {
+    setPriceRange({ min: 0, max: 150 });
+    setCategories([]);
+    setSortBy(options[0]);
+    dispatch(setSearchValues('search', ''));
+    dispatch(setSearchValues('categories', []));
+  };
+
   const includeCategory = categoryName => {
     if (categories.some(category => category === categoryName)) {
       const newCategories = categories.filter(
@@ -115,7 +128,7 @@ const ProductTemplate = () => {
   };
 
   const handleSearch = e => {
-    dispatch(setSearchValue(e.target.value));
+    dispatch(setSearchValues('search', e.target.value));
   };
 
   useEffect(() => {
@@ -132,6 +145,7 @@ const ProductTemplate = () => {
     markedCategories: categories,
     includeCategory,
     applyFilters,
+    clearFilters,
     close: setAsideFiltersVisibility,
   };
 

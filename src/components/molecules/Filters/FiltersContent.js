@@ -18,15 +18,24 @@ const InputRangeWrapper = styled.div`
   margin: 50px 15px 50px 10px;
 `;
 
+const ButtonsWrapper = styled.div`
+  display: flex;
+`;
+
 const StyledButton = styled(Button)`
   border-radius: 4px;
-  width: 50%;
-  margin: 0;
+  margin: 0 5px 0 0;
   &:hover {
-    background-color: ${({ theme }) => theme.white};
-    color: ${({ theme }) => theme.dark};
+    background-color: ${({ theme }) => theme.blue};
+    color: ${({ theme }) => theme.white};
     border-color: ${({ theme }) => theme.dark};
   }
+`;
+
+const FilterButton = styled(StyledButton)`
+  background-color: ${({ theme }) => theme.white};
+  color: ${({ theme }) => theme.dark};
+  border-color: ${({ theme }) => theme.dark};
 `;
 
 const FiltersContent = () => {
@@ -34,6 +43,7 @@ const FiltersContent = () => {
     priceRange,
     priceHandler,
     applyFilters,
+    clearFilters,
     searchValue,
     handleSearch,
     close,
@@ -64,9 +74,14 @@ const FiltersContent = () => {
           onChange={value => priceHandler(value)}
         />
       </InputRangeWrapper>
-      <StyledButton secondary="true" onClick={() => handleApply()}>
-        Filter
-      </StyledButton>
+      <ButtonsWrapper>
+        <StyledButton secondary="true" onClick={() => handleApply()}>
+          Filter
+        </StyledButton>
+        <FilterButton secondary="true" onClick={() => clearFilters()}>
+          Clear
+        </FilterButton>
+      </ButtonsWrapper>
     </>
   );
 };

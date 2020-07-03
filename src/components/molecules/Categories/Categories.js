@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setSearchValues } from 'actions';
 import styled from 'styled-components';
 import categoryImg1 from 'assets/images/category1.jpg';
 import categoryImg2 from 'assets/images/category2.jpg';
@@ -89,27 +91,40 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const Categories = () => (
-  <Wrapper>
-    <Category>
-      <StyledLink to="/">
-        <CategoryImage src={categoryImg1} alt="shoes" />
-        <StyledButton>Shoes</StyledButton>
-      </StyledLink>
-    </Category>
-    <Category>
-      <StyledLink to="/">
-        <CategoryImage src={categoryImg2} alt="clothing" />
-        <StyledButton>Clothing</StyledButton>
-      </StyledLink>
-    </Category>
-    <Category>
-      <StyledLink to="/">
-        <CategoryImage src={categoryImg3} alt="accessories" />
-        <StyledButton>Accessories</StyledButton>
-      </StyledLink>
-    </Category>
-  </Wrapper>
-);
+const Categories = () => {
+  const dispatch = useDispatch();
+
+  return (
+    <Wrapper>
+      <Category>
+        <StyledLink
+          onClick={() => dispatch(setSearchValues('categories', ['Shoes']))}
+          to="/catalog"
+        >
+          <CategoryImage src={categoryImg1} alt="shoes" />
+          <StyledButton>Shoes</StyledButton>
+        </StyledLink>
+      </Category>
+      <Category>
+        <StyledLink
+          onClick={() => dispatch(setSearchValues('categories', ['Hoodies']))}
+          to="/catalog"
+        >
+          <CategoryImage src={categoryImg2} alt="hoodies" />
+          <StyledButton>Hoodies</StyledButton>
+        </StyledLink>
+      </Category>
+      <Category>
+        <StyledLink
+          onClick={() => dispatch(setSearchValues('categories', ['Jackets']))}
+          to="/catalog"
+        >
+          <CategoryImage src={categoryImg3} alt="jackets" />
+          <StyledButton>Jackets</StyledButton>
+        </StyledLink>
+      </Category>
+    </Wrapper>
+  );
+};
 
 export default Categories;

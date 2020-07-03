@@ -171,9 +171,12 @@ export const removeWishlistItem = itemID => dispatch => {
   }, 600);
 };
 
-export const setSearchValue = value => {
+export const setSearchValues = (type, value) => {
   return {
     type: SET_SEARCH_VALUE,
-    payload: value,
+    payload: {
+      type,
+      value,
+    },
   };
 };

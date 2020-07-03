@@ -1,5 +1,5 @@
 /* eslint-disable no-use-before-define */
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Slide from 'components/organisms/Slider/Slide';
 import * as Control from 'components/atoms/ControlBars/ControlBars';
@@ -72,7 +72,15 @@ const Slider = () => {
     slide(slideIndex);
   };
 
-  setSlideTimeout();
+  useEffect(() => {
+    setSlideTimeout();
+
+    return () => {
+      clearTimeout(timeoutRef.current);
+      clearTimeout(setSlideTimeout);
+    };
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <StyledWrapper>

@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import Button from 'components/atoms/Button/Button';
-import { setSearchValue as setSearchValueAction } from 'actions';
+import { setSearchValues as setSearchValuesAction } from 'actions';
 
 const SearchWrapper = styled.form`
   display: flex;
@@ -88,7 +88,7 @@ const Search = ({ close, isVisible, closeSearch, topnav }) => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    dispatch(setSearchValueAction(searchValue));
+    dispatch(setSearchValuesAction('search', searchValue));
     setRedirect(true);
     cleanup();
   };

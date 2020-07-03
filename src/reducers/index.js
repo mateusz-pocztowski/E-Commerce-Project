@@ -30,7 +30,10 @@ export const initialState = {
     isLoading: false,
     duration: 0,
   },
-  searchValue: '',
+  searchValues: {
+    search: '',
+    categories: [],
+  },
   errorID: null,
 };
 
@@ -151,7 +154,10 @@ const rootReducer = (state = initialState, action) => {
     case SET_SEARCH_VALUE:
       return {
         ...state,
-        searchValue: action.payload,
+        searchValues: {
+          ...state.searchValues,
+          [action.payload.type]: action.payload.value,
+        },
       };
     default:
       return state;
