@@ -45,6 +45,7 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         errorID: action.payload,
+        isDataLoading: false,
       };
     case FETCH_ITEMS_SUCCESS:
       return {

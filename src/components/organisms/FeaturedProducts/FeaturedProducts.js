@@ -47,14 +47,13 @@ const FeaturedProducts = ({ products }) => (
     )}
     {products.length !== 0 && (
       <TinySlider settings={settings}>
-        {products.map(({ id, name, price, image, alt }) => (
+        {products.map(({ id, name, price, image }) => (
           <ProductCard
             key={id}
             id={id}
             name={name}
             price={price}
             image={image}
-            alt={alt}
           />
         ))}
       </TinySlider>

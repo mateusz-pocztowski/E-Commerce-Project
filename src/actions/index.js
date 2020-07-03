@@ -58,7 +58,6 @@ export const fetchProducts = (endpoint = '', isNew = false) => async (
             description,
             category: category.name,
             image: `${API_URL + image.url}`,
-            alt: image.alternativeText,
             size,
             price: price.toFixed(2),
           }),

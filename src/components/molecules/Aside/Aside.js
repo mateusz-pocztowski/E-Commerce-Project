@@ -11,10 +11,10 @@ const SidenavWrapper = styled.aside`
   position: fixed;
   display: flex;
   flex-direction: column;
-  ${({ side }) => side}: -100vw;
   width: 100vw;
   top: 0;
   bottom: 0;
+  ${({ side }) => side}: 0;
   z-index: ${({ theme }) => theme.zIndex.level9};
   visibility: hidden;
   opacity: 0;
@@ -26,20 +26,32 @@ const SidenavWrapper = styled.aside`
     -2px 0 10px rgba(54, 54, 54, 0.2);
   background-color: ${({ theme }) => theme.white};
   color: ${({ theme }) => theme.dark};
+  transform: translateX(-100vw);
   ${({ theme }) => theme.mq.xxs} {
     width: calc(100vw - 65px);
-    ${({ side }) => side}: calc((100vw - 65px) * -1);
+    transform: translateX(calc((100vw - 65px) * -1));
   }
   ${({ theme }) => theme.mq.xs} {
     width: 340px;
-    ${({ side }) => side}: -340px;
+    transform: translateX(-340px);
   }
+  ${({ side }) =>
+    side === 'right' &&
+    css`
+      transform: translateX(100vw);
+      ${({ theme }) => theme.mq.xxs} {
+        transform: translateX(calc(100vw - 65px));
+      }
+      ${({ theme }) => theme.mq.xs} {
+        transform: translateX(340px);
+      }
+    `}
   ${({ isActive }) =>
     isActive &&
     css`
       visibility: visible !important;
       opacity: 1 !important;
-      ${({ side }) => side}: 0 !important;
+      transform: translateX(0) !important;
     `}
 `;
 

@@ -115,13 +115,13 @@ const FullCartItem = ({ item }) => {
     item,
   );
 
-  const { id, name, image, size, price, quantity, alt } = item;
+  const { id, name, image, size, price, quantity } = item;
 
   return (
     <ProductItem>
       <Main>
         <ImageWrapper to={`/catalog/${id}`}>
-          <Image src={image} alt={alt} />
+          <Image src={image} alt={name} />
         </ImageWrapper>
         <Content>
           <Name to={`/catalog/${id}`}>{name}</Name>
@@ -158,7 +158,6 @@ FullCartItem.propTypes = {
     image: PropTypes.string,
     size: PropTypes.string,
     price: PropTypes.string,
-    alt: PropTypes.string,
     quantity: PropTypes.number,
     limit: PropTypes.number,
   }).isRequired,
