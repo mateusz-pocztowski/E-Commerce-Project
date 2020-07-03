@@ -52,39 +52,39 @@ Frontend: (hosted by www.netlify.com)
 <p align="center">Home slider</p>
 
 ![screen2](https://user-images.githubusercontent.com/55945204/86472410-672fda00-bd3f-11ea-9745-c5e4b9aee0eb.jpg)
-
+***
 <p align="center">Aside shopping cart</p>
 
 ![screen1](https://user-images.githubusercontent.com/55945204/86472320-45ceee00-bd3f-11ea-8506-7e3a8e637c1f.jpg)
-
+***
 <p align="center">Full shopping cart</p>
 
 ![screen5](https://user-images.githubusercontent.com/55945204/86472824-12409380-bd40-11ea-87fb-468c5fb66984.jpg)
-
+***
 <p align="center">Catalog view</p>
 
 ![screen10](https://user-images.githubusercontent.com/55945204/86472674-d3124280-bd3f-11ea-9086-bb6fa6d552bc.jpg)
-
+***
 <p align="center">Wishlist view</p>
 
 ![screen3](https://user-images.githubusercontent.com/55945204/86472430-71ea6f00-bd3f-11ea-9ad8-f550a771b35a.jpg)
-
+***
 <p align="center">Empty wishlist view</p>
 
 ![screen4](https://user-images.githubusercontent.com/55945204/86472765-f89f4c00-bd3f-11ea-8f25-56299dbaf2cd.jpg)
-
+***
 <p align="center">Validated checkout view</p>
 
 ![screen6](https://user-images.githubusercontent.com/55945204/86472907-34d2ac80-bd40-11ea-92a1-593d0e69cd71.png)
-
+***
 <p align="center">"Add item" modal</p>
 
 ![screen11](https://user-images.githubusercontent.com/55945204/86473248-d9ed8500-bd40-11ea-9550-a945594bfa22.jpg)
-
+***
 <p align="center">Product full details view</p>
 
 ![screen7](https://user-images.githubusercontent.com/55945204/86472986-5a5fb600-bd40-11ea-8973-5b114459b1b2.png)
-
+***
 <p align="center">404 page</p>
 
 ![screen8](https://user-images.githubusercontent.com/55945204/86473111-96931680-bd40-11ea-9fc2-52497b672e21.png)
@@ -92,4 +92,5 @@ Frontend: (hosted by www.netlify.com)
 ## Credits and sources
 
 Images: 50style.pl && unsplash.com
+
 Icons: flaticon.com
