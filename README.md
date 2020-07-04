@@ -25,7 +25,7 @@ Frontend: (hosted by www.netlify.com)
 * React Toastify
 * Framer Motion
 * Styled Components
-* Tiny Slider React
+* React Multi Carousel
 * Formik && Yup
 * Axios
 * Local Storage
@@ -38,7 +38,7 @@ Frontend: (hosted by www.netlify.com)
 * Adding/removing products from cart and wishlist
 * Filtering and sorting products by names, categories and prices
 * Changing quantity of products with same ID and size
-* Featured products are placed in a carousel (tiny-slider-react)
+* Featured products are placed in a carousel (react-multi-carousel)
 * Two shopping carts (aside and full) with same options and logic
 * Adding products with validation (checking if certain size is available)
 * Viewing full details of products
@@ -91,6 +91,5 @@ Frontend: (hosted by www.netlify.com)
 
 ## Credits and sources
 
-Images: 50style.pl && unsplash.com
-
+Images: 50style.pl && unsplash.com <br/>
 Icons: flaticon.com
