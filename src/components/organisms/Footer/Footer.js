@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import SocialMedia from 'components/atoms/SocialMedia/SocialMedia';
 import Accordion from 'components/organisms/Footer/Accordion';
+import useWindowWidth from 'hooks/useWindowWidth';
 import {
   aboutLinks,
   servicesLinks,
@@ -78,16 +79,7 @@ const RightsLink = styled(Link)`
 `;
 
 const Footer = () => {
-  const [width, setWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  const width = useWindowWidth();
 
   return (
     <Wrapper>

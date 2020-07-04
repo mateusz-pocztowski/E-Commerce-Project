@@ -98,7 +98,7 @@ const Button = styled.button`
   }
 `;
 
-const Overlay = styled.a`
+const Overlay = styled.div`
   display: block;
   position: relative;
   overflow: hidden;

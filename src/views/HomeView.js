@@ -17,7 +17,6 @@ const Wrapper = styled.div`
 
 const HomeView = () => {
   const featuredItems = useSelector(({ featured }) => featured);
-  const isLoading = useSelector(({ isDataLoading }) => isDataLoading);
 
   return (
     <>
@@ -26,29 +25,18 @@ const HomeView = () => {
       <main>
         <Wrapper>
           <Categories />
-          {!isLoading && featuredItems.length !== 0 && (
-            <>
-              <SectionHeader
-                title="Trending"
-                subTitle="Top view in this week"
-              />
-              <FeaturedProducts products={featuredItems.slice(0, 6)} />
-            </>
-          )}
+          <SectionHeader title="Trending" subTitle="Top view in this week" />
+          <FeaturedProducts products={featuredItems.slice(0, 6)} />
         </Wrapper>
         <Parallax img={ParallaxImage} />
         <Wrapper>
-          {!isLoading && featuredItems.length !== 0 && (
-            <>
-              <SectionHeader
-                title="Best sellers"
-                subTitle="Top sale in this week"
-              />
-              <FeaturedProducts
-                products={featuredItems.slice(6, featuredItems.length)}
-              />
-            </>
-          )}
+          <SectionHeader
+            title="Best sellers"
+            subTitle="Top sale in this week"
+          />
+          <FeaturedProducts
+            products={featuredItems.slice(6, featuredItems.length)}
+          />
           <Features />
         </Wrapper>
       </main>

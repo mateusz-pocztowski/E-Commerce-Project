@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import TinySlider from 'tiny-slider-react';
 import adidasImg from 'assets/images/brand-adidas.png';
 import championImg from 'assets/images/brand-champion.png';
 import feewearImg from 'assets/images/brand-feewear.png';
@@ -11,6 +10,7 @@ import pumaImg from 'assets/images/brand-puma.png';
 import reebokImg from 'assets/images/brand-reebok.png';
 import umbroImg from 'assets/images/brand-umbro.png';
 import vansImg from 'assets/images/brand-vans.png';
+import Carousel from 'react-multi-carousel';
 
 const Wrapper = styled.section`
   border-top: 1px solid #eaeaea;
@@ -21,27 +21,40 @@ const Brand = styled.div`
   text-align: center;
 `;
 
-const settings = {
-  items: 2,
-  autoplay: true,
-  controls: false,
-  nav: false,
-  autoplayButtonOutput: false,
-  mouseDrag: true,
-  responsive: {
-    400: { items: 3 },
-    500: { items: 4 },
-    768: { items: 5 },
-    950: { items: 6 },
-    1100: { items: 7 },
-    1400: { items: 8 },
-    1700: { items: 9 },
+const responsive = {
+  xxxxl: {
+    breakpoint: { max: 5000, min: 1700 },
+    items: 8,
+  },
+  xxxl: {
+    breakpoint: { max: 1700, min: 1400 },
+    items: 8,
+  },
+  xxl: {
+    breakpoint: { max: 1400, min: 1100 },
+    items: 7,
+  },
+  xl: {
+    breakpoint: { max: 1100, min: 950 },
+    items: 6,
+  },
+  lg: {
+    breakpoint: { max: 950, min: 768 },
+    items: 5,
+  },
+  m: {
+    breakpoint: { max: 768, min: 500 },
+    items: 4,
+  },
+  s: {
+    breakpoint: { max: 500, min: 0 },
+    items: 3,
   },
 };
 
 const Brands = () => (
   <Wrapper>
-    <TinySlider settings={settings}>
+    <Carousel autoPlay arrows={false} responsive={responsive}>
       <Brand>
         <img src={adidasImg} alt="adidas" />
       </Brand>
@@ -72,7 +85,7 @@ const Brands = () => (
       <Brand>
         <img src={feewearImg} alt="feewear" />
       </Brand>
-    </TinySlider>
+    </Carousel>
   </Wrapper>
 );
 

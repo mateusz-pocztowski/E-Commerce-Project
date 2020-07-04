@@ -83,6 +83,7 @@ const options = [
 
 const ProductTemplate = () => {
   const allProducts = useSelector(({ products }) => products);
+  const isDataFetching = useSelector(({ isDataLoading }) => isDataLoading);
   const givenSearchedValue = useSelector(
     ({ searchValues }) => searchValues.search,
   );
@@ -177,7 +178,9 @@ const ProductTemplate = () => {
               />
             </SelectWrapper>
           </OptionsWrapper>
-          {!isSkeletonLoading && allProducts.length === 0 && <EmptyState />}
+          {!isDataFetching &&
+            !isSkeletonLoading &&
+            allProducts.length === 0 && <EmptyState />}
           <GridTemplate products={allProducts} />
           {!isSkeletonLoading && PRODUCT_FETCH_LIMIT === allProducts.length && (
             <StyledButton onClick={() => applyFilters(true)} secondary="true">
