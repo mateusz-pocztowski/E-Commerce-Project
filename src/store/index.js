@@ -4,7 +4,13 @@ import thunk from 'redux-thunk';
 
 const persistedState = localStorage.getItem('storeState')
   ? JSON.parse(localStorage.getItem('storeState'))
-  : initialState;
+  : {
+      ...initialState,
+      searchValues: {
+        search: '',
+        categories: [],
+      },
+    };
 
 const store = createStore(rootReducer, persistedState, applyMiddleware(thunk));
 
