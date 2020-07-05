@@ -6,6 +6,7 @@ const persistedState = localStorage.getItem('storeState')
   ? JSON.parse(localStorage.getItem('storeState'))
   : {
       ...initialState,
+      featured: [],
       searchValues: {
         search: '',
         categories: [],
