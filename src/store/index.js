@@ -3,15 +3,15 @@ import rootReducer, { initialState } from 'reducers';
 import thunk from 'redux-thunk';
 
 const persistedState = localStorage.getItem('storeState')
-  ? JSON.parse(localStorage.getItem('storeState'))
-  : {
-      ...initialState,
+  ? {
+      ...JSON.parse(localStorage.getItem('storeState')),
       featured: [],
       searchValues: {
         search: '',
         categories: [],
       },
-    };
+    }
+  : initialState;
 
 const store = createStore(rootReducer, persistedState, applyMiddleware(thunk));
 
