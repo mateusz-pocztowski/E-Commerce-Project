@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import SocialMedia from 'components/atoms/SocialMedia/SocialMedia';
 import Accordion from 'components/organisms/Footer/Accordion';
-import useWindowWidth from 'hooks/useWindowWidth';
+import useMedia from 'hooks/useMedia';
 import {
   aboutLinks,
   servicesLinks,
@@ -79,27 +79,19 @@ const RightsLink = styled(Link)`
 `;
 
 const Footer = () => {
-  const width = useWindowWidth();
+  const matches = useMedia('(min-width: 768px)');
 
   return (
     <Wrapper>
       <InnerWrapper>
         <Content>
+          <Accordion active={matches} title="About Us" links={aboutLinks} />
           <Accordion
-            active={width >= 768}
-            title="About Us"
-            links={aboutLinks}
-          />
-          <Accordion
-            active={width >= 768}
+            active={matches}
             title="Our Services"
             links={servicesLinks}
           />
-          <Accordion
-            active={width >= 768}
-            title="Information"
-            links={infoLinks}
-          />
+          <Accordion active={matches} title="Information" links={infoLinks} />
           <SocialMediaWrapper>
             <StyledSocialMedia type="twitter" />
             <StyledSocialMedia type="facebook" />

@@ -72,9 +72,9 @@ const Accordion = ({ active, title, links }) => {
   const [isVisible, setVisibility] = useState(false);
 
   const toggle = () => {
-    if (active) return;
-    setVisibility(!isVisible);
+    if (!active) setVisibility(!isVisible);
   };
+
   return (
     <Wrapper onClick={toggle} isActive={isVisible || active}>
       <Header>{title}</Header>
