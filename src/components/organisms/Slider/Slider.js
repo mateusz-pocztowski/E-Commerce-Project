@@ -1,5 +1,4 @@
-/* eslint-disable no-use-before-define */
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import Slide from 'components/organisms/Slider/Slide';
 import * as Control from 'components/atoms/ControlBars/ControlBars';
@@ -12,7 +11,7 @@ import bannerImage3small from 'assets/images/banner3-1150.jpg';
 
 const slides = [
   {
-    id: 1,
+    id: 0,
     title: 'Discover the\nlifestyle',
     subTitle: 'Our collection is flattering on all body types.',
     btnContent: 'Shop now',
@@ -20,7 +19,7 @@ const slides = [
     smallImage: bannerImage1small,
   },
   {
-    id: 2,
+    id: 1,
     title: 'Find your\nstyle',
     subTitle: 'Keep time with the contemporary designs.',
     btnContent: 'Shop now',
@@ -28,7 +27,7 @@ const slides = [
     smallImage: bannerImage2small,
   },
   {
-    id: 3,
+    id: 2,
     title: 'Summer Sale\n40% Off',
     subTitle: 'Latest seasonal collection has dropped!',
     btnContent: 'Shop now',
@@ -45,42 +44,38 @@ const StyledWrapper = styled.header`
   background-color: rgb(33, 36, 37);
 `;
 
+const TIMEOUT_DURATION = 5000;
+
 const Slider = () => {
-  const [activeSlide, setActiveSlide] = useState(1);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
   const timeoutRef = useRef(null);
-  const isAnimatingRef = useRef(false);
 
-  const slideRef = useRef(activeSlide);
-  slideRef.current = activeSlide;
-
-  const slide = (index = null) => {
-    if (slideRef.current === slides.length) setActiveSlide(0);
-    setActiveSlide(index || slideRef.current + 1);
-    setSlideTimeout();
-  };
-
-  const setSlideTimeout = () => {
-    clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(slide, 5000);
-
-    isAnimatingRef.current = true;
-    setTimeout(() => (isAnimatingRef.current = false), 1000);
-  };
+  const slide = useCallback(() => {
+    const nextSlide = (activeSlide + 1) % slides.length;
+    setActiveSlide(nextSlide);
+  }, [activeSlide]);
 
   const changeToSlide = slideIndex => {
-    if (isAnimatingRef.current) return;
-    slide(slideIndex);
+    if (!isAnimating) setActiveSlide(slideIndex);
   };
 
   useEffect(() => {
+    const setSlideTimeout = () => {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = setTimeout(slide, TIMEOUT_DURATION);
+
+      setIsAnimating(true);
+      setTimeout(() => setIsAnimating(false), 1000);
+    };
+
     setSlideTimeout();
 
     return () => {
       clearTimeout(timeoutRef.current);
       clearTimeout(setSlideTimeout);
     };
-    // eslint-disable-next-line
-  }, []);
+  }, [activeSlide, slide]);
 
   return (
     <StyledWrapper>
