@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useReducer, useCallback } from 'react';
 import styled from 'styled-components';
 import UserTemplate from 'templates/UserTemplate';
 import Button from 'components/atoms/Button/Button';
@@ -82,8 +82,6 @@ const options = [
 ];
 
 const ProductTemplate = () => {
-  const allProducts = useSelector(({ products }) => products);
-  const isDataFetching = useSelector(({ isDataLoading }) => isDataLoading);
   const givenSearchedValue = useSelector(
     ({ searchValues }) => searchValues.search,
   );
@@ -91,63 +89,114 @@ const ProductTemplate = () => {
     ({ searchValues }) => searchValues.categories,
   );
 
-  const [priceRange, setPriceRange] = useState({ min: 0, max: 150 });
-  const [sortBy, setSortBy] = useState(options[0]);
-  const [categories, setCategories] = useState(givenCategories);
-  const [searchInputValue, setSearchInputValue] = useState(givenSearchedValue);
-  const [areAsideFiltersVisible, setAsideFiltersVisibility] = useState(false);
+  const allProducts = useSelector(({ products }) => products);
+  const isDataFetching = useSelector(({ isDataLoading }) => isDataLoading);
+  const dispatchToStore = useDispatch();
 
-  const dispatch = useDispatch();
+  const initialFilters = {
+    priceRange: { min: 0, max: 150 },
+    sortBy: options[0],
+    categories: givenCategories,
+    searchInputValue: givenSearchedValue,
+    areAsideFiltersVisible: false,
+  };
+
+  const [filters, dispatch] = useReducer((state, action) => {
+    switch (action.type) {
+      case 'PRICE':
+        return {
+          ...state,
+          priceRange: action.payload,
+        };
+      case 'SORT_BY':
+        return {
+          ...state,
+          sortBy: action.payload,
+        };
+      case 'CATEGORIES':
+        return {
+          ...state,
+          categories: action.payload,
+        };
+      case 'SEARCH':
+        return {
+          ...state,
+          searchInputValue: action.payload,
+        };
+      case 'SHOW_ASIDE_FILTERS':
+        return {
+          ...state,
+          areAsideFiltersVisible: true,
+        };
+      case 'HIDE_ASIDE_FILTERS':
+        return {
+          ...state,
+          areAsideFiltersVisible: false,
+        };
+      default:
+        return state;
+    }
+  }, initialFilters);
 
   const applyFilters = (isNew = false) => {
-    if (allProducts.length === 0 && givenSearchedValue.length >= 3) return;
+    if (allProducts.length === 0 && filters.searchInputValue.length >= 3)
+      return;
     const endpoint = `${
-      categoryEndP(categories) +
-      priceEndP(priceRange) +
-      sortEndP(sortBy.value) +
-      searchEndP(givenSearchedValue)
+      categoryEndP(filters.categories) +
+      priceEndP(filters.priceRange) +
+      sortEndP(filters.sortBy.value) +
+      searchEndP(filters.searchInputValue)
     }`;
 
-    dispatch(fetchProducts(endpoint, isNew));
+    dispatchToStore(fetchProducts(endpoint, isNew));
   };
 
-  const clearFilters = () => {
-    setPriceRange({ min: 0, max: 150 });
-    setCategories([]);
-    setSortBy(options[0]);
-    dispatch(setSearchValues('search', ''));
-    dispatch(setSearchValues('categories', []));
-  };
-
-  const includeCategory = categoryName => {
-    if (categories.some(category => category === categoryName)) {
-      const newCategories = categories.filter(
-        category => category !== categoryName,
-      );
-      setCategories(newCategories);
-    } else setCategories([...categories, categoryName]);
-  };
-
-  const handleSearch = e => {
-    dispatch(setSearchValues('search', e.target.value));
-  };
+  const clearFilters = useCallback(() => {
+    dispatch({ type: 'PRICE', payload: { min: 0, max: 150 } });
+    dispatch({ type: 'CATEGORIES', payload: [] });
+    dispatch({ type: 'SORT_BY', payload: options[0] });
+    dispatchToStore(setSearchValues('search', ''));
+    dispatchToStore(setSearchValues('categories', []));
+  }, [dispatchToStore]);
 
   useEffect(() => {
     applyFilters();
-    setSearchInputValue(givenSearchedValue);
     // eslint-disable-next-line
-  }, [sortBy, givenSearchedValue]);
+  }, [filters.sortBy, filters.searchInputValue]);
 
-  const filters = {
-    priceRange,
-    priceHandler: setPriceRange,
-    searchValue: searchInputValue,
+  useEffect(() => {
+    dispatch({ type: 'SEARCH', payload: givenSearchedValue });
+
+    return () => clearFilters();
+  }, [givenSearchedValue, clearFilters]);
+
+  const includeCategory = categoryName => {
+    if (filters.categories.some(category => category === categoryName)) {
+      const newCategories = filters.categories.filter(
+        category => category !== categoryName,
+      );
+      dispatch({ type: 'CATEGORIES', payload: newCategories });
+    } else
+      dispatch({
+        type: 'CATEGORIES',
+        payload: [...filters.categories, categoryName],
+      });
+  };
+
+  const handleSearch = e => {
+    dispatch({ type: 'SEARCH', payload: e.target.value });
+  };
+
+  const catalogFilters = {
+    priceRange: filters.priceRange,
+    priceHandler: value => dispatch({ type: 'PRICE', payload: value }),
+    searchValue: filters.searchInputValue,
     handleSearch,
-    markedCategories: categories,
+    markedCategories: filters.categories,
     includeCategory,
     applyFilters,
     clearFilters,
-    close: setAsideFiltersVisibility,
+    close: () => dispatch({ type: 'HIDE_ASIDE_FILTERS' }),
   };
 
   const isSkeletonLoading = useSkeleton();
@@ -155,10 +204,10 @@ const ProductTemplate = () => {
   return (
     <UserTemplate>
       <Wrapper>
-        <FiltersProvider filters={filters}>
+        <FiltersProvider filters={catalogFilters}>
           <AsideFilters
-            isOpen={areAsideFiltersVisible}
-            close={() => setAsideFiltersVisibility(false)}
+            isOpen={filters.areAsideFiltersVisible}
+            close={() => dispatch({ type: 'HIDE_ASIDE_FILTERS' })}
           />
           <SideMenu>
             <FiltersContent />
@@ -166,15 +215,17 @@ const ProductTemplate = () => {
         </FiltersProvider>
         <MainWrapper>
           <OptionsWrapper>
-            <Filter onClick={() => setAsideFiltersVisibility(true)}>
+            <Filter onClick={() => dispatch({ type: 'SHOW_ASIDE_FILTERS' })}>
               Filters
             </Filter>
             <SelectWrapper>
               <Select
                 options={options}
                 styles={defaultStyle}
-                onChange={option => setSortBy(option)}
-                value={sortBy}
+                onChange={option =>
+                  dispatch({ type: 'SORT_BY', payload: option })
+                }
+                value={filters.sortBy}
               />
             </SelectWrapper>
           </OptionsWrapper>
